@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trading Radar</title><style>body{font:16px system-ui;background:#0b1220;color:#eef3ff;max-width:1100px;margin:auto;padding:24px}h1{margin-bottom:0}.muted{color:#a9b7cf}table{width:100%;border-collapse:collapse}td,th{padding:12px;text-align:left;border-bottom:1px solid #344258}th{color:#a9b7cf}button,input{padding:10px;border-radius:8px}.panel{background:#17243a;padding:18px;border-radius:12px;margin:20px 0;overflow:auto}.warn{color:#fbbf24}</style></head><body><h1>Trading Radar</h1><p class="muted">Research signals only • No broker execution • Not investment advice</p><div class="panel"><h2>Signals</h2><p id="updated" class="muted">Loading...</p><table><thead><tr><th>Ticker</th><th>Strategy</th><th>Score</th><th>Price</th><th>Relative volume</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div><div class="panel"><h2>Position calculator</h2><p>Account <input id="equity" type="number" value="5000"> Entry <input id="entry" type="number" value="10" step=".01"> Stop <input id="stop" type="number" value="9" step=".01"></p><p id="calc"></p></div><div class="panel"><h2>Simulated paper account</h2><div id="paper">Waiting for first simulated scan.</div></div><div class="panel"><h2>History</h2><p id="history" class="muted">Loading...</p></div><p class="warn">Verified catalyst and short-interest inputs are not yet available; reversal and squeeze signals are disabled. Do not treat ranking scores as probabilities.</p><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trading Radar</title><style>body{font:16px system-ui;background:#0b1220;color:#eef3ff;max-width:1100px;margin:auto;padding:24px}h1{margin-bottom:0}.muted{color:#a9b7cf}table{width:100%;border-collapse:collapse}td,th{padding:12px;text-align:left;border-bottom:1px solid #344258}th{color:#a9b7cf}button,input{padding:10px;border-radius:8px}.panel{background:#17243a;padding:18px;border-radius:12px;margin:20px 0;overflow:auto}.warn{color:#fbbf24}</style></head><body><h1>Trading Radar</h1><p class="muted">Research signals only • No broker execution • Not investment advice</p><div class="panel"><h2>Signals</h2><p id="updated" class="muted">Loading...</p><table><thead><tr><th>Ticker</th><th>Strategy</th><th>Score</th><th>Price</th><th>Relative volume</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div><div class="panel"><h2>Position calculator</h2><p>Account <input id="equity" type="number" value="5000"> Entry <input id="entry" type="number" value="10" step=".01"> Stop <input id="stop" type="number" value="9" step=".01"></p><p id="calc"></p></div><div class="panel"><h2>Alpaca paper account</h2><div id="alpaca">Waiting for first Alpaca sync.</div></div><div class="panel"><h2>Local simulated paper account</h2><div id="paper">Waiting for first simulated scan.</div></div><div class="panel"><h2>History</h2><p id="history" class="muted">Loading...</p></div><p class="warn">Verified catalyst and short-interest inputs are not yet available; reversal and squeeze signals are disabled. Do not treat ranking scores as probabilities.</p><script>
 async function load(){try{let d=await(await fetch('data/signals.json?'+Date.now())).json();document.getElementById('updated').textContent='Last scan: '+d.generated_at;document.getElementById('rows').innerHTML=d.signals.map(x=>'<tr><td>'+x.ticker+'</td><td>'+x.strategy+'</td><td>'+x.score+'</td><td>$'+x.price+'</td><td>'+x.rvol+'x</td><td>'+(x.qualified?'Qualified':'Watch')+'</td></tr>').join('')||'<tr><td colspan="6">No qualifying tickers</td></tr>'}catch(e){document.getElementById('updated').textContent='No scan data yet; run workflow first.'}try{let h=await(await fetch('data/history.json?'+Date.now())).json();document.getElementById('history').textContent=h.length+' daily score snapshots saved'}catch(e){document.getElementById('history').textContent='No historical snapshots yet.'}}
 async function loadPaper(){
   const el=document.getElementById('paper');
@@ -23,7 +23,7 @@ async function loadPaper(){
   const target=e+2*perShareRisk;
   output.textContent=shares+' shares | planned risk $'+plannedRisk.toFixed(2)+' | 2R target $'+target.toFixed(2);
 }
-['equity','entry','stop'].forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();load();loadPaper();</script></body></html>+Number(x||0).toFixed(2);
+['equity','entry','stop'].forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();load();loadPaper();loadAlpaca();</script></body></html>+Number(x||0).toFixed(2);
     const positions=Object.entries(p.positions||{});
     el.textContent='';
     const summary=document.createElement('p');
@@ -40,6 +40,41 @@ async function loadPaper(){
     note.textContent='Research simulation only. Orders are valued at the next observed daily close, not executable fills. No fees, slippage or intraday stop execution.';
     el.appendChild(note);
   }catch(e){el.textContent='Paper account not initialized yet. Run Trading Radar Scan after deployment.';}
+}
+async function loadAlpaca(){
+ const el=document.getElementById('alpaca');
+ try{
+  const r=await fetch('data/alpaca_paper.json?'+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw Error('no snapshot');
+  const a=await r.json();
+  if(a.mode!=='ALPACA_PAPER_ONLY')throw Error('invalid mode');
+  const money=n=>'
+  const a=Number(document.getElementById('equity').value);
+  const e=Number(document.getElementById('entry').value);
+  const stopPrice=Number(document.getElementById('stop').value);
+  const output=document.getElementById('calc');
+  if (![a,e,stopPrice].every(Number.isFinite) || a<=0 || e<=0 || stopPrice<0 || stopPrice>=e) {
+    output.textContent='Enter a positive account balance and entry price, with stop below entry.';
+    return;
+  }
+  const perShareRisk=e-stopPrice;
+  const shares=Math.max(0,Math.floor(Math.min(a*0.01/perShareRisk,a*0.25/e)));
+  const plannedRisk=shares*perShareRisk;
+  const target=e+2*perShareRisk;
+  output.textContent=shares+' shares | planned risk $'+plannedRisk.toFixed(2)+' | 2R target $'+target.toFixed(2);
+}
+['equity','entry','stop'].forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();load();</script></body></html>+Number(n||0).toFixed(2);
+  el.textContent='';
+  const p=document.createElement('p');
+  p.textContent='Equity: '+money(a.equity)+' | Cash: '+money(a.cash)+' | Buying power: '+money(a.buying_power)+' | Last sync: '+a.generated_at;
+  el.appendChild(p);
+  const holdings=document.createElement('p');
+  holdings.textContent=a.positions.length?a.positions.map(x=>x.ticker+': '+x.shares+' shares, unrealized P&L '+money(x.unrealized_pl)).join(' | '):'No open Alpaca positions';
+  el.appendChild(holdings);
+  const orders=document.createElement('p');
+  orders.textContent='Orders submitted during last scan: '+a.orders_submitted_this_run.length;
+  el.appendChild(orders);
+ }catch(e){el.textContent='No Alpaca paper account sync yet. Run Trading Radar Scan.'}
 }
 function calc(){
   const a=Number(document.getElementById('equity').value);
