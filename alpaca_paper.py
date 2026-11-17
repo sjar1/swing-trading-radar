@@ -79,10 +79,22 @@ def trade_plan(signal, equity, buying_power):
 def main():
     if os.getenv("ALPACA_API_KEY") is None or os.getenv("ALPACA_API_SECRET") is None:
         raise RuntimeError("Alpaca paper credentials are missing; no orders submitted")
-    payload = json.loads((DATA / "signals.json").read_text())
+    intraday = os.getenv("RADAR_INTRADAY") == "1"
+    if intraday:
+        from zoneinfo import ZoneInfo
+        local = datetime.now(timezone.utc).astimezone(ZoneInfo("America/New_York"))
+        minute = local.hour * 60 + local.minute
+        if local.weekday() >= 5 or not 9*60+45 <= minute < 15*60+45:
+            print("Outside intraday trading window; no paper orders")
+            return
+        clock = request("GET", "/v2/clock")
+        if not clock.get("is_open"):
+            print("Alpaca market clock closed; no paper orders")
+            return
+    payload = json.loads((DATA / ("intraday_signals.json" if intraday else "signals.json")).read_text())
     generated = datetime.fromisoformat(payload["generated_at"].replace("Z", "+00:00"))
     now = datetime.now(timezone.utc)
-    if generated.tzinfo is None or abs((now - generated).total_seconds()) > 36 * 3600:
+    if generated.tzinfo is None or abs((now - generated).total_seconds()) > (20 * 60 if intraday else 36 * 3600):
         raise RuntimeError("Scanner output is stale; no orders submitted")
     account = request("GET", "/v2/account")
     if account.get("status") != "ACTIVE" or account.get("trading_blocked") or account.get("account_blocked"):
@@ -149,6 +161,7 @@ def main():
     snapshot = {
         "generated_at": now.isoformat(),
         "mode": "ALPACA_PAPER_ONLY",
+        "scan_type": "intraday" if intraday else "daily",
         "equity": float(account_after["equity"]),
         "cash": float(account_after["cash"]),
         "buying_power": float(account_after["buying_power"]),
