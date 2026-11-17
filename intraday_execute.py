@@ -80,7 +80,8 @@ def main():
     tickers=list(dict.fromkeys(t.strip().upper() for t in UNIVERSE if t.strip()))
     start=(now-timedelta(days=190)).date().isoformat()
     results=[];errors=[]
-    snapshots=api("/v2/stocks/snapshots",{"symbols":",".join(tickers),"feed":"iex"}).get("snapshots",{})
+    snapshot_payload=api("/v2/stocks/snapshots",{"symbols":",".join(tickers),"feed":"iex"})
+    snapshots=snapshot_payload.get("snapshots",snapshot_payload)
     for ticker in tickers:
         try:
             payload=api("/v2/stocks/"+ticker+"/bars",{"timeframe":"1Day","start":start,
