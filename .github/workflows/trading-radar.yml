@@ -5,6 +5,9 @@ on:
     - cron: '30 22 * * 1-5'
 permissions:
   contents: write
+concurrency:
+  group: trading-radar-data-writes
+  cancel-in-progress: false
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -34,5 +37,6 @@ jobs:
           if [ -f docs/data/alpaca_paper.json ]; then git add docs/data/alpaca_paper.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update trading radar snapshots"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
