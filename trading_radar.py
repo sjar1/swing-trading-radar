@@ -5,8 +5,22 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
-UNIVERSE = os.getenv("RADAR_TICKERS", "GME,AMC,PLTR,SOFI,HOOD,RKLB,IONQ,UPST,LCID,RIVN,ACHR,JOBY,OPEN,CHPT,QS,BLNK,EVGO,LYFT,GRAB,NU,AFRM,DKNG,HIMS,PATH,AI,SOUN,BBAI,CLSK,MARA,RIOT").split(",")
+DEFAULT_UNIVERSE = os.getenv("RADAR_TICKERS", "GME,AMC,PLTR,SOFI,HOOD,RKLB,IONQ,UPST,LCID,RIVN,ACHR,JOBY,OPEN,CHPT,QS,BLNK,EVGO,LYFT,GRAB,NU,AFRM,DKNG,HIMS,PATH,AI,SOUN,BBAI,CLSK,MARA,RIOT").split(",")
 OUT = Path("docs/data")
+def current_universe():
+    """Use the most recent vetted rotation; fall back to fixed universe."""
+    if os.getenv("RADAR_TICKERS"):
+        return [t.strip().upper() for t in os.environ["RADAR_TICKERS"].split(",") if t.strip()]
+    try:
+        payload=json.loads((OUT/"universe.json").read_text())
+        generated=datetime.fromisoformat(payload["generated_at"].replace("Z","+00:00"))
+        if generated.tzinfo and 0<=(datetime.now(timezone.utc)-generated).total_seconds()<=7*86400:
+            names=payload.get("tickers",[])
+            if 15<=len(names)<=30 and all(isinstance(t,str) and t.isascii() and t.isalpha() and 1<=len(t)<=5 for t in names):
+                return list(dict.fromkeys(names))
+    except (OSError,ValueError,KeyError,TypeError):pass
+    return DEFAULT_UNIVERSE
+UNIVERSE = current_universe()
 def indicators(df):
     d=df.copy()
     c=d["Close"]; v=d["Volume"]
