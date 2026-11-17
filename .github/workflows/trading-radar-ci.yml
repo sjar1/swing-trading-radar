@@ -1,0 +1,24 @@
+name: Trading Radar CI
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'trading_radar.py'
+      - 'backtest.py'
+      - 'test_trading_radar.py'
+      - 'requirements.txt'
+      - '.github/workflows/trading-radar-ci.yml'
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: python -m unittest -v test_trading_radar.py
