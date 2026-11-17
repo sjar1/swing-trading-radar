@@ -5,7 +5,7 @@
 <title>Trading Radar</title>
 <style>
 body{font:16px system-ui,sans-serif;background:#0b1220;color:#eef3ff;max-width:1100px;margin:auto;padding:24px;overflow-wrap:anywhere}
-h1{margin-bottom:0}.muted{color:#a9b7cf}.warn{color:#fbbf24}
+h1{margin-bottom:0}.health{padding:12px 14px;border:1px solid #344258;border-radius:10px;margin:16px 0;font-weight:600}.health-ok{border-color:#23876b;color:#9ff0ce}.health-warn{border-color:#e6a23c;color:#ffd58a}.health-idle{color:#a9b7cf}.muted{color:#a9b7cf}.warn{color:#fbbf24}
 .panel{background:#17243a;padding:18px;border-radius:12px;margin:20px 0;overflow:auto}
 table{width:100%;border-collapse:collapse}td,th{padding:12px;text-align:left;border-bottom:1px solid #344258}th{color:#a9b7cf}
 @media(max-width:700px){
@@ -31,6 +31,7 @@ label{display:flex;align-items:center;gap:5px} .metric{font-size:1.1rem;font-wei
 <body>
 <h1>Trading Radar</h1>
 <p class="muted">Research signals and Alpaca PAPER execution only • No live brokerage orders • Not investment advice</p>
+<div id="scan-health" class="health health-idle" role="status" aria-live="polite">Checking intraday scanner freshness...</div>
 <section class="panel"><h2>Intraday early warnings <span class="muted" style="font-size:13px">(informational only)</span></h2>
 <p id="intraday-status" class="muted">Waiting for first intraday scan.</p>
 <p class="muted">Snapshots scheduled approximately every 15 minutes on weekdays. Browser checks for new data every 60 seconds. IEX-only prices can differ from consolidated quotes; EMA, RSI and MACD use previous daily close.</p>
@@ -73,11 +74,29 @@ function showLines(element,lines){
  element.replaceChildren();
  for(const line of lines){const p=document.createElement('p');p.textContent=line;element.appendChild(p);}
 }
+function isUSMarketHours(){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+ const part=k=>parts.find(p=>p.type===k)?.value;
+ const weekday=part('weekday');
+ const minutes=Number(part('hour'))*60+Number(part('minute'));
+ return !['Sat','Sun'].includes(weekday)&&minutes>=570&&minutes<960;
+}
+function updateScanHealth(generatedAt){
+ const box=byId('scan-health'),time=Date.parse(generatedAt);
+ const age=(Date.now()-time)/60000,marketOpen=isUSMarketHours();
+ box.className='health '+(!marketOpen?'health-idle':!Number.isFinite(age)||age>30?'health-warn':'health-ok');
+ if(!marketOpen){box.textContent='Market closed — intraday scanning is not expected outside regular U.S. market hours.';return;}
+ if(!Number.isFinite(age)){box.textContent='⚠ Intraday scan status unavailable — check the GitHub Actions workflow.';return;}
+ box.textContent=age>30
+  ?'⚠ INTRADAY SCANNER OVERDUE — last published scan '+Math.max(0,Math.round(age))+' minutes ago. Check GitHub Actions.'
+  :'✓ Intraday scanner current — last published scan '+Math.max(0,Math.round(age))+' minutes ago.';
+}
 async function loadIntraday(){
  const status=byId('intraday-status'),rows=byId('intraday-rows');
  try{
   const data=await getData('intraday');
   const age=(Date.now()-Date.parse(data.generated_at))/60000;
+  updateScanHealth(data.generated_at);
   status.textContent='Last snapshot: '+new Date(data.generated_at).toLocaleString()+
    ' | '+(age>35?'STALE — last update over 35 minutes ago':Math.max(0,Math.round(age))+' minutes old')+
    ' | '+(data.items||[]).filter(x=>x.early_warning).length+' early warnings';
@@ -92,7 +111,7 @@ async function loadIntraday(){
    rows.appendChild(tr);
   }
   if(!rows.children.length)status.textContent='Intraday snapshot contains no quotes.';
- }catch(error){status.textContent='No intraday data yet. Run Intraday Early Warning workflow once.';}
+ }catch(error){status.textContent='No intraday data yet. Run Intraday Early Warning workflow once.';updateScanHealth(null);}
 }
 async function loadConfirmations(){
  const status=byId('confirm-status'),rows=byId('confirm-rows');
