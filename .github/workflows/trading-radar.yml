@@ -20,11 +20,16 @@ jobs:
       - run: python trading_radar.py --run
       - name: Update simulated paper account
         run: python paper_trade.py
+      - name: Execute Alpaca paper trades
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+        run: python alpaca_paper.py
       - name: Preserve historical data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/signals.json docs/data/history.json docs/data/paper_account.json
+          git add docs/data/signals.json docs/data/history.json docs/data/paper_account.json docs/data/alpaca_paper.json
           if ! git diff --cached --quiet; then
             git commit -m "Update trading radar snapshots"
             git push
