@@ -21,6 +21,9 @@ label{display:flex;align-items:center;gap:5px} .metric{font-size:1.1rem;font-wei
 <p class="muted">Snapshots scheduled approximately every 15 minutes on weekdays. Browser checks for new data every 60 seconds. IEX-only prices can differ from consolidated quotes; EMA, RSI and MACD use previous daily close.</p>
 <table><thead><tr><th>Ticker</th><th>Latest price</th><th>Prior 20-day high</th><th>Gap</th><th>Readiness</th><th>Signal</th><th>Quote time</th></tr></thead><tbody id="intraday-rows"></tbody></table>
 </section>
+<section class="panel"><h2>Intraday paper-trade confirmations</h2><p id="confirm-status" class="muted">Waiting for intraday execution scan.</p>
+<table><thead><tr><th>Ticker</th><th>Price</th><th>RSI</th><th>IEX relative volume</th><th>Score</th><th>Decision</th></tr></thead><tbody id="confirm-rows"></tbody></table>
+<p class="muted">Confirmed intraday signals use current-session Alpaca IEX data; the volume test compares today's accumulated IEX volume against full previous IEX sessions. Paper orders may be submitted only during regular market hours.</p></section>
 <section class="panel"><h2>Signals</h2><p id="updated" class="muted">Loading...</p>
 <table><thead><tr><th>Ticker</th><th>Strategy</th><th>Score</th><th>Price</th><th>Relative volume</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></section>
 <section class="panel"><h2>Position calculator</h2>
@@ -65,6 +68,24 @@ async function loadIntraday(){
   }
   if(!rows.children.length)status.textContent='Intraday snapshot contains no quotes.';
  }catch(error){status.textContent='No intraday data yet. Run Intraday Early Warning workflow once.';}
+}
+async function loadConfirmations(){
+ const status=byId('confirm-status'),rows=byId('confirm-rows');
+ try{
+  const data=await getData('intraday_signals');
+  const age=(Date.now()-Date.parse(data.generated_at))/60000;
+  status.textContent='Last confirmation scan: '+new Date(data.generated_at).toLocaleString()+
+   (age>35?' | STALE — over 35 minutes old':' | '+Math.max(0,Math.round(age))+' minutes old');
+  rows.replaceChildren();
+  for(const x of data.signals||[]){
+   const tr=document.createElement('tr');
+   for(const value of [x.ticker,money(x.price),x.rsi,x.rvol+'x',x.score,
+     x.qualified?'QUALIFIED FOR PAPER EXECUTION':'Not qualified']){
+    const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
+   }
+   rows.appendChild(tr);
+  }
+ }catch(error){status.textContent='Intraday confirmation scan has not published data yet.';}
 }
 async function loadSignals(){
  try{
@@ -127,7 +148,7 @@ function calc(){
 }
 for(const id of ['equity','entry','stop'])byId(id).addEventListener('input',calc);
 calc();
-Promise.allSettled([loadIntraday(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca()]);
-setInterval(()=>{loadIntraday();loadAlpaca();},60000);
+Promise.allSettled([loadIntraday(),loadConfirmations(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca()]);
+setInterval(()=>{loadIntraday();loadConfirmations();loadAlpaca();},60000);
 </script>
 </body></html>
