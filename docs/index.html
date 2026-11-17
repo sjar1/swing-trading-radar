@@ -181,7 +181,7 @@ function renderPurchasePlan(){
   if(!shares)continue;
   const spend=shares*limit;remaining-=spend;total+=spend;plannedRisk+=shares*riskPerShare;
   const tr=document.createElement('tr');
-  for(const value of [x.ticker,shares,money(spend),money(limit),money(stop),money(limit+2*riskPerShare)]){
+  for(const value of [x.ticker,shares,money(spend),money(limit),money(stop),money(limit+3*riskPerShare)]){
    const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
   }
   rows.appendChild(tr);
