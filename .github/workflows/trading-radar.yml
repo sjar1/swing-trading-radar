@@ -21,6 +21,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_trading_radar.py
       - name: Refresh stock universe from liquidity, volatility and momentum
+        continue-on-error: true # preserve daily scan and paper account on data-provider outages
         run: python refresh_universe.py
       - run: python trading_radar.py --run
       - name: Update simulated paper account
