@@ -4,7 +4,7 @@ No order submissions here. Today's IEX volume is compared with full prior
 IEX sessions, intentionally conservative (not projected). Indicators incorporate
 today's partial daily bar. Missing/stale data fail closed.
 """
-import json, os, math
+import json, os, math, time
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from pathlib import Path
@@ -80,9 +80,11 @@ def main():
     tickers=list(dict.fromkeys(t.strip().upper() for t in UNIVERSE if t.strip()))
     start=(now-timedelta(days=190)).date().isoformat()
     results=[];errors=[]
+    started=time.monotonic()
     snapshot_payload=api("/v2/stocks/snapshots",{"symbols":",".join(tickers),"feed":"iex"})
     snapshots=snapshot_payload.get("snapshots",snapshot_payload)
-    for ticker in tickers:
+    for index,ticker in enumerate(tickers):
+        if index:time.sleep(0.35)  # gentle pacing for Alpaca data API
         try:
             payload=api("/v2/stocks/"+ticker+"/bars",{"timeframe":"1Day","start":start,
                 "end":now.isoformat(),"limit":250,"feed":"iex","adjustment":"raw"})
@@ -111,6 +113,9 @@ def main():
             if item:results.append(item)
         except Exception as exc:
             errors.append(ticker+": "+type(exc).__name__)
+    print("Intraday data scan: requested",len(tickers),"symbols, valid",len(results),
+          "errors",len(errors),"elapsed_seconds",round(time.monotonic()-started,1))
+    if errors:print("Data issues (first 10):","; ".join(errors[:10]))
     if not results:
         raise RuntimeError("No valid intraday IEX bars; no orders")
     payload={"generated_at":now.isoformat(),"mode":"intraday_iex",
