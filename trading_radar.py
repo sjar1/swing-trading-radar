@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
-UNIVERSE = os.getenv("RADAR_TICKERS", "GME,AMC,PLTR,SOFI,HOOD,RKLB,IONQ,UPST,LCID,RIVN").split(",")
+UNIVERSE = os.getenv("RADAR_TICKERS", "GME,AMC,PLTR,SOFI,HOOD,RKLB,IONQ,UPST,LCID,RIVN,ACHR,JOBY,OPEN,CHPT,QS,BLNK,EVGO,LYFT,GRAB,NU,AFRM,DKNG,HIMS,PATH,AI,SOUN,BBAI,CLSK,MARA,RIOT").split(",")
 OUT = Path("docs/data")
 def indicators(df):
     d=df.copy()
