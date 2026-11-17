@@ -20,6 +20,8 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_trading_radar.py
+      - name: Refresh stock universe from liquidity, volatility and momentum
+        run: python refresh_universe.py
       - run: python trading_radar.py --run
       - name: Update simulated paper account
         run: python paper_trade.py
@@ -34,6 +36,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data/signals.json docs/data/history.json docs/data/paper_account.json
+          if [ -f docs/data/universe.json ]; then git add docs/data/universe.json; fi
           if [ -f docs/data/alpaca_paper.json ]; then git add docs/data/alpaca_paper.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Update trading radar snapshots"
