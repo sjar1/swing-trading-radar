@@ -27,7 +27,7 @@ def run():
         qty=max(0,int(min(state["cash"]*.25/price, state["cash"]/price, state["starting_cash"]*.01/(price-stop))))
         if qty<1:continue
         state["cash"]=round(state["cash"]-qty*price,2)
-        state["positions"][t]={"shares":qty,"entry":price,"stop":stop,"target":round(price+2*(price-stop),2),"opened":day,"last_price":price}
+        state["positions"][t]={"shares":qty,"entry":price,"stop":stop,"target":round(price+3*(price-stop),2),"opened":day,"last_price":price}
         state["trades"].append({"date":day,"ticker":t,"action":"BUY","shares":qty,"price":price,"note":"Next observed daily close; simulated"})
     state["pending"]=[]
     for t,pos in list(state["positions"].items()):
