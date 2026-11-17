@@ -69,7 +69,7 @@ def trade_plan(signal, equity, buying_power):
     ))
     if qty < 1:
         return None
-    target = round(limit + 2 * per_share_risk, 2)
+    target = round(limit + 3 * per_share_risk, 2)
     if target <= limit:
         return None
     return {"qty": qty, "limit": limit, "stop": round(stop, 2), "target": target,
