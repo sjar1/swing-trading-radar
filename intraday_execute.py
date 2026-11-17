@@ -80,11 +80,29 @@ def main():
     tickers=list(dict.fromkeys(t.strip().upper() for t in UNIVERSE if t.strip()))
     start=(now-timedelta(days=190)).date().isoformat()
     results=[];errors=[]
+    snapshots=api("/v2/stocks/snapshots",{"symbols":",".join(tickers),"feed":"iex"}).get("snapshots",{})
     for ticker in tickers:
         try:
             payload=api("/v2/stocks/"+ticker+"/bars",{"timeframe":"1Day","start":start,
                 "end":now.isoformat(),"limit":250,"feed":"iex","adjustment":"raw"})
             bars=payload.get("bars") or []
+            snapshot=snapshots.get(ticker) or {}
+            daily=snapshot.get("dailyBar") or {}
+            trade=snapshot.get("latestTrade") or {}
+            # The snapshot supplies the current partial session, while historical
+            # daily bars supply only completed sessions.
+            current_date=now.astimezone(EASTERN).date()
+            latest_price=num(trade.get("p"))
+            if not daily or latest_price is None or latest_price<=0:continue
+            ts=trade.get("t")
+            if not ts:continue
+            trade_time=datetime.fromisoformat(ts.replace("Z","+00:00"))
+            if (now-trade_time).total_seconds()>300 or (now-trade_time).total_seconds()<0:continue
+            if trade_time.astimezone(EASTERN).date()!=current_date:continue
+            current_bar={"t":now.isoformat(),"o":daily.get("o"),"h":daily.get("h"),
+               "l":daily.get("l"),"c":latest_price,"v":daily.get("v")}
+            bars=[b for b in bars if datetime.fromisoformat(b["t"].replace("Z","+00:00")).astimezone(EASTERN).date()<current_date]
+            bars.append(current_bar)
             if payload.get("next_page_token"):
                 errors.append(ticker+": historical bars paginated; skipped")
                 continue
