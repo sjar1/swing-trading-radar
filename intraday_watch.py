@@ -18,7 +18,9 @@ def fetch_snapshots(tickers):
     headers={"APCA-API-KEY-ID":os.environ["ALPACA_API_KEY"],
              "APCA-API-SECRET-KEY":os.environ["ALPACA_API_SECRET"]}
     with urlopen(Request(url,headers=headers),timeout=25) as resp:
-        return json.load(resp).get("snapshots",{})
+        payload=json.load(resp)
+        # Alpaca multi-symbol snapshots are keyed directly by ticker.
+        return payload.get("snapshots",payload)
 def finite(value):
     try:
         v=float(value)
