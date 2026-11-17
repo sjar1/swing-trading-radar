@@ -26,11 +26,13 @@ label{display:flex;align-items:center;gap:5px} .metric{font-size:1.1rem;font-wei
 <p class="muted">Confirmed intraday signals use current-session Alpaca IEX data; the volume test compares today's accumulated IEX volume against full previous IEX sessions. Paper orders may be submitted only during regular market hours.</p></section>
 <section class="panel"><h2>Signals</h2><p id="updated" class="muted">Loading...</p>
 <table><thead><tr><th>Ticker</th><th>Strategy</th><th>Score</th><th>Price</th><th>Relative volume</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></section>
-<section class="panel"><h2>Position calculator</h2>
-<fieldset><label>Account <input id="equity" type="number" value="5000" min="0" step=".01"></label>
-<label>Entry <input id="entry" type="number" value="10" min="0" step=".01"></label>
-<label>Stop <input id="stop" type="number" value="9" min="0" step=".01"></label></fieldset>
-<p id="calc" class="metric"></p></section>
+<section class="panel"><h2>Suggested purchase plan (PAPER only)</h2>
+<p class="muted">Enter a total budget. The planner spreads it across up to four currently qualified stocks, with a proposed buy-limit price and stop-loss. Watch-only stocks are never presented as buys.</p>
+<fieldset><label>Total budget ($) <input id="budget" type="number" value="1000" min="1" step="100"></label></fieldset>
+<p id="plan-status" class="muted">Loading confirmed opportunities...</p>
+<table><thead><tr><th>Stock</th><th>Shares</th><th>Proposed spend</th><th>Buy limit</th><th>Stop loss</th><th>Profit target</th></tr></thead><tbody id="plan-rows"></tbody></table>
+<p id="plan-summary" class="metric"></p>
+<p class="muted">Illustrative prices, not executable quotes or guaranteed fills. Plan uses fresh qualified signals only, caps any one position at 25% of account equity and planned loss at 1% per stock. A stop can fill below its price. This planner does not place orders.</p></section>
 <section class="panel"><h2>Alpaca paper account</h2><div id="alpaca" class="muted">Loading...</div></section>
 <section class="panel"><h2>Local simulated paper account</h2><div id="paper" class="muted">Loading...</div></section>
 <section class="panel"><h2>History</h2><p id="history" class="muted">Loading...</p></section>
@@ -137,18 +139,59 @@ async function loadAlpaca(){
   ]);
  }catch(error){el.textContent='Alpaca paper snapshot unavailable. Check the Execute Alpaca paper trades workflow step.';}
 }
-function calc(){
- const a=Number(byId('equity').value),entry=Number(byId('entry').value),stop=Number(byId('stop').value);
- if(![a,entry,stop].every(Number.isFinite)||a<=0||entry<=0||stop<0||stop>=entry){
-  byId('calc').textContent='Enter a positive account and entry, with a stop below entry.';return;
- }
- const perShareRisk=entry-stop;
- const shares=Math.max(0,Math.floor(Math.min(a*.01/perShareRisk,a*.25/entry)));
- byId('calc').textContent=shares+' shares | planned risk '+money(shares*perShareRisk)+' | 2R target '+money(entry+2*perShareRisk);
+let planSignals=[],planEquity=null,planFresh=false;
+async function loadPurchasePlan(){
+ try{
+  const [intraday,daily,account]=await Promise.allSettled([
+   getData('intraday_signals'),getData('signals'),getData('alpaca_paper')]);
+  if(account.status==='fulfilled' && account.value.mode==='ALPACA_PAPER_ONLY')
+   planEquity=Number(account.value.equity);
+  const i=intraday.status==='fulfilled'?intraday.value:null;
+  const d=daily.status==='fulfilled'?daily.value:null;
+  const age=x=>x?Date.now()-Date.parse(x.generated_at):Infinity;
+  const candidates=[];
+  if(i && age(i)<=20*60000)for(const x of i.signals||[])
+   if(x.qualified)candidates.push({...x,source:'intraday'});
+  if(d && age(d)<=36*3600000)for(const x of d.signals||[])
+   if(x.qualified && !candidates.some(c=>c.ticker===x.ticker))
+    candidates.push({...x,source:'daily'});
+  planSignals=candidates.sort((a,b)=>(Number(b.score)||0)-(Number(a.score)||0)).slice(0,4);
+  planFresh=Boolean((i&&age(i)<=20*60000)||(d&&age(d)<=36*3600000));
+  renderPurchasePlan();
+ }catch(error){byId('plan-status').textContent='Unable to load purchase plan data.';}
 }
-for(const id of ['equity','entry','stop'])byId(id).addEventListener('input',calc);
-calc();
-Promise.allSettled([loadIntraday(),loadConfirmations(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca()]);
-setInterval(()=>{loadIntraday();loadConfirmations();loadAlpaca();},60000);
+function renderPurchasePlan(){
+ const rows=byId('plan-rows');rows.replaceChildren();
+ const budget=Number(byId('budget').value);
+ const status=byId('plan-status'),summary=byId('plan-summary');
+ if(!Number.isFinite(budget)||budget<=0){status.textContent='Enter a positive total budget.';summary.textContent='';return;}
+ if(!planFresh){status.textContent='No fresh scanner data — no purchase suggestions.';summary.textContent='';return;}
+ if(!planSignals.length){status.textContent='No stocks currently qualify for purchase. Keep the budget in cash.';summary.textContent='Suggested investment: $0.00 — wait for a confirmed buy signal.';return;}
+ if(!Number.isFinite(planEquity)||planEquity<=0){status.textContent='Alpaca account equity unavailable — cannot apply risk limits.';summary.textContent='';return;}
+ let remaining=budget,total=0,plannedRisk=0;
+ const each=budget/planSignals.length;
+ for(const x of planSignals){
+  const price=Number(x.price),stop=Number(x.stop_reference);
+  if(!Number.isFinite(price)||price<=0||!Number.isFinite(stop)||stop<=0||stop>=price)continue;
+  const limit=Math.ceil(price*1.01*100)/100;
+  if(stop>=limit)continue;
+  const riskPerShare=limit-stop;
+  const maxSpend=Math.min(each,remaining,planEquity*.25);
+  const shares=Math.max(0,Math.floor(Math.min(maxSpend/limit,planEquity*.01/riskPerShare)));
+  if(!shares)continue;
+  const spend=shares*limit;remaining-=spend;total+=spend;plannedRisk+=shares*riskPerShare;
+  const tr=document.createElement('tr');
+  for(const value of [x.ticker,shares,money(spend),money(limit),money(stop),money(limit+2*riskPerShare)]){
+   const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
+  }
+  rows.appendChild(tr);
+ }
+ if(!rows.children.length){status.textContent='Signals found, but none has a valid stop price and affordable share size. No purchase suggested.';summary.textContent='Suggested investment: $0.00';return;}
+ status.textContent='Illustrative plan based on '+rows.children.length+' qualified stock(s).';
+ summary.textContent='Proposed total: '+money(total)+' | Unused budget: '+money(budget-total)+' | Planned stop risk: '+money(plannedRisk);
+}
+byId('budget').addEventListener('input',renderPurchasePlan);
+Promise.allSettled([loadIntraday(),loadConfirmations(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca(),loadPurchasePlan()]);
+setInterval(()=>{loadIntraday();loadConfirmations();loadAlpaca();loadPurchasePlan();},60000);
 </script>
 </body></html>
