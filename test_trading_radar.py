@@ -7,7 +7,7 @@ class RadarTests(unittest.TestCase):
         x=position(10,9,5000)
         self.assertEqual(x["shares"],50)
         self.assertEqual(x["risk"],50)
-        self.assertEqual(x["target_2r"],12)
+        self.assertEqual(x["target_3r"],13)
     def test_invalid_stop(self):
         self.assertEqual(position(10,10)["shares"],0)
     def test_indicators(self):
