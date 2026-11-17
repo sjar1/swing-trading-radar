@@ -18,11 +18,13 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_trading_radar.py
       - run: python trading_radar.py --run
+      - name: Update simulated paper account
+        run: python paper_trade.py
       - name: Preserve historical data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/signals.json docs/data/history.json
+          git add docs/data/signals.json docs/data/history.json docs/data/paper_account.json
           if ! git diff --cached --quiet; then
             git commit -m "Update trading radar snapshots"
             git push
