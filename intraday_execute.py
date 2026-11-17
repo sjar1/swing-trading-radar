@@ -36,7 +36,7 @@ def evaluate_bars(ticker,bars,now):
     records=[]
     for bar in bars:
         timestamp=datetime.fromisoformat(bar["t"].replace("Z","+00:00"))
-        day=timestamp.astimezone(EASTERN).date()
+        day=timestamp.date()
         if day>local_date:continue
         records.append((day,bar))
     records.sort(key=lambda item:item[0])
@@ -101,7 +101,7 @@ def main():
             if trade_time.astimezone(EASTERN).date()!=current_date:continue
             current_bar={"t":now.isoformat(),"o":daily.get("o"),"h":daily.get("h"),
                "l":daily.get("l"),"c":latest_price,"v":daily.get("v")}
-            bars=[b for b in bars if datetime.fromisoformat(b["t"].replace("Z","+00:00")).astimezone(EASTERN).date()<current_date]
+            bars=[b for b in bars if datetime.fromisoformat(b["t"].replace("Z","+00:00")).date()<current_date]
             bars.append(current_bar)
             if payload.get("next_page_token"):
                 errors.append(ticker+": historical bars paginated; skipped")
