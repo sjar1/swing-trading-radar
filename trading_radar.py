@@ -41,7 +41,7 @@ def indicators(df):
 def position(entry, stop, equity=5000, risk_fraction=.01):
     if entry<=0 or stop<0 or stop>=entry: return {"shares":0,"risk":0}
     shares=max(0,math.floor(min(equity*risk_fraction/(entry-stop),equity*.25/entry)))
-    return {"shares":shares,"cost":round(shares*entry,2),"risk":round(shares*(entry-stop),2),"target_2r":round(entry+2*(entry-stop),2)}
+    return {"shares":shares,"cost":round(shares*entry,2),"risk":round(shares*(entry-stop),2),"target_3r":round(entry+3*(entry-stop),2)}
 
 def evaluate(ticker, history, short_interest=None, days_to_cover=None, catalyst=False):
     d=indicators(history)
