@@ -4,7 +4,7 @@ from intraday_persisted_broker_reconciliation import reconcile
 from intraday_broker_recovery import RecoveryBlocked
 ID="intraday-test"
 def event(n,t,**kw):return {"event_id":str(n),"client_order_id":ID,"type":t,**kw}
-def broker(**kw):return {"id":"broker-1","client_order_id":ID,"status":"new",**kw}
+def broker(**kw):return {"id":"broker-1","client_order_id":ID,"status":"new"} | kw
 class BrokerJournalTests(unittest.TestCase):
     def setUp(self):
         self.db=sqlite3.connect(":memory:")
