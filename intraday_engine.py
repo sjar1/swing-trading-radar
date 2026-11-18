@@ -80,7 +80,7 @@ def gate(account,positions,orders,day_entries,now):
     if account.get("status")!="ACTIVE" or account.get("trading_blocked") or account.get("account_blocked"): return "account_blocked"
     equity=finite(account.get("equity")); last=finite(account.get("last_equity"))
     if equity is None or last is None or equity<=0: return "invalid_equity"
-    if equity-last<=-DAILY_LOSS: return "daily_loss_limit"
+    if equity-last<=-DAILY_LOSS: return "daily_loss_limit"\n    if finite(account.get("cash")) is None: return "invalid_cash"
     if len(positions)+len([o for o in orders if o.get("side")=="buy"])>=MAX_POSITIONS: return "position_limit"
     if day_entries>=MAX_ENTRIES: return "entry_limit"
     return None
@@ -102,7 +102,7 @@ def main():
         history=api(PAPER,"/v2/orders?status=all&limit=500&after="+quote(start))
         day_entries=sum(1 for o in history if o.get("side")=="buy" and o.get("status") not in ("rejected","canceled","expired"))
         blocked=gate(account,positions,orders,day_entries,now)
-        if not clock.get("is_open"): blocked="market_closed"
+        if not clock.get("is_open"): blocked="market_closed"\n        if os.getenv("INTRADAY_PAPER_ORDERS")=="1": blocked="execution_not_certified"
         result["status"]=blocked or "scanning"
         if blocked: return
         held={p["symbol"] for p in positions}|{o["symbol"] for o in orders}
@@ -133,18 +133,9 @@ def main():
             trade=plan(signal,finite(account.get("equity")),available)
             if not trade: continue
             result["signals"].append({"symbol":symbol,**signal,**trade})
-            if os.getenv("INTRADAY_PAPER_ORDERS")!="1": continue
-            # Explicit PAPER-only opt-in. Never use a live endpoint.
-            payload={"symbol":symbol,"qty":str(trade["qty"]),"side":"buy","type":"limit",
-                     "time_in_force":"day","limit_price":trade["limit_price"],
-                     "order_class":"bracket","take_profit":trade["take_profit"],
-                     "stop_loss":trade["stop_loss"],
-                     "client_order_id":"intraday-"+now.strftime("%Y%m%d")+"-"+symbol+"-"+signal["strategy"][:4]}
-            api(PAPER,"/v2/orders","POST",payload)
-            result["orders_submitted"]+=1
-            day_entries+=1;held.add(symbol);available-=trade["qty"]*float(trade["limit_price"])
+            # Execution is intentionally disabled until flattening and reconciliation are certified.\n            continue
         result["status"]="scanned"
-        if os.getenv("INTRADAY_PAPER_ORDERS")=="1": result["mode"]="PAPER_ORDERS_ENABLED"
+
     except Exception as exc:
         # Never emit credentials or raw broker errors.
         result["status"]="error";result["error_type"]=type(exc).__name__
