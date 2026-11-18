@@ -36,5 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: intraday-engine-diagnostics
-          path: |\n            docs/data/intraday_engine.json\n            docs/data/intraday_lifecycle.json
+          path: |
+            docs/data/intraday_engine.json
+            docs/data/intraday_lifecycle.json
           if-no-files-found: warn
