@@ -49,9 +49,9 @@ def main():
     if stop<=0 or limit<=stop:raise SystemExit("Invalid stop/limit")
     equity=float(account["equity"])
     cash=min(float(account["cash"]),float(account["buying_power"]))
-    # Test-only allocation: at most $100 notional and $2 planned loss.
-    qty=math.floor(min(100/limit,2/(limit-stop),equity*MAX_TRADE_RISK/(limit-stop),cash/limit))
-    if qty<1:raise SystemExit("Not enough capital for safely bounded test")
+    # Test-only allocation: at most $750 notional and $5 planned stop loss.
+    qty=math.floor(min(750/limit,5/(limit-stop),equity*MAX_TRADE_RISK/(limit-stop),cash/limit))
+    if qty<1:raise SystemExit("Test risk/notional caps cannot safely buy one share; no order")
     target=round(limit+3*(limit-stop),2)
     order={"symbol":symbol,"qty":str(qty),"side":"buy","type":"limit",
            "time_in_force":"day","limit_price":str(limit),"order_class":"bracket",
