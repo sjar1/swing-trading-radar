@@ -11,9 +11,10 @@ on:
         description: 'Test symbol'
         type: choice
         options:
+          - F
           - SPY
           - QQQ
-        default: SPY
+        default: F
 permissions:
   contents: read
 jobs:
