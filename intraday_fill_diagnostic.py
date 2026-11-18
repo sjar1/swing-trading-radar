@@ -42,6 +42,11 @@ def main():
         intents=load_session_intents(db_url,today.date().isoformat())
         proof=reconcile_session(intents,snapshot["fills"])
         result.update(proof)
+        # The session-only collector cannot establish a complete broker
+        # position snapshot or all-time account ownership. Do not promote
+        # this diagnostic to a reconciliation heartbeat.
+        result["reconciliation_heartbeat_healthy"]=False
+        result["reconciliation_evidence_scope"]="session_only"
         print(json.dumps(result,sort_keys=True))
         return 0
     except Exception as exc:
