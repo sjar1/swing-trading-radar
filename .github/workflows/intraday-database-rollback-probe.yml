@@ -23,7 +23,7 @@ jobs:
       - name: Check probe source and syntax
         run: |
           python -m py_compile intraday_database_transaction_probe.py
-          python -m unittest -v test_intraday_durable_intent_reservation.py test_intraday_broker_ack_transactions.py
+          python -m unittest -v test_intraday_durable_intent_reservation.py test_intraday_broker_ack_transactions.py test_intraday_database_transaction_probe.py
       - name: Probe blocked session with rollback-only transaction
         env:
           INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
