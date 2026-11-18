@@ -8,7 +8,7 @@ from datetime import datetime,timezone,timedelta
 from intraday_engine import api,PAPER
 from intraday_account_history import collect_window
 from intraday_alpaca_fills import FillHistoryBlocked
-from intraday_account_identity import verify_account_identity
+from intraday_account_identity import verify_account_identity,AccountIdentityBlocked
 
 def inspect(*,api_fn,now,expected_account_id=None):
     if not isinstance(now,datetime) or now.tzinfo is None:
@@ -46,6 +46,9 @@ def main():
         return 0
     except Exception as exc:
         output["reason"]=type(exc).__name__
+        if isinstance(exc,AccountIdentityBlocked):
+            safe_reasons={"expected_account_missing","invalid_account_snapshot","missing_broker_account_id","broker_account_mismatch"}
+            output["identity_failure"]=str(exc) if str(exc) in safe_reasons else "identity_check_failed"
         print(json.dumps(output,sort_keys=True))
         return 3
 
