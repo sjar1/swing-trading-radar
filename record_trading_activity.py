@@ -13,7 +13,7 @@ if not isinstance(history,list):history=[]
 rows=signals.get("signals",[])
 qualified=[x.get("ticker") for x in rows if x.get("qualified")]
 rejected=sorted((x for x in rows if not x.get("qualified")),key=lambda x:(len(x.get("rejection_reasons",[])),abs(float(x.get("rvol",0))-1.2)))[:10]
-orders=paper.get("orders_submitted_this_run",[]) if paper.get("scan_type")=="intraday" else []
+orders=paper.get("orders_submitted_this_run",[]) if paper.get("scan_type")=="intraday" and abs((datetime.fromisoformat(paper.get("generated_at","1970-01-01T00:00:00+00:00"))-datetime.fromisoformat(signals.get("generated_at","1970-01-01T00:00:00+00:00"))).total_seconds())<1200 else []
 entry={"timestamp":signals.get("generated_at",datetime.now(timezone.utc).isoformat()),
        "evaluated":len(rows),"qualified":qualified,
        "closest":[{"ticker":x.get("ticker"),"price":x.get("price"),"rvol":x.get("rvol"),
