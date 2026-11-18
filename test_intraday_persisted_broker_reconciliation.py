@@ -45,4 +45,19 @@ class BrokerJournalTests(unittest.TestCase):
     def test_unknown_broker_status_stays_blocked(self):
         self.put(event(1,"submission_attempted"))
         self.assertEqual(self.check(broker(status="pending_replace"))["status"],"unresolved_broker_order")
+    def test_broker_filled_but_journal_only_acknowledged(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"))
+        with self.assertRaises(PersistenceBlocked):self.check(broker(status="filled"))
+    def test_partial_fill_broker_regression(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
+                 event(3,"partially_filled",broker_order_id="broker-1",fill_qty="0.5"))
+        with self.assertRaises(PersistenceBlocked):self.check(broker(status="new"))
+    def test_partial_fill_broker_terminal_requires_event(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
+                 event(3,"partially_filled",broker_order_id="broker-1",fill_qty="0.5"))
+        with self.assertRaises(PersistenceBlocked):self.check(broker(status="filled"))
+    def test_terminal_journal_broker_conflict(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
+                 event(3,"filled",broker_order_id="broker-1",fill_qty="1"))
+        with self.assertRaises(PersistenceBlocked):self.check(broker(status="canceled"))
 if __name__=="__main__":unittest.main()
