@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime,timezone
 from intraday_execution_adapter import execution_gate,proposal,AdapterBlocked
 NOW=datetime(2026,11,18,16,30,tzinfo=timezone.utc)
-ACCOUNT={"status":"ACTIVE","equity":"5000","last_equity":"5000","cash":"5000"}
+ACCOUNT={"status":"ACTIVE","trading_blocked":False,"account_blocked":False,"equity":"5000","last_equity":"5000","cash":"5000"}
 SESSION=(5000,5000,5000,0,True,0)
 CAL={"date":"2026-11-18","open":"09:30","close":"16:00"}
 TRADE={"qty":1,"limit_price":"100.00","stop_loss":{"stop_price":"99.00"},"take_profit":{"limit_price":"103.00"}}
