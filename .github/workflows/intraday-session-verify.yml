@@ -1,0 +1,25 @@
+name: Intraday Supabase Session Persistence Verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Test session verification
+        run: python -m unittest -v test_intraday_session_verify.py
+      - name: Read-only verify persisted session and equity sample
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_session_verify.py
