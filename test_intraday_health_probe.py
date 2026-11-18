@@ -25,7 +25,14 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(len(out["observed_components"]),4)
         self.assertFalse(out["monitor_fully_healthy"])
         self.assertFalse(out["execution_enabled"])
-        self.assertIn("reconciliation_not_observed",out["problems"])
+        self.assertIn("reconciliation_not_verified",out["problems"])
+    @patch.dict("os.environ",{"INTRADAY_DATABASE_URL":"test"})
+    def test_independent_reconciliation_evidence(self):
+        from test_intraday_reconciliation_health import evidence
+        out=probe(api_fn=api,connect_fn=lambda *a,**kw:Conn(),now_fn=lambda:NOW,
+                  reconciliation_evidence=evidence())
+        self.assertIn("reconciliation",out["observed_components"])
+        self.assertFalse(out["execution_enabled"])
     @patch.dict("os.environ",{"INTRADAY_DATABASE_URL":"test"})
     def test_broker_failure_is_redacted(self):
         def fail(base,path):raise RuntimeError("secret")
