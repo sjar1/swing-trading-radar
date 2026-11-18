@@ -46,6 +46,7 @@ def main():
         return 0
     except Exception as exc:
         # Deliberately omit raw broker responses and exception text.
+        result["status"]="blocked"
         result["reason"]=type(exc).__name__
         print(json.dumps(result,sort_keys=True))
         return 3
