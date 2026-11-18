@@ -15,12 +15,13 @@ def verify_account_identity(*,api_fn,base,expected_account_id):
     actual=account.get("id")
     if not isinstance(actual,str) or not actual.strip():
         raise AccountIdentityBlocked("missing_broker_account_id")
-    if not hmac.compare_digest(actual,expected_account_id.strip()):
-        # Alpaca exposes both a UUID `id` and a human-readable `account_number`.
-        # Never silently substitute one for the other; explain the mismatch safely.
-        number=account.get("account_number")
-        if isinstance(number,str) and hmac.compare_digest(number,expected_account_id.strip()):
-            raise AccountIdentityBlocked("expected_value_is_account_number_not_id")
+    expected=expected_account_id.strip()
+    number=account.get("account_number")
+    # Alpaca exposes both a UUID `id` and a shorter `account_number`.
+    # Require an exact match to either verified broker-provided identifier.
+    id_matches=hmac.compare_digest(actual,expected)
+    number_matches=isinstance(number,str) and bool(number.strip()) and hmac.compare_digest(number,expected)
+    if not (id_matches or number_matches):
         raise AccountIdentityBlocked("broker_account_mismatch")
     return {"account_identity_verified":True,"dedicated_account_proven":False,
             "account_history_complete":False,"position_attribution_certified":False,
