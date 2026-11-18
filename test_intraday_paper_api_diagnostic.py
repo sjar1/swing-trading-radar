@@ -10,10 +10,26 @@ class ApiDiagnosticTests(unittest.TestCase):
         self.assertFalse(x["account_history_complete"])
         self.assertFalse(x["reconciliation_heartbeat_healthy"])
         self.assertFalse(x["execution_enabled"])
+        self.assertFalse(x["restart_clear"])
+        self.assertIn("history_not_certified",x["restart_blockers"])
     def test_reject_truncated_orders(self):
         def api(base,path):
             if path=="/v2/account":return {"id":"paper-1"}
             if "/v2/orders?" in path:return [{}]*500
+            return []
+        with self.assertRaises(FillHistoryBlocked):inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
+    def test_open_orders_block_restart(self):
+        def api(base,path):
+            if path=="/v2/account":return {"id":"paper-1"}
+            if "status=open" in path:return [{"id":"opaque"}]
+            return []
+        x=inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
+        self.assertEqual(x["open_order_count"],1)
+        self.assertIn("open_orders_require_reconciliation",x["restart_blockers"])
+    def test_open_order_truncation_blocks(self):
+        def api(base,path):
+            if path=="/v2/account":return {"id":"paper-1"}
+            if "status=open" in path:return [{}]*500
             return []
         with self.assertRaises(FillHistoryBlocked):inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
     def test_network_error_propagates_without_approval(self):
