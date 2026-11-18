@@ -1386,5 +1386,102 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-18T20:30:43.210227+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 10.22,
+        "rvol": 0.97,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.62,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 18.36,
+        "rvol": 0.79,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 3.17,
+        "rvol": 0.77,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.2,
+        "rvol": 1.3,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.63,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 12.04,
+        "rvol": 0.75,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.09,
+        "rvol": 0.58,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.54,
+        "rvol": 0.51,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 22.71,
+        "rvol": 0.28,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
