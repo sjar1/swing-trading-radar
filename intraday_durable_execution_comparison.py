@@ -41,7 +41,7 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
         # Only an explicitly tagged execution increment is countable. A status
         # transition, order snapshot, or cumulative filled_qty is not an increment.
         if payload.get("event_type")!="fill":
-            if status in ("partially_filled","filled"):
+            if status in ("partially_filled","filled") or "filled_qty" in payload or "fill_qty" in payload:
                 item["incomplete"]=True
             continue
         execution_id=payload.get("execution_id")
@@ -80,7 +80,7 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
             raise RecoveryBlocked("fill_event_broker_identity_mismatch")
         matched+=1
         broker_qty=quantity(order.get("filled_qty"))
-        if item["incomplete"] or (item["count"]==0 and broker_qty>0):
+        if item["incomplete"] or item["count"]==0:
             incomplete+=1
             continue
         if broker_qty!=item["quantity"]:
