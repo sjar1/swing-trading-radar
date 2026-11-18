@@ -44,6 +44,8 @@ def persist(*,db_url,client_order_id,broker_order,account_verified,broker_base,o
                 prior_events=cur.fetchall()
                 if any(e[0]!=broker_id for e in prior_events):
                     raise DurableFillBlocked("conflicting_persisted_broker_identity")
+                if any(e[1] in ("filled","canceled","rejected","expired") for e in prior_events):
+                    raise DurableFillBlocked("terminal_order_requires_separate_reconciliation")
                 cur.execute("""UPDATE intraday_paper.order_intents
                                SET broker_order_id=%s,updated_at=now()
                                WHERE client_order_id=%s""",(broker_id,client_order_id))
