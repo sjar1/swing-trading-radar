@@ -46,20 +46,27 @@ def evaluate_bars(ticker,bars,now):
     today=current[0]
     if not all(num(today.get(k)) is not None for k in ("o","h","l","c","v")):return None
     price=num(today["c"]);volume=num(today["v"])
-    if price is None or not 2<=price<=25 or volume<=0:return None
+    if price is None or not 2<=price<=30 or volume<=0:return None
     avg_volume=sum(float(b["v"]) for _,b in prior[-20:])/20
     avg_dollar_volume=sum(float(b["c"])*float(b["v"]) for _,b in prior[-20:])/20
     if avg_volume<=0:return None
-    rvol=volume/avg_volume
+    # Approximate full-session IEX volume; avoids comparing a partial day to full days.
+    local=now.astimezone(EASTERN)
+    elapsed=max(1,min(390,local.hour*60+local.minute-570))
+    rvol=(volume*390/elapsed)/avg_volume
     prior_high=max(float(b["h"]) for _,b in prior[-20:])
     rows=prior[-100:]+[(local_date,today)]
     df=pd.DataFrame([{"Open":float(b["o"]),"High":float(b["h"]),
       "Low":float(b["l"]),"Close":float(b["c"]),"Volume":float(b["v"])}
       for _,b in rows],index=pd.DatetimeIndex([str(d) for d,_ in rows]))
     x=indicators(df).iloc[-1]
-    trend=price>float(x.ema20) and price>float(x.ema50)
-    momentum=(avg_dollar_volume>=5_000_000 and trend and price>prior_high and
-              rvol>=2 and 55<=float(x.rsi)<=75 and float(x.macdh)>0)
+    trend=price>float(x.ema20)
+    prior_macdh=float(indicators(df.iloc[:-1]).iloc[-1].macdh)
+    checks={"price":2<=price<=30,"liquidity":avg_dollar_volume>=2_000_000,
+            "ema20_trend":trend,"near_20d_high":price>=prior_high*0.97,
+            "projected_rvol":rvol>=1.2,"rsi":45<=float(x.rsi)<=75,
+            "macd_positive_or_improving":float(x.macdh)>0 or float(x.macdh)>prior_macdh}
+    momentum=all(checks.values())
     # Consistent with existing daily momentum scoring (25+20+15+5)/80.
     score=round(100*(25+20+15+5)/80) if momentum else 0
     stop=round(price-2*float(x.atr),2)
@@ -68,9 +75,10 @@ def evaluate_bars(ticker,bars,now):
        "rvol":round(rvol,2),"rsi":round(float(x.rsi),1),
        "score":score,"strategy":"momentum" if qualified else "watch",
        "qualified":qualified,"stop_reference":stop if qualified else None,
+       "filter_checks":checks,"rejection_reasons":[k for k,v in checks.items() if not v],
        "prior_20d_high":round(prior_high,2),
        "data_source":"Alpaca IEX daily bars; partial current session",
-       "volume_method":"Current IEX session volume / average 20 completed IEX sessions (unprojected)",
+       "volume_method":"Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
        "avg_iex_daily_dollar_volume":round(avg_dollar_volume,2)}
 def main():
     now=datetime.now(timezone.utc)
@@ -120,7 +128,7 @@ def main():
         raise RuntimeError("No valid intraday IEX bars; no orders")
     payload={"generated_at":now.isoformat(),"mode":"intraday_iex",
       "signals":sorted(results,key=lambda s:s["score"],reverse=True),
-      "errors":errors,"execution_note":"Conservative unprojected IEX volume; 15-minute schedule is not streaming."}
+      "errors":errors,"execution_note":"Projected IEX volume is approximate; 15-minute schedule is not streaming."}
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(payload,indent=2)+"\n")
     print("Intraday confirmations:",sum(s["qualified"] for s in results),"of",len(results))
