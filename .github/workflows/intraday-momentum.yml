@@ -21,15 +21,15 @@ jobs:
         run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py
       - name: Scan with PAPER credentials (no orders by default)
         env:
-          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
-          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+          ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
+          ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
           INTRADAY_PAPER_ORDERS: '0'
         run: python intraday_engine.py
       - name: Read-only PAPER lifecycle and account risk audit
         if: always()
         env:
-          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
-          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+          ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
+          ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
         run: python intraday_lifecycle.py
       - name: Upload diagnostics artifact
         if: always()
