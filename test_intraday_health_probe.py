@@ -13,7 +13,7 @@ class Conn:
     def __enter__(self):return self
     def __exit__(self,*args):pass
 def api(base,path):
-    if path=="/v2/account":return {"status":"ACTIVE","trading_blocked":False,"account_blocked":False}
+    if path=="/v2/account":return {"status":"ACTIVE","trading_blocked":False,"account_blocked":False,"equity":"5000","last_equity":"5000","cash":"5000"}
     if path=="/v2/positions":return []
     if path=="/v2/orders?status=open&limit=500":return []
     if path=="/v2/clock":return {"is_open":True,"timestamp":"2026-11-18T15:00:00Z"}
