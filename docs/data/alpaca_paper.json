@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-18T03:46:41.973134+00:00",
+  "generated_at": "2026-11-18T15:11:46.865979+00:00",
   "mode": "ALPACA_PAPER_ONLY",
-  "scan_type": "daily",
+  "scan_type": "intraday",
   "equity": 7500.0,
   "cash": 7500.0,
   "buying_power": 15000.0,
