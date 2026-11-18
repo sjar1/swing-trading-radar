@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Run intraday and lifecycle unit tests
-        run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py test_intraday_paper_pilot.py test_intraday_reconciliation.py test_intraday_ledger.py test_intraday_calendar.py test_intraday_scanner_calendar.py test_intraday_equity_state.py test_intraday_flatten_controller.py test_intraday_transaction_store.py test_intraday_crash_recovery.py test_intraday_postgres_store.py test_intraday_broker_db_audit.py test_intraday_session_bootstrap.py test_intraday_session_verify.py test_intraday_equity_monitor.py test_intraday_fault_injection.py test_intraday_pilot_preflight.py test_intraday_execution_adapter.py test_intraday_eod_reconciliation.py
+        run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py test_intraday_paper_pilot.py test_intraday_reconciliation.py test_intraday_ledger.py test_intraday_calendar.py test_intraday_scanner_calendar.py test_intraday_equity_state.py test_intraday_flatten_controller.py test_intraday_transaction_store.py test_intraday_crash_recovery.py test_intraday_postgres_store.py test_intraday_broker_db_audit.py test_intraday_session_bootstrap.py test_intraday_session_verify.py test_intraday_equity_monitor.py test_intraday_fault_injection.py test_intraday_pilot_preflight.py test_intraday_execution_adapter.py test_intraday_eod_reconciliation.py test_intraday_execution_protocol.py
       - name: PAPER scanner (read-only, orders disabled)
         env:
           ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
