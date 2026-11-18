@@ -4,8 +4,8 @@ from intraday_durable_fill_reconciliation import DurableFillBlocked
 def evidence(n=1,compared=1,incomplete=0,unresolved=0):
     return dict(snapshot={"intents":[("intraday-a","SPY","broker-a")]*n,"snapshot_atomic":True},
                 audit={"intent_count":n},
-                broker_probe={"durable_intent_count":n,"matched_broker_orders":n-unresolved,"unresolved_broker_orders":unresolved,"execution_enabled":False,"broker_writes":0},
-                execution_comparison={"durable_intent_count":n,"compared_order_count":compared,"incomplete_order_count":incomplete,"broker_snapshot_drift_count":0,"unresolved_broker_order_count":0,"execution_enabled":False,"broker_writes":0,"fill_history_certified":False,"historical_execution_coverage_proven":False})
+                broker_probe={"durable_intent_count":n,"matched_broker_orders":n-unresolved,"unresolved_broker_orders":unresolved,"broker_orders_with_fills":compared,"execution_enabled":False,"broker_writes":0},
+                execution_comparison={"durable_intent_count":n,"compared_order_count":compared,"incomplete_order_count":incomplete,"matched_broker_orders":n-unresolved,"broker_snapshot_drift_count":0,"unresolved_broker_order_count":0,"execution_enabled":False,"broker_writes":0,"fill_history_certified":False,"historical_execution_coverage_proven":False})
 class AssessmentTests(unittest.TestCase):
     def test_consistent_nonempty_is_not_authorization(self):
         x=assess(**evidence())
@@ -30,6 +30,18 @@ class AssessmentTests(unittest.TestCase):
         with self.assertRaises(DurableFillBlocked):assess(**v)
     def test_false_certification(self):
         v=evidence();v["execution_comparison"]["fill_history_certified"]=True
+        with self.assertRaises(DurableFillBlocked):assess(**v)
+    def test_claimed_restart_ready_rejected(self):
+        v=evidence();v["broker_probe"]["restart_clear"]=True
+        with self.assertRaises(DurableFillBlocked):assess(**v)
+    def test_claimed_history_complete_rejected(self):
+        v=evidence();v["execution_comparison"]["account_history_complete"]=True
+        with self.assertRaises(DurableFillBlocked):assess(**v)
+    def test_impossible_broker_filled_count_rejected(self):
+        v=evidence();v["broker_probe"]["broker_orders_with_fills"]=2
+        with self.assertRaises(DurableFillBlocked):assess(**v)
+    def test_comparison_exceeds_broker_matches_rejected(self):
+        v=evidence();v["execution_comparison"]["matched_broker_orders"]=0
         with self.assertRaises(DurableFillBlocked):assess(**v)
     def test_invalid_count(self):
         v=evidence();v["execution_comparison"]["compared_order_count"]=-1
