@@ -16,10 +16,10 @@ def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100):
         raise FillHistoryBlocked("invalid_window")
     if type(max_pages)!=int or not 1<=max_pages<=50 or page_size!=100:
         raise FillHistoryBlocked("invalid_page_limits")
-    # Alpaca's orders endpoint is capped at 500; a full page is not proof
-    # of exhaustion, so reject it instead of silently losing older orders.
+    # Include orders created before the window: they may fill inside it.
+    # The 500-order cap forces busy accounts to fail closed.
     orders=api_fn(base,"/v2/orders?"+urlencode({"status":"all","limit":500,
-        "nested":"false","after":start_utc.isoformat(),"until":end_utc.isoformat()}))
+        "nested":"false"}))
     if not isinstance(orders,list) or len(orders)>=500:
         raise FillHistoryBlocked("order_history_truncated")
     activities=[]
