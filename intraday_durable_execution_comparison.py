@@ -15,6 +15,7 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
         raise DurableFillBlocked("invalid_fill_event_snapshot")
     ledger={}
     event_ids=set()
+    execution_ids=set()
     for row in rows:
         if not isinstance(row,(tuple,list)) or len(row)!=7:
             raise DurableFillBlocked("invalid_fill_event_row")
@@ -49,10 +50,9 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
         qty=quantity(payload.get("fill_qty"))
         if qty<=0:
             raise DurableFillBlocked("invalid_execution_increment")
-        if "executions" not in item:item["executions"]=set()
-        if execution_id in item["executions"]:
+        if execution_id in execution_ids:
             raise DurableFillBlocked("duplicate_execution_id")
-        item["executions"].add(execution_id)
+        execution_ids.add(execution_id)
         item["quantity"]+=qty
         item["count"]+=1
     if len(ledger)>max_orders:
