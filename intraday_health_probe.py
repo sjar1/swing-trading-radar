@@ -22,6 +22,7 @@ def probe(*,api_fn=None,connect_fn=None,now_fn=None):
     stamp=now.astimezone(timezone.utc).isoformat()
     heartbeats={name:{"healthy":False,"observed_at":stamp} for name in REQUIRED}
     problems=[]
+    account=None
     try:
         from intraday_engine import PAPER
         account=api_fn(PAPER,"/v2/account")
@@ -48,9 +49,24 @@ def probe(*,api_fn=None,connect_fn=None,now_fn=None):
         heartbeats["database"]["healthy"]=True
     except Exception:
         problems.append("database_unavailable")
+    try:
+        from intraday_engine import PAPER
+        from intraday_risk_snapshot import assess
+        if account is None:
+            raise ValueError("account_missing")
+        positions=api_fn(PAPER,"/v2/positions")
+        orders=api_fn(PAPER,"/v2/orders?status=open&limit=500")
+        if not isinstance(positions,list) or not isinstance(orders,list) or len(positions)>=500 or len(orders)>=500:
+            raise ValueError("risk_snapshot_incomplete")
+        risk=assess(account,positions,orders)
+        if not risk["within_limits"]:
+            raise ValueError("risk_limit_reached")
+        heartbeats["risk"]["healthy"]=True
+    except Exception:
+        problems.append("risk_unverified_or_limit_reached")
     # These components require independent runtime evidence; do not manufacture
     # green heartbeats based on a successful broker or database connection.
-    problems.extend(("reconciliation_not_observed","risk_monitor_not_observed"))
+    problems.append("reconciliation_not_observed")
     result=evaluate_health(heartbeats,now)
     return {"mode":"PAPER_READ_ONLY","status":"blocked","observed_components":
             sorted(k for k,v in heartbeats.items() if v["healthy"]),
