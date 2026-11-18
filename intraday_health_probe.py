@@ -8,7 +8,7 @@ import sys
 from datetime import datetime,timezone
 from intraday_monitor_health import evaluate_health,REQUIRED
 
-def probe(*,api_fn=None,connect_fn=None,now_fn=None):
+def probe(*,api_fn=None,connect_fn=None,now_fn=None,reconciliation_evidence=None):
     if api_fn is None:
         from intraday_engine import api as api_fn
     if connect_fn is None:
@@ -66,7 +66,12 @@ def probe(*,api_fn=None,connect_fn=None,now_fn=None):
         problems.append("risk_unverified_or_limit_reached")
     # These components require independent runtime evidence; do not manufacture
     # green heartbeats based on a successful broker or database connection.
-    problems.append("reconciliation_not_observed")
+    try:
+        from intraday_reconciliation_health import evaluate as evaluate_reconciliation
+        evaluate_reconciliation(reconciliation_evidence,now=now)
+        heartbeats["reconciliation"]["healthy"]=True
+    except Exception:
+        problems.append("reconciliation_not_verified")
     result=evaluate_health(heartbeats,now)
     return {"mode":"PAPER_READ_ONLY","status":"blocked","observed_components":
             sorted(k for k,v in heartbeats.items() if v["healthy"]),
