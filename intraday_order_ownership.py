@@ -50,3 +50,16 @@ def verify_flatten_readiness(positions,open_orders,intents,fill_attributions):
         # partial fills, adjustments and bracket children, not just order IDs.
         raise OwnershipBlocked("position_fill_attribution_not_certified")
     return {**result,"no_positions":True,"cancel_plan_only":result["owned_open_order_ids"]}
+
+def verify_attributed_flatten_readiness(positions,open_orders,intents,fills,*,fills_complete=False,dedicated_account=False):
+    """Read-only proof combining open-order ownership and broker fill balances.
+
+    Still does not authorize broker cancellation or position liquidation.
+    """
+    from intraday_fill_attribution import attribute_positions
+    orders=verify_order_ownership(open_orders,intents)
+    proof=attribute_positions(positions,fills,intents,
+        fills_complete=fills_complete,dedicated_account=dedicated_account)
+    return {"verified":True,"owned_open_order_ids":orders["owned_open_order_ids"],
+            "attributed_positions":proof["positions"],"broker_writes":0,
+            "execution_enabled":False}
