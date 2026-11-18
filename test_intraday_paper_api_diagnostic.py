@@ -11,8 +11,10 @@ class ApiDiagnosticTests(unittest.TestCase):
         self.assertFalse(x["reconciliation_heartbeat_healthy"])
         self.assertFalse(x["execution_enabled"])
     def test_reject_truncated_orders(self):
-        def api(base,path):return [{}]*500 if path=="/v2/account":return {"id":"paper-1"}
-            if "/v2/orders?" in path else []
+        def api(base,path):
+            if path=="/v2/account":return {"id":"paper-1"}
+            if "/v2/orders?" in path:return [{}]*500
+            return []
         with self.assertRaises(FillHistoryBlocked):inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
     def test_network_error_propagates_without_approval(self):
         def api(base,path):raise TimeoutError("private broker error")
