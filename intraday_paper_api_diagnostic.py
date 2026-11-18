@@ -8,17 +8,21 @@ from datetime import datetime,timezone,timedelta
 from intraday_engine import api,PAPER
 from intraday_account_history import collect_window
 from intraday_alpaca_fills import FillHistoryBlocked
+from intraday_account_identity import verify_account_identity
 
-def inspect(*,api_fn,now):
+def inspect(*,api_fn,now,expected_account_id=None):
     if not isinstance(now,datetime) or now.tzinfo is None:
         raise FillHistoryBlocked("invalid_observation_time")
     now=now.astimezone(timezone.utc)
     if not callable(api_fn):
         raise FillHistoryBlocked("invalid_api")
+    identity=verify_account_identity(api_fn=api_fn,base=PAPER,expected_account_id=expected_account_id)
     # A short fixed UTC window limits exposure to API pagination edge cases.
     start=now-timedelta(hours=1)
     snapshot=collect_window(api_fn=api_fn,base=PAPER,start_utc=start,end_utc=now,max_pages=10,clock_fn=lambda:now)
     return {"mode":"PAPER_READ_ONLY","status":"window_observed",
+            "account_identity_verified":identity["account_identity_verified"],
+            "dedicated_account_proven":False,
             "window_exhausted":True,"activity_count":snapshot["activity_count"],
             "order_count":snapshot["orders_count"],
             "account_history_complete":False,
@@ -36,7 +40,8 @@ def main():
         print(json.dumps(output,sort_keys=True))
         return 2
     try:
-        output=inspect(api_fn=api,now=datetime.now(timezone.utc))
+        output=inspect(api_fn=api,now=datetime.now(timezone.utc),
+                       expected_account_id=os.getenv("ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"))
         print(json.dumps(output,sort_keys=True))
         return 0
     except Exception as exc:
