@@ -11,6 +11,7 @@ from intraday_live_order_probe import inspect_orders
 from intraday_snapshot_consistency import verify_snapshots
 from intraday_durable_execution_comparison import compare_rows
 from intraday_atomic_recovery_snapshot import load_atomic_snapshot
+from intraday_recovery_evidence_assessment import assess
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -55,6 +56,10 @@ def main():
             raise ValueError("durable_execution_snapshot_mismatch")
         if audit["intent_count"]!=output["broker_order_probe"]["durable_intent_count"]:
             raise ValueError("durable_intent_snapshot_mismatch")
+        output["recovery_evidence_assessment"]=assess(
+            snapshot=snapshot,audit=audit,
+            broker_probe=output["broker_order_probe"],
+            execution_comparison=output["durable_execution_comparison"])
         output["mode"]="PAPER_READ_ONLY"
         print(json.dumps(output,sort_keys=True))
         return 0
