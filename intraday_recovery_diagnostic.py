@@ -1,9 +1,16 @@
 """Sanitized read-only PAPER/database restart diagnostic; no order submissions."""
 import json,os,sys
 from datetime import datetime,timezone
+from zoneinfo import ZoneInfo
+from intraday_observation_bundle import inspect_bundle
 from intraday_engine import api,PAPER
 from intraday_recovery_readiness import inspect_recovery
 from intraday_durable_fill_reconciliation import load_session_intents
+
+def read_only_api(base,path,method="GET",payload=None):
+    if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
+        raise ValueError("read_only_paper_endpoint_required")
+    return api(base,path)
 
 def main():
     output={"status":"blocked","mode":"PAPER_READ_ONLY","entry_permitted":False,
@@ -18,8 +25,9 @@ def main():
         print(json.dumps(output,sort_keys=True))
         return 2
     try:
-        result=inspect_recovery(db_url=os.environ["INTRADAY_DATABASE_URL"],
-            session_date=datetime.now(timezone.utc).date(),api_fn=api,base=PAPER,
+        result=inspect_bundle(db_url=os.environ["INTRADAY_DATABASE_URL"],
+            session_date=datetime.now(ZoneInfo("America/New_York")).date(),
+            now=datetime.now(timezone.utc),api_fn=read_only_api,base=PAPER,
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
             load_fn=load_session_intents)
         output.update(result)
