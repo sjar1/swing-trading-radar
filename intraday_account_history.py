@@ -7,12 +7,15 @@ from datetime import datetime,timezone,timedelta
 from urllib.parse import urlencode
 from intraday_alpaca_fills import normalize,FillHistoryBlocked
 
-def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100):
+def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100,clock_fn=None):
     if not isinstance(start_utc,datetime) or not isinstance(end_utc,datetime) or start_utc.tzinfo is None or end_utc.tzinfo is None:
         raise FillHistoryBlocked("invalid_window")
     start_utc=start_utc.astimezone(timezone.utc)
     end_utc=end_utc.astimezone(timezone.utc)
-    if start_utc>=end_utc or end_utc>datetime.now(timezone.utc)+timedelta(minutes=5):
+    observed_now=datetime.now(timezone.utc) if clock_fn is None else clock_fn()
+    if not isinstance(observed_now,datetime) or observed_now.tzinfo is None:
+        raise FillHistoryBlocked("invalid_clock")
+    if start_utc>=end_utc or end_utc>observed_now.astimezone(timezone.utc)+timedelta(minutes=5):
         raise FillHistoryBlocked("invalid_window")
     if type(max_pages)!=int or not 1<=max_pages<=50 or page_size!=100:
         raise FillHistoryBlocked("invalid_page_limits")
