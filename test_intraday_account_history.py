@@ -28,4 +28,27 @@ class HistoryTests(unittest.TestCase):
             if "/v2/orders?" in path:return [{"id":"o","client_order_id":"intraday-abc","symbol":"AAPL"}]
             return [{"id":"x","activity_type":"FILL","order_id":"o","symbol":"AAPL","side":"buy"}]*2
         with self.assertRaises(FillHistoryBlocked):collect(api)
+    def test_interrupted_second_page_fails_closed(self):
+        calls=[0]
+        def api(base,path):
+            if "/v2/orders?" in path:return []
+            calls[0]+=1
+            if calls[0]==1:return [{"id":str(i)} for i in range(100)]
+            raise ConnectionError("network_interrupted")
+        with self.assertRaises(ConnectionError):collect(api)
+        self.assertEqual(calls[0],2)
+    def test_repeated_page_cursor_rejected(self):
+        def api(base,path):
+            if "/v2/orders?" in path:return []
+            return [{"id":str(i)} for i in range(100)]
+        with self.assertRaises(FillHistoryBlocked):collect(api,max_pages=3)
+    def test_partial_page_invalid_order_blocks(self):
+        def api(base,path):
+            if "/v2/orders?" in path:return [{"id":"missing-client"}]
+            return []
+        # Invalid order metadata must not yield a valid empty ledger.
+        with self.assertRaises(FillHistoryBlocked):collect(api)
+    def test_api_failure_on_orders_blocks(self):
+        def api(base,path):raise TimeoutError("orders_timeout")
+        with self.assertRaises(TimeoutError):collect(api)
 if __name__=="__main__":unittest.main()
