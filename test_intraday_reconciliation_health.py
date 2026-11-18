@@ -19,6 +19,14 @@ class HealthTests(unittest.TestCase):
     def test_missing_count(self):
         e=evidence();e.pop("unattributed_positions")
         with self.assertRaises(ReconciliationHealthBlocked):evaluate(e,now=NOW)
+    def test_boolean_zero_not_accepted(self):
+        e=evidence();e["unmatched_fills"]=False
+        with self.assertRaisesRegex(ReconciliationHealthBlocked,"invalid_reconciliation_counts"):
+            evaluate(e,now=NOW)
+    def test_float_zero_not_accepted(self):
+        e=evidence();e["unattributed_positions"]=0.0
+        with self.assertRaisesRegex(ReconciliationHealthBlocked,"invalid_reconciliation_counts"):
+            evaluate(e,now=NOW)
     def test_stale(self):
         e=evidence();e["observed_at"]=(NOW-timedelta(seconds=91)).isoformat()
         with self.assertRaises(ReconciliationHealthBlocked):evaluate(e,now=NOW)
