@@ -27,19 +27,23 @@ def main():
         print(json.dumps(output,sort_keys=True))
         return 2
     try:
+        session_date=datetime.now(ZoneInfo("America/New_York")).date()
+        observed_at=datetime.now(timezone.utc)
         result=inspect_bundle(db_url=os.environ["INTRADAY_DATABASE_URL"],
-            session_date=datetime.now(ZoneInfo("America/New_York")).date(),
-            now=datetime.now(timezone.utc),api_fn=read_only_api,base=PAPER,
+            session_date=session_date,
+            now=observed_at,api_fn=read_only_api,base=PAPER,
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
             load_fn=load_session_intents)
         output.update(result)
         audit=audit_rows(load_order_event_rows(os.environ["INTRADAY_DATABASE_URL"],
-            datetime.now(ZoneInfo("America/New_York")).date().isoformat()))
+            session_date.isoformat()))
         output["durable_event_audit"]=audit
         output["broker_order_probe"]=inspect_orders(
             intents=load_session_intents(os.environ["INTRADAY_DATABASE_URL"],
                 datetime.now(ZoneInfo("America/New_York")).date().isoformat()),
             api_fn=read_only_api,base=PAPER)
+        if audit["intent_count"]!=output["broker_order_probe"]["durable_intent_count"]:
+            raise ValueError("durable_intent_snapshot_mismatch")
         output["mode"]="PAPER_READ_ONLY"
         print(json.dumps(output,sort_keys=True))
         return 0
