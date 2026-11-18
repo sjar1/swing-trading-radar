@@ -18,6 +18,14 @@ def read_only_api(base,path,method="GET",payload=None):
         raise ValueError("read_only_paper_endpoint_required")
     return api(base,path)
 
+def enforce_read_only(output):
+    # Sanitized reporting invariant, including failed diagnostics.
+    output.update({"mode":"PAPER_READ_ONLY","entry_permitted":False,
+                   "execution_enabled":False,"broker_writes":0,
+                   "restart_clear":False,"account_history_complete":False,
+                   "position_attribution_certified":False})
+    return output
+
 def main():
     output={"status":"blocked","mode":"PAPER_READ_ONLY","entry_permitted":False,
             "execution_enabled":False,"broker_writes":0}
@@ -60,15 +68,12 @@ def main():
             snapshot=snapshot,audit=audit,
             broker_probe=output["broker_order_probe"],
             execution_comparison=output["durable_execution_comparison"])
-        # Never inherit authorization from an upstream observation.
-        output.update({"mode":"PAPER_READ_ONLY","entry_permitted":False,
-                       "execution_enabled":False,"broker_writes":0,
-                       "restart_clear":False,"account_history_complete":False,
-                       "position_attribution_certified":False})
+        enforce_read_only(output)
         print(json.dumps(output,sort_keys=True))
         return 0
     except Exception as exc:
         # Never emit account IDs, DB URLs, SQL errors, broker payloads or raw exceptions.
+        enforce_read_only(output)
         output["reason"]=type(exc).__name__
         print(json.dumps(output,sort_keys=True))
         return 3
