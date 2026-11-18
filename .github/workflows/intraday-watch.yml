@@ -39,11 +39,16 @@ jobs:
           RADAR_INTRADAY: "1"
         run: |
           if [ -f docs/data/intraday_signals.json ]; then python alpaca_paper.py; fi
+      - name: Record scan diagnostics and paper activity
+        if: always()
+        run: |
+          if [ -f docs/data/intraday_signals.json ]; then python record_trading_activity.py; fi
       - name: Publish market snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data/intraday.json
+          if [ -f docs/data/trading_activity.json ]; then git add docs/data/trading_activity.json; fi
           if [ -f docs/data/intraday_signals.json ]; then git add docs/data/intraday_signals.json; fi
           if [ -f docs/data/alpaca_paper.json ]; then git add docs/data/alpaca_paper.json; fi
           if ! git diff --cached --quiet; then
