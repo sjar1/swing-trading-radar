@@ -12,7 +12,6 @@ def inspect(db_url,session_date):
     if not isinstance(db_url,str) or not db_url:
         raise ValueError("database_url_required")
     import psycopg
-    from psycopg import sql
     # A read-only transaction checks that the schema and session are present.
     with psycopg.connect(db_url,connect_timeout=8,sslmode="require") as conn:
         with conn.cursor() as cur:
