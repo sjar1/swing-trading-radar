@@ -800,5 +800,103 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-18T19:00:39.802502+00:00",
+    "evaluated": 28,
+    "qualified": [
+      "GRAB",
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 10.46,
+        "rvol": 1.03,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 18.61,
+        "rvol": 0.83,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.32,
+        "rvol": 0.63,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.6,
+        "rvol": 0.44,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.24,
+        "rvol": 1.25,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.74,
+        "rvol": 1.04,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.64,
+        "rvol": 0.89,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 12.12,
+        "rvol": 0.88,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.22,
+        "rvol": 0.74,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 13.14,
+        "rvol": 0.6,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
