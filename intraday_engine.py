@@ -80,7 +80,8 @@ def gate(account,positions,orders,day_entries,now):
     if account.get("status")!="ACTIVE" or account.get("trading_blocked") or account.get("account_blocked"): return "account_blocked"
     equity=finite(account.get("equity")); last=finite(account.get("last_equity"))
     if equity is None or last is None or equity<=0: return "invalid_equity"
-    if equity-last<=-DAILY_LOSS: return "daily_loss_limit"\n    if finite(account.get("cash")) is None: return "invalid_cash"
+    if equity-last<=-DAILY_LOSS: return "daily_loss_limit"
+    if finite(account.get("cash")) is None: return "invalid_cash"
     if len(positions)+len([o for o in orders if o.get("side")=="buy"])>=MAX_POSITIONS: return "position_limit"
     if day_entries>=MAX_ENTRIES: return "entry_limit"
     return None
@@ -102,7 +103,8 @@ def main():
         history=api(PAPER,"/v2/orders?status=all&limit=500&after="+quote(start))
         day_entries=sum(1 for o in history if o.get("side")=="buy" and o.get("status") not in ("rejected","canceled","expired"))
         blocked=gate(account,positions,orders,day_entries,now)
-        if not clock.get("is_open"): blocked="market_closed"\n        if os.getenv("INTRADAY_PAPER_ORDERS")=="1": blocked="execution_not_certified"
+        if not clock.get("is_open"): blocked="market_closed"
+        if os.getenv("INTRADAY_PAPER_ORDERS")=="1": blocked="execution_not_certified"
         result["status"]=blocked or "scanning"
         if blocked: return
         held={p["symbol"] for p in positions}|{o["symbol"] for o in orders}
@@ -133,7 +135,8 @@ def main():
             trade=plan(signal,finite(account.get("equity")),available)
             if not trade: continue
             result["signals"].append({"symbol":symbol,**signal,**trade})
-            # Execution is intentionally disabled until flattening and reconciliation are certified.\n            continue
+            # Execution is intentionally disabled until flattening and reconciliation are certified.
+            continue
         result["status"]="scanned"
 
     except Exception as exc:
