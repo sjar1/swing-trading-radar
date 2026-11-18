@@ -63,8 +63,8 @@ def evaluate_bars(ticker,bars,now):
     trend=price>float(x.ema20)
     prior_macdh=float(indicators(df.iloc[:-1]).iloc[-1].macdh)
     checks={"price":2<=price<=30,"liquidity":avg_dollar_volume>=2_000_000,
-            "ema20_trend":trend,"near_20d_high":price>=prior_high*0.97,
-            "projected_rvol":rvol>=1.2,"rsi":45<=float(x.rsi)<=75,
+            "ema20_trend":trend,"near_20d_high":price>=prior_high*0.95,
+            "projected_rvol":rvol>=1.1,"rsi":45<=float(x.rsi)<=75,
             "macd_positive_or_improving":float(x.macdh)>0 or float(x.macdh)>prior_macdh}
     momentum=all(checks.values())
     # Consistent with existing daily momentum scoring (25+20+15+5)/80.
