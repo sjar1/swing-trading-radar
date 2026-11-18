@@ -24,6 +24,16 @@ def reconcile(*,conn,client_order_id,broker_order):
     # A persisted acknowledgement must match the broker's immutable ID.
     if phase not in ("submission_unknown","needs_reconciliation"):
         recover(conn,client_order_id,broker_order=broker_order)
+    terminal={"filled","canceled","rejected"}
+    broker_phase=decision["suggested_state"]
+    if phase in terminal and broker_phase!=phase:
+        raise PersistenceBlocked("terminal_broker_state_conflict")
+    if phase=="partially_filled" and broker_phase in ("accepted","submitted","rejected"):
+        raise PersistenceBlocked("partial_fill_broker_state_regression")
+    if phase=="acknowledged" and broker_phase in terminal:
+        raise PersistenceBlocked("unrecorded_terminal_broker_transition")
+    if phase=="partially_filled" and broker_phase in terminal:
+        raise PersistenceBlocked("unrecorded_terminal_broker_transition")
     # Never equate a broker's cumulative fill status with persisted fill events.
     # Even matching statuses cannot establish complete account history.
     return {"status":"broker_identity_observed","persisted_phase":phase,
