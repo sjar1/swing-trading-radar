@@ -29,6 +29,10 @@ class DiagnosticTests(unittest.TestCase):
         self.assertIn('"durable_event_audit"',out.getvalue())
         self.assertIn('"broker_order_probe"',out.getvalue())
         self.assertIn('"durable_snapshot_consistency"',out.getvalue())
+        result=json.loads(out.getvalue())
+        self.assertEqual(result["status"],"insufficient_nonempty_recovery_evidence")
+        self.assertEqual(result["next_step"],"observe_real_paper_durable_order_intents")
+        self.assertFalse(result["entry_permitted"])
     def test_upstream_authorization_claim_cannot_escape_diagnostic(self):
         upstream={"status":"recovery_observed","restart_clear":True,
                   "entry_permitted":True,"execution_enabled":True,
