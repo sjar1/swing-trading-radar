@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          python -m unittest -v test_intraday_risk_snapshot.py test_intraday_health_probe.py test_intraday_monitor_health.py test_intraday_durable_fill_reconciliation.py test_intraday_fill_diagnostic.py test_intraday_alpaca_fills.py test_intraday_fill_attribution.py test_intraday_order_ownership.py test_intraday_lifecycle_integration.py test_intraday_broker_recovery.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py test_intraday_durable_ack.py 2>&1 | tee intraday-feature-tests.log
+          python -m unittest -v test_intraday_recovery_simulator.py test_intraday_risk_snapshot.py test_intraday_health_probe.py test_intraday_monitor_health.py test_intraday_durable_fill_reconciliation.py test_intraday_fill_diagnostic.py test_intraday_alpaca_fills.py test_intraday_fill_attribution.py test_intraday_order_ownership.py test_intraday_lifecycle_integration.py test_intraday_broker_recovery.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py test_intraday_durable_ack.py 2>&1 | tee intraday-feature-tests.log
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4
