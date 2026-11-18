@@ -9,6 +9,7 @@ from intraday_engine import api,PAPER
 from intraday_account_history import collect_window
 from intraday_alpaca_fills import FillHistoryBlocked
 from intraday_account_identity import verify_account_identity,AccountIdentityBlocked
+from intraday_position_snapshot import inspect_positions
 
 def inspect(*,api_fn,now,expected_account_id=None):
     if not isinstance(now,datetime) or now.tzinfo is None:
@@ -20,7 +21,9 @@ def inspect(*,api_fn,now,expected_account_id=None):
     # A short fixed UTC window limits exposure to API pagination edge cases.
     start=now-timedelta(hours=1)
     snapshot=collect_window(api_fn=api_fn,base=PAPER,start_utc=start,end_utc=now,max_pages=10,clock_fn=lambda:now)
+    positions=inspect_positions(api_fn=api_fn,base=PAPER)
     return {"mode":"PAPER_READ_ONLY","status":"window_observed",
+            "position_count":positions["position_count"],"positions_observed":True,
             "account_identity_verified":identity["account_identity_verified"],
             "dedicated_account_proven":False,
             "window_exhausted":True,"activity_count":snapshot["activity_count"],
