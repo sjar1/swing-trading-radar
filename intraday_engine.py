@@ -3,6 +3,7 @@ import json, math, os, urllib.request
 from datetime import datetime, timezone, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from intraday_calendar import verify_clock, CalendarBlocked
 
 PAPER="https://paper-api.alpaca.markets"
 DATA="https://data.alpaca.markets"
@@ -94,6 +95,19 @@ def main():
         if not all(os.getenv(k) for k in ("ALPACA_INTRADAY_API_KEY","ALPACA_INTRADAY_API_SECRET")):
             result["status"]="missing_paper_credentials"; return
         clock=api(PAPER,"/v2/clock")
+        from urllib.parse import urlencode
+        calendar_query=urlencode({"start":now.date().isoformat(),"end":now.date().isoformat()})
+        calendar_days=api(PAPER,"/v2/calendar?"+calendar_query)
+        if not isinstance(calendar_days,list) or len(calendar_days)!=1:
+            result["status"]="calendar_unavailable"; return
+        try:
+            session=verify_clock(calendar_days[0],clock,now)
+        except CalendarBlocked:
+            result["status"]="calendar_unverified"; return
+        result["session"]=session
+        if not session["entry_allowed"]:
+            result["status"]="market_closed" if not clock["is_open"] else "outside_calendar_entry_window"
+            return
         account=api(PAPER,"/v2/account")
         positions=api(PAPER,"/v2/positions")
         orders=api(PAPER,"/v2/orders?status=open&limit=500")
