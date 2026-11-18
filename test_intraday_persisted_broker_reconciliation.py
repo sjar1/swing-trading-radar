@@ -4,7 +4,7 @@ from intraday_persisted_broker_reconciliation import reconcile
 from intraday_broker_recovery import RecoveryBlocked
 ID="intraday-test"
 def event(n,t,**kw):return {"event_id":str(n),"client_order_id":ID,"type":t,**kw}
-def broker(**kw):return {"id":"broker-1","client_order_id":ID,"status":"new"} | kw
+def broker(**kw):return {"id":"broker-1","client_order_id":ID,"status":"new","filled_qty":"0"} | kw
 class BrokerJournalTests(unittest.TestCase):
     def setUp(self):
         self.db=sqlite3.connect(":memory:")
@@ -34,7 +34,7 @@ class BrokerJournalTests(unittest.TestCase):
     def test_partial_fill_remains_uncertified(self):
         self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
                  event(3,"partially_filled",broker_order_id="broker-1",fill_qty="0.5"))
-        x=self.check(broker(status="partially_filled"))
+        x=self.check(broker(status="partially_filled",filled_qty="0.5"))
         self.assertEqual(x["persisted_fill_quantity"],"0.5")
         self.assertFalse(x["fill_history_certified"])
     def test_wrong_client_rejected(self):
@@ -60,4 +60,23 @@ class BrokerJournalTests(unittest.TestCase):
         self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
                  event(3,"filled",broker_order_id="broker-1",fill_qty="1"))
         with self.assertRaises(PersistenceBlocked):self.check(broker(status="canceled"))
+    def test_broker_fill_quantity_mismatch_blocks(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
+                 event(3,"partially_filled",broker_order_id="broker-1",fill_qty="0.5"))
+        with self.assertRaises(PersistenceBlocked):
+            self.check(broker(status="partially_filled",filled_qty="0.75"))
+    def test_missing_broker_fill_quantity_blocks(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"))
+        with self.assertRaises(PersistenceBlocked):
+            self.check({"id":"broker-1","client_order_id":ID,"status":"new"})
+    def test_nonfinite_broker_fill_quantity_blocks(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"))
+        with self.assertRaises(PersistenceBlocked):
+            self.check(broker(filled_qty="NaN"))
+    def test_matching_decimal_quantities_observed_only(self):
+        self.put(event(1,"submission_attempted"),event(2,"acknowledged",broker_order_id="broker-1"),
+                 event(3,"partially_filled",broker_order_id="broker-1",fill_qty="0.5"))
+        x=self.check(broker(status="partially_filled",filled_qty="0.500"))
+        self.assertTrue(x["fill_quantity_equal"])
+        self.assertFalse(x["fill_history_certified"])
 if __name__=="__main__":unittest.main()
