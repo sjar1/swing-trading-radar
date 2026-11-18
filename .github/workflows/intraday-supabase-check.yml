@@ -1,0 +1,25 @@
+name: Intraday Supabase Read-Only Connection Check
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out isolated intraday feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PostgreSQL driver
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify Supabase connection without writes
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_db_check.py
