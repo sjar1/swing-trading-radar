@@ -18,17 +18,23 @@ jobs:
         with:
           python-version: '3.11'
       - name: Unit tests
-        run: python -m unittest -v test_intraday_engine.py
+        run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py
       - name: Scan with PAPER credentials (no orders by default)
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
           INTRADAY_PAPER_ORDERS: '0'
         run: python intraday_engine.py
+      - name: Read-only PAPER lifecycle and account risk audit
+        if: always()
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+        run: python intraday_lifecycle.py
       - name: Upload diagnostics artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: intraday-engine-diagnostics
-          path: docs/data/intraday_engine.json
+          path: |\n            docs/data/intraday_engine.json\n            docs/data/intraday_lifecycle.json
           if-no-files-found: warn
