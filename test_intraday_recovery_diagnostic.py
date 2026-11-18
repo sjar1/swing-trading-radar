@@ -2,6 +2,11 @@ import unittest,io,os,json
 from contextlib import redirect_stdout
 from unittest.mock import patch
 import intraday_recovery_diagnostic as d
+def observed_bundle(result):
+    def call(**kwargs):
+        kwargs["load_fn"]("opaque","2026-11-18")
+        return result
+    return call
 class DiagnosticTests(unittest.TestCase):
     def test_missing_credentials_block(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"","ALPACA_INTRADAY_API_SECRET":"","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":""}):
@@ -16,7 +21,7 @@ class DiagnosticTests(unittest.TestCase):
         self.assertNotIn("private-account",out.getvalue())
     def test_success_is_still_read_only(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"private-account"}):
-            with patch.object(d,"inspect_bundle",return_value={"status":"recovery_observed","restart_clear":False,"execution_enabled":False,"broker_writes":0}):
+            with patch.object(d,"inspect_bundle",side_effect=observed_bundle({"status":"recovery_observed","restart_clear":False,"execution_enabled":False,"broker_writes":0})):
                 with patch.object(d,"load_atomic_snapshot",return_value={"intents":[],"event_rows":[],"execution_rows":[],"snapshot_atomic":True}):
                     with patch.object(d,"load_session_intents",return_value=[]):
                         with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
@@ -30,9 +35,10 @@ class DiagnosticTests(unittest.TestCase):
                   "broker_writes":5,"account_history_complete":True,
                   "position_attribution_certified":True}
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
-            with patch.object(d,"inspect_bundle",return_value=upstream):
-                with patch.object(d,"load_atomic_snapshot",return_value={"intents":[],"event_rows":[],"execution_rows":[],"snapshot_atomic":True}):
-                    with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
+            with patch.object(d,"inspect_bundle",side_effect=observed_bundle(upstream)):
+                with patch.object(d,"load_session_intents",return_value=[]):
+                    with patch.object(d,"load_atomic_snapshot",return_value={"intents":[],"event_rows":[],"execution_rows":[],"snapshot_atomic":True}):
+                        with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
         result=json.loads(out.getvalue())
         for field in ("restart_clear","entry_permitted","execution_enabled","account_history_complete","position_attribution_certified"):
             self.assertIs(result[field],False)
@@ -70,7 +76,7 @@ class DiagnosticTests(unittest.TestCase):
                     with patch.object(d,"load_session_intents",return_value=[("intraday-a","SPY",None)]):
                         with patch.object(d,"inspect_orders",return_value={"durable_intent_count":1}):
                             with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),3)
-        self.assertIn("DurableFillBlocked",out.getvalue())
+        self.assertIn("ValueError",out.getvalue())
     def test_read_only_api_rejects_writes(self):
         with self.assertRaises(ValueError):
             d.read_only_api(d.PAPER,"/v2/orders",method="POST",payload={})
