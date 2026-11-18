@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-11-18T17:09:39.825313+00:00",
+    "evaluated": 27,
+    "qualified": [
+      "RIOT",
+      "GRAB",
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "WULF",
+        "price": 11.85,
+        "rvol": 1.11,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 10.47,
+        "rvol": 1.06,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.38,
+        "rvol": 0.68,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.57,
+        "rvol": 0.53,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.57,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.13,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.41,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 13.18,
+        "rvol": 0.73,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.19,
+        "rvol": 0.67,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 22.66,
+        "rvol": 0.22,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [
+      {
+        "ticker": "RIOT",
+        "id": "306b967a-9baf-4b85-8054-1e5045d9d2fc",
+        "qty": 25,
+        "limit": 18.08,
+        "stop": 15.1,
+        "target": 27.02
+      },
+      {
+        "ticker": "GRAB",
+        "id": "109f1b31-4446-4c20-808b-159688fc8010",
+        "qty": 258,
+        "limit": 3.22,
+        "stop": 2.93,
+        "target": 4.09
+      }
+    ],
+    "reason": "Paper orders submitted"
+  }
+]
