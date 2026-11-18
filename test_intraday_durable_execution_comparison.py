@@ -25,6 +25,11 @@ class ExecutionComparisonTests(unittest.TestCase):
     def test_excessive_event_rows_fail_closed(self):
         with self.assertRaises(DurableFillBlocked):
             run([row()]*2001)
+    def test_untyped_fill_quantity_marks_incomplete(self):
+        x=run([row(1,"new",{"fill_qty":"0.5"},"broker-one"),
+               row(2,"partially_filled",{"event_type":"fill","execution_id":"exec-2","fill_qty":"0.5"},"broker-one")])
+        self.assertEqual(x["compared_order_count"],0)
+        self.assertEqual(x["incomplete_order_count"],1)
     def test_mismatch(self):
         with self.assertRaises(DurableFillBlocked):
             run([row(1,"partially_filled",{"event_type":"fill","execution_id":"exec-1","fill_qty":"0.4"},"broker-one")])
