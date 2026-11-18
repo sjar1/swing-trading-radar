@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-11-18T16:45:44.637611+00:00",
+  "generated_at": "2026-11-18T17:01:00.186282+00:00",
   "mode": "ALPACA_PAPER_ONLY",
   "scan_type": "intraday",
-  "equity": 7499.86,
+  "equity": 7500.35,
   "cash": 7341.52,
-  "buying_power": 14841.38,
+  "buying_power": 14841.87,
   "positions": [
     {
       "ticker": "F",
       "shares": "14",
       "entry": 11.32,
-      "market_value": 158.34,
-      "unrealized_pl": -0.14
+      "market_value": 158.83,
+      "unrealized_pl": 0.35
     }
   ],
   "orders_submitted_this_run": []
