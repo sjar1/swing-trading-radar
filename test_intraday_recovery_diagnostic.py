@@ -18,9 +18,11 @@ class DiagnosticTests(unittest.TestCase):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"private-account"}):
             with patch.object(d,"inspect_bundle",return_value={"status":"recovery_observed","restart_clear":False,"execution_enabled":False,"broker_writes":0}):
                 with patch.object(d,"load_order_event_rows",return_value=[]):
-                    with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
+                    with patch.object(d,"load_session_intents",return_value=[]):
+                        with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
         self.assertIn('"execution_enabled": false',out.getvalue())
         self.assertIn('"durable_event_audit"',out.getvalue())
+        self.assertIn('"broker_order_probe"',out.getvalue())
     def test_read_only_api_rejects_writes(self):
         with self.assertRaises(ValueError):
             d.read_only_api(d.PAPER,"/v2/orders",method="POST",payload={})
