@@ -19,5 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install PostgreSQL driver for durable acknowledgement tests
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
       - name: Test durable acknowledgement transitions and protocol
         run: python -m unittest -v test_intraday_durable_ack.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py
