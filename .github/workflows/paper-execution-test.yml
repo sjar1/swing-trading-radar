@@ -1,0 +1,36 @@
+name: Paper Execution Test (Manual Only)
+on:
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: 'Submit one small PAPER bracket order (false = read-only dry run)'
+        type: boolean
+        required: true
+        default: false
+      symbol:
+        description: 'Test symbol'
+        type: choice
+        options:
+          - SPY
+          - QQQ
+        default: SPY
+permissions:
+  contents: read
+jobs:
+  paper-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bounded paper execution test
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+          EXECUTE: ${{ inputs.execute }}
+          SYMBOL: ${{ inputs.symbol }}
+        run: |
+          if [ "$EXECUTE" = "true" ]; then
+            python paper_execution_test.py --execute --symbol "$SYMBOL"
+          else
+            python paper_execution_test.py --symbol "$SYMBOL"
+          fi
