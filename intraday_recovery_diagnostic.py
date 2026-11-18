@@ -60,7 +60,11 @@ def main():
             snapshot=snapshot,audit=audit,
             broker_probe=output["broker_order_probe"],
             execution_comparison=output["durable_execution_comparison"])
-        output["mode"]="PAPER_READ_ONLY"
+        # Never inherit authorization from an upstream observation.
+        output.update({"mode":"PAPER_READ_ONLY","entry_permitted":False,
+                       "execution_enabled":False,"broker_writes":0,
+                       "restart_clear":False,"account_history_complete":False,
+                       "position_attribution_certified":False})
         print(json.dumps(output,sort_keys=True))
         return 0
     except Exception as exc:
