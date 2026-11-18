@@ -1,4 +1,4 @@
-import unittest,io,os
+import unittest,io,os,json
 from contextlib import redirect_stdout
 from unittest.mock import patch
 import intraday_recovery_diagnostic as d
@@ -24,6 +24,19 @@ class DiagnosticTests(unittest.TestCase):
         self.assertIn('"durable_event_audit"',out.getvalue())
         self.assertIn('"broker_order_probe"',out.getvalue())
         self.assertIn('"durable_snapshot_consistency"',out.getvalue())
+    def test_upstream_authorization_claim_cannot_escape_diagnostic(self):
+        upstream={"status":"recovery_observed","restart_clear":True,
+                  "entry_permitted":True,"execution_enabled":True,
+                  "broker_writes":5,"account_history_complete":True,
+                  "position_attribution_certified":True}
+        with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
+            with patch.object(d,"inspect_bundle",return_value=upstream):
+                with patch.object(d,"load_atomic_snapshot",return_value={"intents":[],"event_rows":[],"execution_rows":[],"snapshot_atomic":True}):
+                    with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),0)
+        result=json.loads(out.getvalue())
+        for field in ("restart_clear","entry_permitted","execution_enabled","account_history_complete","position_attribution_certified"):
+            self.assertIs(result[field],False)
+        self.assertEqual(result["broker_writes"],0)
     def test_cross_snapshot_intent_count_mismatch_blocks(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
             with patch.object(d,"inspect_bundle",return_value={"execution_enabled":False}):
