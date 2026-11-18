@@ -6,7 +6,7 @@ I=("intraday-one","SPY","broker-one")
 def run(intents,reader):
     return inspect_orders(intents=intents,api_fn=reader,base="PAPER")
 def broker(*args):
-    return {"client_order_id":"intraday-one","id":"broker-one","symbol":"SPY","status":"new"}
+    return {"client_order_id":"intraday-one","id":"broker-one","symbol":"SPY","status":"new","filled_qty":"0"}
 class LiveOrderProbeTests(unittest.TestCase):
     def test_empty_snapshot_stays_blocked(self):
         x=run([],broker)
@@ -39,4 +39,16 @@ class LiveOrderProbeTests(unittest.TestCase):
     def test_unknown_broker_status_unresolved(self):
         x=run([I],lambda *args:{**broker(),"status":"pending_replace"})
         self.assertEqual(x["unresolved_broker_orders"],1)
+    def test_actual_broker_fill_quantity_observed(self):
+        x=run([I],lambda *args:{**broker(),"status":"partially_filled","filled_qty":"0.5"})
+        self.assertEqual(x["broker_orders_with_fills"],1)
+        self.assertFalse(x["persisted_fill_quantity_compared"])
+        self.assertFalse(x["execution_enabled"])
+    def test_missing_broker_fill_quantity_blocks(self):
+        order=broker()
+        del order["filled_qty"]
+        with self.assertRaises(DurableFillBlocked):run([I],lambda *args:order)
+    def test_invalid_broker_fill_quantity_blocks(self):
+        with self.assertRaises(DurableFillBlocked):
+            run([I],lambda *args:{**broker(),"filled_qty":"NaN"})
 if __name__=="__main__":unittest.main()
