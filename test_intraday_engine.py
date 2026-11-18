@@ -20,14 +20,26 @@ class EngineTests(unittest.TestCase):
         self.assertLessEqual(p["qty"]*float(p["limit_price"]),1000)
     def test_daily_loss(self):
         now=datetime(2026,11,18,11,0,tzinfo=ZoneInfo("America/New_York"))
-        self.assertEqual(gate({"status":"ACTIVE","equity":"4899","last_equity":"5000"},[],[],0,now),"daily_loss_limit")
+        self.assertEqual(gate({"status":"ACTIVE","equity":"4899","last_equity":"5000","cash":"5000"},[],[],0,now),"daily_loss_limit")
     def test_position_limit(self):
         now=datetime(2026,11,18,11,0,tzinfo=ZoneInfo("America/New_York"))
-        a={"status":"ACTIVE","equity":"5000","last_equity":"5000"}
+        a={"status":"ACTIVE","equity":"5000","last_equity":"5000","cash":"5000"}
         self.assertEqual(gate(a,[{"symbol":"A"},{"symbol":"B"}],[],0,now),"position_limit")
     def test_entry_limit(self):
         now=datetime(2026,11,18,11,0,tzinfo=ZoneInfo("America/New_York"))
-        a={"status":"ACTIVE","equity":"5000","last_equity":"5000"}
+        a={"status":"ACTIVE","equity":"5000","last_equity":"5000","cash":"5000"}
         self.assertEqual(gate(a,[],[],5,now),"entry_limit")
+
+    def test_execution_fail_closed_design(self):
+        import inspect, intraday_engine
+        source=inspect.getsource(intraday_engine.main)
+        self.assertIn('execution_not_certified',source)
+        self.assertNotIn('api(PAPER,"/v2/orders","POST"',source)
+    def test_missing_cash_blocks(self):
+        now=datetime(2026,11,18,11,0,tzinfo=ZoneInfo("America/New_York"))
+        self.assertEqual(gate({"status":"ACTIVE","equity":"5000","last_equity":"5000"},[],[],0,now),"invalid_cash")
+    def test_after_hours_blocks(self):
+        now=datetime(2026,11,18,16,0,tzinfo=ZoneInfo("America/New_York"))
+        self.assertEqual(gate({"status":"ACTIVE","equity":"5000","last_equity":"5000","cash":"5000"},[],[],0,now),"outside_entry_window")
 
 if __name__=="__main__": unittest.main()
