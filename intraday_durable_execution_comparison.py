@@ -13,6 +13,8 @@ from intraday_broker_recovery import decide,RecoveryBlocked
 def compare_rows(*,rows,api_fn,base,max_orders=20):
     if not isinstance(rows,list) or not callable(api_fn) or type(max_orders) is not int or not 1<=max_orders<=100:
         raise DurableFillBlocked("invalid_fill_event_snapshot")
+    if len(rows)>max_orders*100:
+        raise DurableFillBlocked("excessive_fill_event_rows")
     ledger={}
     event_ids=set()
     execution_ids=set()
@@ -83,12 +85,14 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
             continue
         if broker_qty!=item["quantity"]:
             raise DurableFillBlocked("broker_durable_execution_quantity_mismatch")
-        compared+=1
+        if item["count"]>0:
+            compared+=1
     return {"status":"bounded_explicit_fill_event_comparison",
             "durable_intent_count":len(ledger),"matched_broker_orders":matched,
             "compared_order_count":compared,"incomplete_order_count":incomplete,
             "explicit_execution_count":sum(x["count"] for x in ledger.values()),
             "persisted_fill_quantity_compared":compared>0,
+            "snapshot_atomic":False,"historical_event_completeness_verified":False,
             "fill_history_certified":False,"account_history_complete":False,
             "restart_clear":False,"entry_permitted":False,
             "execution_enabled":False,"broker_writes":0}
