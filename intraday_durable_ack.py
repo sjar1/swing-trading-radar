@@ -18,7 +18,10 @@ ALLOWED={
     "canceled":set(),"rejected":set(),"expired":set(),"closed":set(),
 }
 
-def transition(conn,client_order_id,new_state,broker_order_id=None,broker_status=None,event_at=None):
+def transition(conn,client_order_id,new_state,broker_order_id=None,broker_status=None,event_at=None, schema='intraday_paper'):
+    if not isinstance(schema,str) or not (schema=="intraday_paper" or (schema.startswith("intraday_test_") and len(schema)==30 and all(ch in "0123456789abcdef" for ch in schema[14:]))):
+        raise TransitionBlocked("invalid_schema")
+    from psycopg import sql
     if not isinstance(client_order_id,str) or not client_order_id.startswith("intraday-"):
         raise TransitionBlocked("invalid_client_id")
     if new_state not in {x for values in ALLOWED.values() for x in values}:
@@ -31,7 +34,7 @@ def transition(conn,client_order_id,new_state,broker_order_id=None,broker_status
     try:
         with conn.transaction():
             with conn.cursor() as cur:
-                cur.execute("SELECT state,broker_order_id FROM intraday_paper.order_intents WHERE client_order_id=%s FOR UPDATE",(client_order_id,))
+                cur.execute(sql.SQL("SELECT state,broker_order_id FROM {}.order_intents WHERE client_order_id=%s FOR UPDATE").format(sql.Identifier(schema)),(client_order_id,))
                 row=cur.fetchone()
                 if row is None: raise TransitionBlocked("intent_missing")
                 old,existing_id=row
@@ -41,10 +44,10 @@ def transition(conn,client_order_id,new_state,broker_order_id=None,broker_status
                     raise TransitionBlocked("broker_id_mismatch")
                 if old=="reserved" and new_state!="unknown":
                     raise TransitionBlocked("must_mark_ambiguous_before_network")
-                cur.execute("UPDATE intraday_paper.order_intents SET state=%s,broker_order_id=coalesce(broker_order_id,%s),updated_at=now() WHERE client_order_id=%s",
+                cur.execute(sql.SQL("UPDATE {}.order_intents SET state=%s,broker_order_id=coalesce(broker_order_id,%s),updated_at=now() WHERE client_order_id=%s").format(sql.Identifier(schema)),
                             (new_state,broker_order_id,client_order_id))
                 if broker_order_id:
-                    cur.execute("INSERT INTO intraday_paper.order_events (client_order_id,broker_order_id,broker_status,event_at,payload) VALUES (%s,%s,%s,%s,%s::jsonb) ON CONFLICT DO NOTHING",
+                    cur.execute(sql.SQL("INSERT INTO {}.order_events (client_order_id,broker_order_id,broker_status,event_at,payload) VALUES (%s,%s,%s,%s,%s::jsonb) ON CONFLICT DO NOTHING").format(sql.Identifier(schema)),
                                 (client_order_id,broker_order_id,broker_status,event_at,"{}"))
         return {"client_order_id":client_order_id,"state":new_state,"retry_submission":False,"execution_enabled":False}
     except TransitionBlocked:
