@@ -30,6 +30,21 @@ class ExecutionComparisonTests(unittest.TestCase):
                row(2,"partially_filled",{"event_type":"fill","execution_id":"exec-2","fill_qty":"0.5"},"broker-one")])
         self.assertEqual(x["compared_order_count"],0)
         self.assertEqual(x["incomplete_order_count"],1)
+    def test_broker_fill_changes_between_reads(self):
+        calls=[0]
+        def moving(*args):
+            calls[0]+=1
+            return {**broker(),"filled_qty":"0.5" if calls[0]==1 else "0.75"}
+        x=run([row(1,"partially_filled",{"event_type":"fill","execution_id":"exec-1","fill_qty":"0.5"},"broker-one")],moving)
+        self.assertEqual(x["broker_snapshot_drift_count"],1)
+        self.assertEqual(x["compared_order_count"],0)
+    def test_broker_status_changes_between_reads(self):
+        calls=[0]
+        def moving(*args):
+            calls[0]+=1
+            return {**broker(),"status":"partially_filled" if calls[0]==1 else "filled"}
+        x=run([row(1,"partially_filled",{"event_type":"fill","execution_id":"exec-1","fill_qty":"0.5"},"broker-one")],moving)
+        self.assertEqual(x["broker_snapshot_drift_count"],1)
     def test_mismatch(self):
         with self.assertRaises(DurableFillBlocked):
             run([row(1,"partially_filled",{"event_type":"fill","execution_id":"exec-1","fill_qty":"0.4"},"broker-one")])
