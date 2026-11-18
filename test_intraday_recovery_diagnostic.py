@@ -23,6 +23,7 @@ class DiagnosticTests(unittest.TestCase):
         self.assertIn('"execution_enabled": false',out.getvalue())
         self.assertIn('"durable_event_audit"',out.getvalue())
         self.assertIn('"broker_order_probe"',out.getvalue())
+        self.assertIn('"durable_snapshot_consistency"',out.getvalue())
     def test_cross_snapshot_intent_count_mismatch_blocks(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
             with patch.object(d,"inspect_bundle",return_value={"execution_enabled":False}):
