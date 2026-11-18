@@ -94,8 +94,10 @@ def main():
                           "equity":str(state["equity"]),"prior_close_equity":str(state["prior_close"])}))
         return 0
     except Exception as exc:
-        print("BLOCKED: session initialization refused ("+str(exc) if isinstance(exc,ValueError) else
-              "BLOCKED: session initialization failed ("+type(exc).__name__,end=")\n")
+        if isinstance(exc, ValueError):
+            print("BLOCKED: session initialization refused (" + str(exc) + ")")
+        else:
+            print("BLOCKED: session initialization failed (" + type(exc).__name__ + ")")
         return 3
 
 if __name__=="__main__":
