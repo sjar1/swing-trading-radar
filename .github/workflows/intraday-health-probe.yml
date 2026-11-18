@@ -17,7 +17,7 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install 'psycopg[binary]>=3.2,<4'
       - name: Validate probe offline
-        run: python -m unittest -v test_intraday_monitor_health.py test_intraday_health_probe.py
+        run: python -m unittest -v test_intraday_risk_snapshot.py test_intraday_monitor_health.py test_intraday_health_probe.py
       - name: Read PAPER broker and database health (no writes)
         env:
           ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
