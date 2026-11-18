@@ -14,13 +14,15 @@ class Conn:
     def __exit__(self,*args):pass
 def api(base,path):
     if path=="/v2/account":return {"status":"ACTIVE","trading_blocked":False,"account_blocked":False}
+    if path=="/v2/positions":return []
+    if path=="/v2/orders?status=open&limit=500":return []
     if path=="/v2/clock":return {"is_open":True,"timestamp":"2026-11-18T15:00:00Z"}
     raise AssertionError("unexpected_api")
 class ProbeTests(unittest.TestCase):
     @patch.dict("os.environ",{"INTRADAY_DATABASE_URL":"test"})
     def test_healthy_connections_still_block_execution(self):
         out=probe(api_fn=api,connect_fn=lambda *a,**kw:Conn(),now_fn=lambda:NOW)
-        self.assertEqual(len(out["observed_components"]),3)
+        self.assertEqual(len(out["observed_components"]),4)
         self.assertFalse(out["monitor_fully_healthy"])
         self.assertFalse(out["execution_enabled"])
         self.assertIn("reconciliation_not_observed",out["problems"])
