@@ -19,6 +19,12 @@ class HistoryTests(unittest.TestCase):
         def api(base,path):
             return [] if "/v2/orders?" in path else [{"id":"a","activity_type":"FILL","order_id":"missing","symbol":"AAPL","side":"buy"}]
         with self.assertRaises(FillHistoryBlocked):collect(api)
+    def test_injected_clock_accepts_fixed_test_window(self):
+        x=collect(lambda *a:[],clock_fn=lambda:END)
+        self.assertTrue(x["window_exhausted"])
+    def test_invalid_clock_rejected(self):
+        with self.assertRaisesRegex(FillHistoryBlocked,"invalid_clock"):
+            collect(lambda *a:[],clock_fn=lambda:None)
     def test_invalid_window(self):
         with self.assertRaises(FillHistoryBlocked):collect_window(api_fn=lambda *a:[],base="PAPER",start_utc=END,end_utc=START)
     def test_bad_limits(self):
