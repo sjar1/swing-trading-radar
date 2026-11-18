@@ -33,7 +33,15 @@ def main():
     try:
         today=datetime.now(ZoneInfo("America/New_York"))
         start=today.replace(hour=0,minute=0,second=0,microsecond=0).astimezone(timezone.utc)
-        result=summarize(collect_session_fills(start))
+        snapshot=collect_session_fills(start)
+        result=summarize(snapshot)
+        from intraday_durable_fill_reconciliation import load_session_intents,reconcile_session
+        db_url=os.getenv("INTRADAY_DATABASE_URL")
+        if not db_url:
+            raise RuntimeError("database_unavailable")
+        intents=load_session_intents(db_url,today.date().isoformat())
+        proof=reconcile_session(intents,snapshot["fills"])
+        result.update(proof)
         print(json.dumps(result,sort_keys=True))
         return 0
     except Exception as exc:
