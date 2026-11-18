@@ -59,7 +59,6 @@ def run():
                 cur.execute(sql.SQL("SELECT count(*),sum(reserved_risk) FROM {}.order_intents").format(ident))
                 count,total=cur.fetchone()
             note("Atomic budget invariants",count==4 and total==100)
-            note("Simulated crash rolls back",reservation("intraday-test-crash",fail_after_insert=True)=="limit" if count==4 else False)
             # Free one budget slot, inject crash, then confirm no residual intent.
             with admin.cursor() as cur:
                 cur.execute(sql.SQL("DELETE FROM {}.order_intents WHERE client_order_id=%s").format(ident),("intraday-test-duplicate",))
