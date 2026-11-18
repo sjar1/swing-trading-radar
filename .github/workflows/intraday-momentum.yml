@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Unit tests
-        run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py test_intraday_paper_pilot.py test_intraday_reconciliation.py test_intraday_ledger.py test_intraday_calendar.py test_intraday_scanner_calendar.py test_intraday_equity_state.py test_intraday_flatten_controller.py test_intraday_transaction_store.py test_intraday_crash_recovery.py
+        run: python -m unittest -v test_intraday_engine.py test_intraday_lifecycle.py test_intraday_paper_pilot.py test_intraday_reconciliation.py test_intraday_ledger.py test_intraday_calendar.py test_intraday_scanner_calendar.py test_intraday_equity_state.py test_intraday_flatten_controller.py test_intraday_transaction_store.py test_intraday_crash_recovery.py test_intraday_postgres_store.py
       - name: Scan with PAPER credentials (no orders by default)
         env:
           ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
