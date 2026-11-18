@@ -28,6 +28,36 @@ class HistoryTests(unittest.TestCase):
             if "/v2/orders?" in path:return [{"id":"o","client_order_id":"intraday-abc","symbol":"AAPL"}]
             return [{"id":"x","activity_type":"FILL","order_id":"o","symbol":"AAPL","side":"buy"}]*2
         with self.assertRaises(FillHistoryBlocked):collect(api)
+    def test_valid_timestamp_within_window(self):
+        def api(base,path):
+            if "/v2/orders?" in path:
+                return [{"id":"order1","client_order_id":"intraday-abc","symbol":"AAPL"}]
+            return [{"id":"fill1","activity_type":"FILL","order_id":"order1",
+                     "symbol":"AAPL","side":"buy","transaction_time":START.isoformat()}]
+        x=collect(api)
+        self.assertEqual(x["activity_count"],1)
+        self.assertFalse(x["account_history_complete"])
+    def test_end_boundary_rejected(self):
+        def api(base,path):
+            if "/v2/orders?" in path:return []
+            return [{"id":"fill1","transaction_time":END.isoformat()}]
+        with self.assertRaisesRegex(FillHistoryBlocked,"fill_outside_requested_window"):
+            collect(api)
+    def test_missing_timestamp_rejected(self):
+        def api(base,path):
+            if "/v2/orders?" in path:return []
+            return [{"id":"fill1"}]
+        with self.assertRaisesRegex(FillHistoryBlocked,"missing_fill_timestamp"):
+            collect(api)
+    def test_timezone_offset_accepted(self):
+        from datetime import timezone,timedelta
+        local=START.astimezone(timezone(timedelta(hours=-5))).isoformat()
+        def api(base,path):
+            if "/v2/orders?" in path:
+                return [{"id":"order1","client_order_id":"intraday-abc","symbol":"AAPL"}]
+            return [{"id":"fill1","activity_type":"FILL","order_id":"order1",
+                     "symbol":"AAPL","side":"buy","transaction_time":local}]
+        self.assertEqual(collect(api)["activity_count"],1)
     def test_interrupted_second_page_fails_closed(self):
         calls=[0]
         def api(base,path):
