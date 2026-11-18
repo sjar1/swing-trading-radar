@@ -98,7 +98,7 @@ async function loadIntraday(){
   const age=(Date.now()-Date.parse(data.generated_at))/60000;
   updateScanHealth(data.generated_at);
   status.textContent='Last snapshot: '+new Date(data.generated_at).toLocaleString()+
-   ' | '+(age>35?'STALE — last update over 35 minutes ago':Math.max(0,Math.round(age))+' minutes old')+
+   ' | '+(!isUSMarketHours()?'Market closed — awaiting next session':age>30?'OVERDUE — last update over 30 minutes ago':Math.max(0,Math.round(age))+' minutes old')+
    ' | '+(data.items||[]).filter(x=>x.early_warning).length+' early warnings';
   rows.replaceChildren();
   for(const x of data.items||[]){
