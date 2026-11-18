@@ -41,10 +41,11 @@ def run():
             except CheckpointWriteBlocked:
                 results["stale_revision_rejected"]=True
             row=conn.execute(sql.SQL("SELECT checkpoint,revision FROM {}.recovery_checkpoints WHERE session_date=%s").format(ident),(day,)).fetchone()
-            results["durable_checkpoint_written"]=row[1]==1 and row[0]["state"]["last_sequence"]==1
+            saved=row[0] if isinstance(row[0],dict) else json.loads(row[0])
+            results["durable_checkpoint_written"]=row[1]==1 and saved["state"]["last_sequence"]==1
             now=datetime.now(timezone.utc)
             try:
-                restart_observation(row[0],session_date=day.isoformat(),
+                restart_observation(saved,session_date=day.isoformat(),
                     checkpoint_observed_at=now-timedelta(seconds=5),now=now,
                     broker_observation={"sequence":2,"observed_at":now.isoformat(),
                         "snapshot_complete":False,"ownership_verified":False,
