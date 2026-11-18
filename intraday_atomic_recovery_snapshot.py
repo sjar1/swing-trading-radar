@@ -31,7 +31,7 @@ def load_atomic_snapshot(db_url,session_date,max_rows=2000):
     import psycopg
     with psycopg.connect(db_url,connect_timeout=8,sslmode="require") as conn:
         with conn.cursor() as cur:
-            cur.execute("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
+            cur.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY")
             cur.execute("""SELECT i.client_order_id,i.symbol,i.broker_order_id,i.state,
                                   e.id,e.broker_order_id,e.broker_status,e.event_at,e.payload
                            FROM intraday_paper.order_intents i
