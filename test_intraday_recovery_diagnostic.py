@@ -37,6 +37,21 @@ class DiagnosticTests(unittest.TestCase):
         for field in ("restart_clear","entry_permitted","execution_enabled","account_history_complete","position_attribution_certified"):
             self.assertIs(result[field],False)
         self.assertEqual(result["broker_writes"],0)
+    def test_failed_diagnostic_cannot_report_upstream_authorization(self):
+        upstream={"entry_permitted":True,"execution_enabled":True,
+                  "broker_writes":2,"restart_clear":True,
+                  "account_history_complete":True,
+                  "position_attribution_certified":True}
+        with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
+            with patch.object(d,"inspect_bundle",return_value=upstream):
+                with patch.object(d,"load_atomic_snapshot",side_effect=RuntimeError("private-db-secret")):
+                    with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),3)
+        result=json.loads(out.getvalue())
+        self.assertEqual(result["reason"],"RuntimeError")
+        self.assertNotIn("private-db-secret",out.getvalue())
+        for field in ("entry_permitted","execution_enabled","restart_clear","account_history_complete","position_attribution_certified"):
+            self.assertIs(result[field],False)
+        self.assertEqual(result["broker_writes"],0)
     def test_cross_snapshot_intent_count_mismatch_blocks(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
             with patch.object(d,"inspect_bundle",return_value={"execution_enabled":False}):
