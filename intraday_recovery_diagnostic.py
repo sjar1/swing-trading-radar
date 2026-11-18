@@ -8,6 +8,7 @@ from intraday_recovery_readiness import inspect_recovery
 from intraday_durable_fill_reconciliation import load_session_intents
 from intraday_durable_event_audit import load_order_event_rows,audit_rows
 from intraday_live_order_probe import inspect_orders
+from intraday_snapshot_consistency import verify_snapshots
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -35,12 +36,13 @@ def main():
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
             load_fn=load_session_intents)
         output.update(result)
-        audit=audit_rows(load_order_event_rows(os.environ["INTRADAY_DATABASE_URL"],
-            session_date.isoformat()))
+        event_rows=load_order_event_rows(os.environ["INTRADAY_DATABASE_URL"],session_date.isoformat())
+        audit=audit_rows(event_rows)
         output["durable_event_audit"]=audit
+        intents=load_session_intents(os.environ["INTRADAY_DATABASE_URL"],session_date.isoformat())
+        output["durable_snapshot_consistency"]=verify_snapshots(event_rows=event_rows,intents=intents)
         output["broker_order_probe"]=inspect_orders(
-            intents=load_session_intents(os.environ["INTRADAY_DATABASE_URL"],
-                datetime.now(ZoneInfo("America/New_York")).date().isoformat()),
+            intents=intents,
             api_fn=read_only_api,base=PAPER)
         if audit["intent_count"]!=output["broker_order_probe"]["durable_intent_count"]:
             raise ValueError("durable_intent_snapshot_mismatch")
