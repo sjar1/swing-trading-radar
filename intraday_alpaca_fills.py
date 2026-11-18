@@ -50,11 +50,11 @@ def collect_session_fills(start_utc,*,max_pages=20,page_size=100):
     if not isinstance(orders,list) or len(orders)>=500:
         raise FillHistoryBlocked("order_history_truncated")
     activities=[]
-    until=None
+    page_token=None
     for _ in range(max_pages):
         query={"activity_types":"FILL","direction":"desc","page_size":page_size,
                "after":start_utc.isoformat()}
-        if until:query["until"]=until
+        if page_token:query["page_token"]=page_token
         page=api(PAPER,"/v2/account/activities?"+urlencode(query))
         if not isinstance(page,list):
             raise FillHistoryBlocked("invalid_activity_page")
@@ -68,7 +68,7 @@ def collect_session_fills(start_utc,*,max_pages=20,page_size=100):
                     "position_attribution_certified":False,"execution_enabled":False,
                     "broker_writes":0}
         last=page[-1]
-        if not isinstance(last,dict) or not isinstance(last.get("id"),str) or not last["id"] or last["id"]==until:
+        if not isinstance(last,dict) or not isinstance(last.get("id"),str) or not last["id"] or last["id"]==page_token:
             raise FillHistoryBlocked("invalid_pagination_cursor")
-        until=last["id"]
+        page_token=last["id"]
     raise FillHistoryBlocked("activity_page_limit_reached")
