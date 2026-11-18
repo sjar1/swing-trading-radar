@@ -30,6 +30,16 @@ def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100):
         page=api_fn(base,"/v2/account/activities?"+urlencode(query))
         if not isinstance(page,list) or len(page)>page_size:
             raise FillHistoryBlocked("invalid_activity_page")
+        # Reject a malformed or replayed page before accumulating it.
+        page_ids=set()
+        for activity in page:
+            if not isinstance(activity,dict) or not isinstance(activity.get("id"),str) or not activity["id"]:
+                raise FillHistoryBlocked("invalid_activity_id")
+            if activity["id"] in page_ids:
+                raise FillHistoryBlocked("duplicate_activity_in_page")
+            page_ids.add(activity["id"])
+        if page_ids.intersection({a["id"] for a in activities}):
+            raise FillHistoryBlocked("duplicate_activity_across_pages")
         activities.extend(page)
         if len(page)<page_size:
             fills=normalize(activities,orders)
