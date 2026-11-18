@@ -62,6 +62,7 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
     matched=0
     incomplete=0
     compared=0
+    unstable=0
     for client,item in ledger.items():
         symbol,broker_id=item["identity"]
         if broker_id is None:
@@ -85,11 +86,26 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
             continue
         if broker_qty!=item["quantity"]:
             raise DurableFillBlocked("broker_durable_execution_quantity_mismatch")
-        if item["count"]>0:
-            compared+=1
+        # Broker observations cannot share the database transaction.
+        # Re-read to catch changes while this diagnostic is running.
+        try:
+            second=api_fn(base,"/v2/orders:by_client_order_id?client_order_id="+quote(client,safe=""))
+        except Exception:
+            incomplete+=1
+            unstable+=1
+            continue
+        second_result=decide(client,"unknown",second)
+        if not second_result["reconciled"] or second_result["broker_order_id"]!=broker_id or second.get("symbol")!=symbol:
+            raise RecoveryBlocked("broker_order_changed_during_comparison")
+        if quantity(second.get("filled_qty"))!=broker_qty or second.get("status")!=order.get("status"):
+            incomplete+=1
+            unstable+=1
+            continue
+        compared+=1
     return {"status":"bounded_explicit_fill_event_comparison",
             "durable_intent_count":len(ledger),"matched_broker_orders":matched,
             "compared_order_count":compared,"incomplete_order_count":incomplete,
+            "broker_snapshot_drift_count":unstable,
             "explicit_execution_count":sum(x["count"] for x in ledger.values()),
             "persisted_event_count":len(event_ids),
             "historical_execution_coverage_proven":False,
