@@ -28,6 +28,20 @@ class HistoryTests(unittest.TestCase):
             if "/v2/orders?" in path:return [{"id":"o","client_order_id":"intraday-abc","symbol":"AAPL"}]
             return [{"id":"x","activity_type":"FILL","order_id":"o","symbol":"AAPL","side":"buy"}]*2
         with self.assertRaises(FillHistoryBlocked):collect(api)
+    def test_pre_window_order_matches_in_window_fill(self):
+        from urllib.parse import urlparse,parse_qs
+        def api(base,path):
+            if "/v2/orders?" in path:
+                params=parse_qs(urlparse(path).query)
+                self.assertNotIn("after",params)
+                self.assertNotIn("until",params)
+                return [{"id":"old-order","client_order_id":"intraday-old",
+                         "symbol":"AAPL","created_at":"2026-11-16T12:00:00Z"}]
+            return [{"id":"fill-new","activity_type":"FILL","order_id":"old-order",
+                     "symbol":"AAPL","side":"buy","transaction_time":START.isoformat()}]
+        out=collect(api)
+        self.assertEqual(out["fills"][0]["client_order_id"],"intraday-old")
+        self.assertFalse(out["account_history_complete"])
     def test_valid_timestamp_within_window(self):
         def api(base,path):
             if "/v2/orders?" in path:
