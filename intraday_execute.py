@@ -1,7 +1,7 @@
 """Intraday momentum confirmation using Alpaca IEX daily bars only.
 
-No order submissions here. Today's IEX volume is compared with full prior
-IEX sessions, intentionally conservative (not projected). Indicators incorporate
+No order submissions here. Projected current-session IEX volume is compared with
+full prior IEX sessions. Indicators incorporate
 today's partial daily bar. Missing/stale data fail closed.
 """
 import json, os, math, time
@@ -63,9 +63,10 @@ def evaluate_bars(ticker,bars,now):
     trend=price>float(x.ema20)
     prior_macdh=float(indicators(df.iloc[:-1]).iloc[-1].macdh)
     checks={"price":2<=price<=30,"liquidity":avg_dollar_volume>=2_000_000,
-            "ema20_trend":trend,"near_20d_high":price>=prior_high*0.95,
-            "projected_rvol":rvol>=1.1,"rsi":45<=float(x.rsi)<=75,
+            "ema20_trend":trend,
+            "projected_rvol":rvol>=0.9,"rsi":40<=float(x.rsi)<=75,
             "macd_positive_or_improving":float(x.macdh)>0 or float(x.macdh)>prior_macdh}
+    # Do not require proximity to a 20-day high; EMA trend and MACD still gate entries.
     momentum=all(checks.values())
     # Consistent with existing daily momentum scoring (25+20+15+5)/80.
     score=round(100*(25+20+15+5)/80) if momentum else 0
