@@ -77,7 +77,7 @@ class HistoryTests(unittest.TestCase):
         def api(base,path):
             if "/v2/orders?" in path:return []
             calls[0]+=1
-            if calls[0]==1:return [{"id":str(i)} for i in range(100)]
+            if calls[0]==1:return [{"id":str(i),"transaction_time":START.isoformat()} for i in range(100)]
             raise ConnectionError("network_interrupted")
         with self.assertRaises(ConnectionError):collect(api)
         self.assertEqual(calls[0],2)
