@@ -52,6 +52,17 @@ class DiagnosticTests(unittest.TestCase):
         for field in ("entry_permitted","execution_enabled","restart_clear","account_history_complete","position_attribution_certified"):
             self.assertIs(result[field],False)
         self.assertEqual(result["broker_writes"],0)
+    def test_cross_transaction_identity_drift_blocks(self):
+        def bundle(**kwargs):
+            kwargs["load_fn"]("opaque","2026-11-18")
+            return {"execution_enabled":False,"broker_writes":0}
+        with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
+            with patch.object(d,"inspect_bundle",side_effect=bundle):
+                with patch.object(d,"load_session_intents",return_value=[("intraday-a","QQQ",None)]):
+                    with patch.object(d,"load_atomic_snapshot",return_value={"intents":[("intraday-a","SPY",None)],"event_rows":[],"execution_rows":[],"snapshot_atomic":True}):
+                        with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),3)
+        self.assertIn("ValueError",out.getvalue())
+        self.assertIn('"entry_permitted": false',out.getvalue())
     def test_cross_snapshot_intent_count_mismatch_blocks(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"key","ALPACA_INTRADAY_API_SECRET":"secret","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":"account"}):
             with patch.object(d,"inspect_bundle",return_value={"execution_enabled":False}):
