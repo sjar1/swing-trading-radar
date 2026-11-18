@@ -41,7 +41,7 @@ def advance(state,observation):
         raise RecoveryJournalBlocked("unverified_snapshot")
     orders=observation.get("open_order_ids")
     positions=observation.get("positions")
-    if not isinstance(orders,list) or len(orders)!=len(set(orders)) or any(not isinstance(x,str) or not x for x in orders):
+    if not isinstance(orders,list) or any(not isinstance(x,str) or not x for x in orders) or len(orders)!=len(set(orders)):
         raise RecoveryJournalBlocked("invalid_orders")
     if not isinstance(positions,dict) or any(not isinstance(k,str) or not k or type(v)!=int or v<=0 for k,v in positions.items()):
         raise RecoveryJournalBlocked("invalid_positions")
