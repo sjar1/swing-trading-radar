@@ -17,7 +17,7 @@ def owned_orders(orders):
 def flatten_plan(positions, orders, now, next_close=None):
     """Generate a proposed liquidation plan; never execute it.
 
-    Account-wide net positions are shared by strategies. Ownership cannot be
+    Account-wide net positions may be shared by strategies. Ownership cannot be
     inferred safely from a tagged order alone, so do not propose position closes.
     """
     now=now.astimezone(timezone.utc)
