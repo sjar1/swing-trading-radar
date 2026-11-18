@@ -30,3 +30,4 @@ Entry window 09:45–15:15 ET, weekdays and broker market-open.
 8. Add backtesting with fees/slippage and a full paper trade journal before considering any live trading.
 
 Do not merge or enable unattended paper execution until the above blockers are resolved and independently tested.
+\n## Separate Alpaca paper account\nSet repository Actions secrets `ALPACA_INTRADAY_API_KEY` and `ALPACA_INTRADAY_API_SECRET` from the second Alpaca paper account. Do not modify the existing `ALPACA_API_KEY` or `ALPACA_API_SECRET` secrets used by the swing workflow. Intraday workflows exclusively read the new secrets. The intraday bot remains dry-run only and cannot place orders.\n
