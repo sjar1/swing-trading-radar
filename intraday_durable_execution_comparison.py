@@ -18,7 +18,6 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
     ledger={}
     event_ids=set()
     execution_ids=set()
-    event_counts={}
     for row in rows:
         if not isinstance(row,(tuple,list)) or len(row)!=7:
             raise DurableFillBlocked("invalid_fill_event_row")
@@ -37,7 +36,6 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
         if type(event_id) is not int or event_id<=0 or event_id in event_ids or not isinstance(payload,dict):
             raise DurableFillBlocked("invalid_or_duplicate_fill_event")
         event_ids.add(event_id)
-        event_counts[client]=event_counts.get(client,0)+1
         if event_broker_id is not None and event_broker_id!=broker_id:
             raise DurableFillBlocked("fill_event_broker_identity_mismatch")
         # Only an explicitly tagged execution increment is countable. A status
