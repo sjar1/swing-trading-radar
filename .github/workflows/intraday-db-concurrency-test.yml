@@ -1,0 +1,33 @@
+name: Intraday Isolated PostgreSQL Concurrency Test
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type ISOLATED_TEST_ONLY (creates and drops a temporary test schema; no broker orders)'
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: intraday-isolated-db-integration
+  cancel-in-progress: false
+jobs:
+  test:
+    if: ${{ inputs.confirm == 'ISOLATED_TEST_ONLY' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Concurrent transactions, rollback and recovery (isolated test schema only)
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          INTRADAY_DB_TEST_CONFIRM: ${{ inputs.confirm }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_db_concurrency_test.py
