@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Offline API shape safety tests
-        run: python -m unittest -v test_intraday_account_identity.py test_intraday_paper_api_diagnostic.py test_intraday_account_history.py
+        run: python -m unittest -v test_intraday_account_identity.py test_intraday_position_snapshot.py test_intraday_paper_api_diagnostic.py test_intraday_account_history.py
       - name: Inspect dedicated PAPER history using GET only
         env:
           ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
