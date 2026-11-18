@@ -11,16 +11,15 @@ from alpaca_paper import request, trade_plan, MAX_TRADE_RISK, MAX_OPEN_POSITIONS
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--execute",action="store_true")
-    parser.add_argument("--symbol",default="SPY")
+    parser.add_argument("--symbol",default="F")
     args=parser.parse_args()
     symbol=args.symbol.upper().strip()
-    if symbol not in ("SPY","QQQ"):
-        raise SystemExit("Only SPY or QQQ permitted for controlled execution test")
+    if symbol not in ("F","SPY","QQQ"):
+        raise SystemExit("Only F, SPY or QQQ permitted for controlled execution test")
     clock=request("GET","/v2/clock")
     account=request("GET","/v2/account")
     positions=request("GET","/v2/positions")
     orders=request("GET","/v2/orders?status=open&limit=500&nested=true")
-    quote=request("GET","/v2/stocks/"+symbol+"/quotes/latest") if False else None
     print("PAPER endpoint verified; market open:",bool(clock.get("is_open")))
     print("Account status:",account.get("status"),"existing positions:",len(positions),"open orders:",len(orders))
     if not args.execute:
