@@ -1,0 +1,37 @@
+name: Intraday PAPER Historical Backfill (Read Only)
+on:
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "Historical lookback hours (1-24)"
+        required: true
+        default: "6"
+        type: choice
+        options:
+          - "1"
+          - "6"
+          - "12"
+          - "24"
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run offline safety tests
+        run: python -m unittest -v test_intraday_history_backfill.py test_intraday_backfill_diagnostic.py
+      - name: Inspect bounded PAPER history
+        env:
+          ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
+          ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
+          INTRADAY_BACKFILL_HOURS: ${{ inputs.hours }}
+          INTRADAY_PAPER_ORDERS: "0"
+        run: python intraday_backfill_diagnostic.py
