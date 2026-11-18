@@ -53,6 +53,18 @@ class AtomicSnapshotTests(unittest.TestCase):
         with patch.dict(sys.modules,{"psycopg":psycopg}):
             with self.assertRaises(DurableFillBlocked):
                 load_atomic_snapshot("opaque","2026-11-18",max_rows=1)
+    def test_partial_event_rejected(self):
+        with self.assertRaises(DurableFillBlocked):
+            project([("intraday-a","SPY",None,"reserved",None,None,"new",None,None)])
+    def test_invalid_identity_rejected(self):
+        with self.assertRaises(DurableFillBlocked):
+            project([("external-order","SPY",None,"reserved",None,None,None,None,None)])
+    def test_database_connection_error_propagates(self):
+        psycopg=MagicMock()
+        psycopg.connect.side_effect=ConnectionError("private-db-secret")
+        with patch.dict(sys.modules,{"psycopg":psycopg}):
+            with self.assertRaises(ConnectionError):
+                load_atomic_snapshot("opaque","2026-11-18")
     def test_invalid_row(self):
         with self.assertRaises(DurableFillBlocked):project([("bad",)])
 if __name__=="__main__":unittest.main()
