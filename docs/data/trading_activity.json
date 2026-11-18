@@ -416,5 +416,100 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-18T18:00:39.428875+00:00",
+    "evaluated": 28,
+    "qualified": [
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 10.54,
+        "rvol": 1.11,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 12.19,
+        "rvol": 1.05,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 18.23,
+        "rvol": 0.89,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 3.17,
+        "rvol": 0.84,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.45,
+        "rvol": 0.69,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.65,
+        "rvol": 0.52,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.83,
+        "rvol": 1.19,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.32,
+        "rvol": 1.25,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.62,
+        "rvol": 0.89,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.21,
+        "rvol": 0.75,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
