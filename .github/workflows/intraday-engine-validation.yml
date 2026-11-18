@@ -30,12 +30,15 @@ jobs:
           ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
           ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
         run: python intraday_lifecycle.py
-      - name: Run offline crash and equity fault injection\n        run: python intraday_fault_injection.py\n      - name: Upload diagnostics
+      - name: Run offline crash and equity fault injection
+        run: python intraday_fault_injection.py
+      - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: intraday-validation-diagnostics
           path: |
             docs/data/intraday_engine.json
-            docs/data/intraday_lifecycle.json\n            docs/data/intraday_safety.json
+            docs/data/intraday_lifecycle.json
+            docs/data/intraday_safety.json
           if-no-files-found: warn
