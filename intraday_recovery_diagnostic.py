@@ -7,6 +7,7 @@ from intraday_engine import api,PAPER
 from intraday_recovery_readiness import inspect_recovery
 from intraday_durable_fill_reconciliation import load_session_intents
 from intraday_durable_event_audit import load_order_event_rows,audit_rows
+from intraday_live_order_probe import inspect_orders
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -35,6 +36,10 @@ def main():
         audit=audit_rows(load_order_event_rows(os.environ["INTRADAY_DATABASE_URL"],
             datetime.now(ZoneInfo("America/New_York")).date().isoformat()))
         output["durable_event_audit"]=audit
+        output["broker_order_probe"]=inspect_orders(
+            intents=load_session_intents(os.environ["INTRADAY_DATABASE_URL"],
+                datetime.now(ZoneInfo("America/New_York")).date().isoformat()),
+            api_fn=read_only_api,base=PAPER)
         output["mode"]="PAPER_READ_ONLY"
         print(json.dumps(output,sort_keys=True))
         return 0
