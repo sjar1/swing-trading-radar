@@ -31,6 +31,8 @@ def evaluate(evidence,*,now,max_age_seconds=90):
     missing=[key for key in required if evidence.get(key) is not True]
     if missing:
         raise ReconciliationHealthBlocked("insufficient_independent_evidence")
+    if any(type(evidence.get(key)) is not int for key in ("unmatched_fills","unattributed_positions")):
+        raise ReconciliationHealthBlocked("invalid_reconciliation_counts")
     if evidence.get("unmatched_fills")!=0 or evidence.get("unattributed_positions")!=0:
         raise ReconciliationHealthBlocked("unreconciled_activity")
     return {"reconciliation_observed":True,"healthy":True,"entry_permitted":False,
