@@ -1,0 +1,27 @@
+name: Intraday PAPER Acknowledgement and EOD Audit
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Reconciliation and EOD safety tests
+        run: python -m unittest -v test_intraday_eod_reconciliation.py
+      - name: Read-only PAPER acknowledgement and end-of-day audit
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
+          ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_eod_reconciliation.py
