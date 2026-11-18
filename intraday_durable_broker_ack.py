@@ -42,6 +42,11 @@ def persist(*,db_url,client_order_id,broker_order,account_verified,broker_base,o
                 cur.execute("""UPDATE intraday_paper.order_intents
                                SET broker_order_id=%s,updated_at=now()
                                WHERE client_order_id=%s""",(broker_id,client_order_id))
+                cur.execute("""SELECT broker_order_id,broker_status FROM intraday_paper.order_events
+                               WHERE client_order_id=%s FOR UPDATE""",(client_order_id,))
+                prior_events=cur.fetchall()
+                if any(e[0]!=broker_id for e in prior_events):
+                    raise DurableFillBlocked("conflicting_persisted_broker_identity")
                 cur.execute("""INSERT INTO intraday_paper.order_events
                                (client_order_id,broker_order_id,broker_status,event_at,payload)
                                VALUES (%s,%s,%s,%s,%s::jsonb)
