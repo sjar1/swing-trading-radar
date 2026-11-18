@@ -6,6 +6,7 @@ from intraday_observation_bundle import inspect_bundle
 from intraday_engine import api,PAPER
 from intraday_recovery_readiness import inspect_recovery
 from intraday_durable_fill_reconciliation import load_session_intents
+from intraday_durable_event_audit import load_order_event_rows,audit_rows
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -31,6 +32,9 @@ def main():
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
             load_fn=load_session_intents)
         output.update(result)
+        audit=audit_rows(load_order_event_rows(os.environ["INTRADAY_DATABASE_URL"],
+            datetime.now(ZoneInfo("America/New_York")).date().isoformat()))
+        output["durable_event_audit"]=audit
         output["mode"]="PAPER_READ_ONLY"
         print(json.dumps(output,sort_keys=True))
         return 0
