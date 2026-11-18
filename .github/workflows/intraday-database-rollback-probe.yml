@@ -1,0 +1,31 @@
+name: Intraday PAPER Database Rollback Probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: intraday-paper-database-rollback-probe
+  cancel-in-progress: false
+jobs:
+  rollback-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated database driver
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Check probe source and syntax
+        run: |
+          python -m py_compile intraday_database_transaction_probe.py
+          python -m unittest -v test_intraday_durable_intent_reservation.py test_intraday_broker_ack_transactions.py
+      - name: Probe blocked session with rollback-only transaction
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_database_transaction_probe.py
