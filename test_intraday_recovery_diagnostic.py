@@ -8,6 +8,13 @@ def observed_bundle(result):
         return result
     return call
 class DiagnosticTests(unittest.TestCase):
+    def setUp(self):
+        inventory=patch.object(d,"inspect_session_inventory",return_value={
+            "status":"bounded_session_inventory","sessions":[],
+            "nonempty_session_count":0,"entry_permitted":False,
+            "execution_enabled":False,"broker_writes":0})
+        inventory.start()
+        self.addCleanup(inventory.stop)
     def test_missing_credentials_block(self):
         with patch.dict(os.environ,{"INTRADAY_DATABASE_URL":"opaque","ALPACA_INTRADAY_API_KEY":"","ALPACA_INTRADAY_API_SECRET":"","ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID":""}):
             with redirect_stdout(io.StringIO()) as out:
