@@ -1,0 +1,26 @@
+name: Intraday Isolated Recovery DB Integration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Offline safety checks
+        run: python -m unittest -v test_intraday_recovery_checkpoint_write.py test_intraday_recovery_restart_gate.py test_intraday_recovery_checkpoint_db.py
+      - name: Isolated Supabase recovery checkpoint test
+        env:
+          INTRADAY_DATABASE_URL: ${{ secrets.INTRADAY_DATABASE_URL }}
+          INTRADAY_DB_TEST_CONFIRM: ISOLATED_TEST_ONLY
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_recovery_db_integration.py
