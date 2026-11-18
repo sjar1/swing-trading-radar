@@ -39,14 +39,14 @@ def persist(*,db_url,client_order_id,broker_order,account_verified,broker_base,o
                 row=cur.fetchone()
                 if row is None or row[0] not in (None,broker_id) or row[1] not in ("reserved","submitted","accepted","partially_filled","filled","canceled","rejected","expired"):
                     raise DurableFillBlocked("durable_intent_missing_or_conflicting")
-                cur.execute("""UPDATE intraday_paper.order_intents
-                               SET broker_order_id=%s,updated_at=now()
-                               WHERE client_order_id=%s""",(broker_id,client_order_id))
                 cur.execute("""SELECT broker_order_id,broker_status FROM intraday_paper.order_events
                                WHERE client_order_id=%s FOR UPDATE""",(client_order_id,))
                 prior_events=cur.fetchall()
                 if any(e[0]!=broker_id for e in prior_events):
                     raise DurableFillBlocked("conflicting_persisted_broker_identity")
+                cur.execute("""UPDATE intraday_paper.order_intents
+                               SET broker_order_id=%s,updated_at=now()
+                               WHERE client_order_id=%s""",(broker_id,client_order_id))
                 cur.execute("""INSERT INTO intraday_paper.order_events
                                (client_order_id,broker_order_id,broker_status,event_at,payload)
                                VALUES (%s,%s,%s,%s,%s::jsonb)
