@@ -41,11 +41,18 @@ def main():
     try:
         session_date=datetime.now(ZoneInfo("America/New_York")).date()
         observed_at=datetime.now(timezone.utc)
+        observed_intents=[]
+        def tracked_intents(db_url,session):
+            rows=load_session_intents(db_url,session)
+            if not isinstance(rows,list):
+                raise ValueError("invalid_observed_intents")
+            observed_intents.append(rows)
+            return rows
         result=inspect_bundle(db_url=os.environ["INTRADAY_DATABASE_URL"],
             session_date=session_date,
             now=observed_at,api_fn=read_only_api,base=PAPER,
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
-            load_fn=load_session_intents)
+            load_fn=tracked_intents)
         output.update(result)
         snapshot=load_atomic_snapshot(os.environ["INTRADAY_DATABASE_URL"],session_date.isoformat())
         output["durable_snapshot_atomic"]=snapshot["snapshot_atomic"]
@@ -53,6 +60,11 @@ def main():
         audit=audit_rows(event_rows)
         output["durable_event_audit"]=audit
         intents=snapshot["intents"]
+        # Separate recovery reads must agree with the atomic snapshot.
+        if not observed_intents or any(
+            sorted(rows)!=sorted(intents) for rows in observed_intents
+        ):
+            raise ValueError("cross_transaction_durable_intent_drift")
         output["durable_snapshot_consistency"]=verify_snapshots(event_rows=event_rows,intents=intents)
         output["broker_order_probe"]=inspect_orders(
             intents=intents,
