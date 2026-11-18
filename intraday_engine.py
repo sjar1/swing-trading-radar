@@ -18,8 +18,8 @@ MAX_ENTRIES=5
 def api(base,path,method="GET",payload=None):
     if base not in (PAPER,DATA) or not path.startswith("/") or "://" in path:
         raise ValueError("Invalid API endpoint")
-    headers={"APCA-API-KEY-ID":os.environ["ALPACA_API_KEY"],
-             "APCA-API-SECRET-KEY":os.environ["ALPACA_API_SECRET"]}
+    headers={"APCA-API-KEY-ID":os.environ["ALPACA_INTRADAY_API_KEY"],
+             "APCA-API-SECRET-KEY":os.environ["ALPACA_INTRADAY_API_SECRET"]}
     data=None if payload is None else json.dumps(payload).encode()
     if data: headers["Content-Type"]="application/json"
     req=urllib.request.Request(base+path,headers=headers,data=data,method=method)
@@ -90,7 +90,7 @@ def main():
     result={"generated_at":datetime.now(timezone.utc).isoformat(),"mode":"PAPER_DRY_RUN",
             "signals":[],"diagnostics":[],"orders_submitted":0}
     try:
-        if not all(os.getenv(k) for k in ("ALPACA_API_KEY","ALPACA_API_SECRET")):
+        if not all(os.getenv(k) for k in ("ALPACA_INTRADAY_API_KEY","ALPACA_INTRADAY_API_SECRET")):
             result["status"]="missing_paper_credentials"; return
         clock=api(PAPER,"/v2/clock")
         account=api(PAPER,"/v2/account")
