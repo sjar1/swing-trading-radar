@@ -17,7 +17,7 @@ def inspect(*,api_fn,now):
         raise FillHistoryBlocked("invalid_api")
     # A short fixed UTC window limits exposure to API pagination edge cases.
     start=now-timedelta(hours=1)
-    snapshot=collect_window(api_fn=api_fn,base=PAPER,start_utc=start,end_utc=now,max_pages=10)
+    snapshot=collect_window(api_fn=api_fn,base=PAPER,start_utc=start,end_utc=now,max_pages=10,clock_fn=lambda:now)
     return {"mode":"PAPER_READ_ONLY","status":"window_observed",
             "window_exhausted":True,"activity_count":snapshot["activity_count"],
             "order_count":snapshot["orders_count"],
