@@ -1,0 +1,45 @@
+name: Intraday Feature Branch Safety CI
+on:
+  push:
+    branches:
+      - feature/intraday-momentum-paper-engine
+    paths:
+      - 'intraday_*.py'
+      - 'test_intraday_*.py'
+      - '.github/workflows/intraday-feature-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: intraday-feature-safety-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Run read-only intraday safety suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest -v test_intraday_fill_attribution.py test_intraday_order_ownership.py test_intraday_lifecycle_integration.py test_intraday_broker_recovery.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py test_intraday_durable_ack.py 2>&1 | tee intraday-feature-tests.log
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: intraday-feature-test-results
+          path: intraday-feature-tests.log
+          if-no-files-found: warn
+      - name: Test summary
+        if: always()
+        run: |
+          echo "## Intraday feature safety tests" >> "$GITHUB_STEP_SUMMARY"
+          echo "Status: ${{ job.status }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "No PAPER broker writes are performed." >> "$GITHUB_STEP_SUMMARY"
