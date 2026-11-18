@@ -32,7 +32,7 @@ def project(rows):
         execution_rows.append((client,symbol,broker_id,event_id,status,payload,event_broker))
     return {"intents":[(client,*identity) for client,identity in intents.items()],
             "event_rows":event_rows,"execution_rows":execution_rows,
-            "snapshot_atomic":True,"broker_writes":0,"execution_enabled":False}
+            "snapshot_atomic":False,"broker_writes":0,"execution_enabled":False}
 
 def load_atomic_snapshot(db_url,session_date,max_rows=2000):
     if not isinstance(db_url,str) or not db_url or not isinstance(session_date,str) or not session_date or type(max_rows) is not int or not 1<=max_rows<=10000:
@@ -50,4 +50,6 @@ def load_atomic_snapshot(db_url,session_date,max_rows=2000):
             rows=cur.fetchall()
             if len(rows)>max_rows:
                 raise DurableFillBlocked("atomic_snapshot_row_limit_exceeded")
-            return project(rows)
+            result=project(rows)
+            result["snapshot_atomic"]=True
+            return result
