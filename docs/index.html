@@ -39,7 +39,15 @@ label{display:flex;align-items:center;gap:5px} .metric{font-size:1.1rem;font-wei
 </section>
 <section class="panel"><h2>Intraday paper-trade confirmations</h2><p id="confirm-status" class="muted">Waiting for intraday execution scan.</p>
 <table><thead><tr><th>Ticker</th><th>Price</th><th>RSI</th><th>IEX relative volume</th><th>Score</th><th>Decision</th></tr></thead><tbody id="confirm-rows"></tbody></table>
-<p class="muted">Confirmed intraday signals use current-session Alpaca IEX data; the volume test compares today's accumulated IEX volume against full previous IEX sessions. Paper orders may be submitted only during regular market hours.</p></section>
+<p class="muted">Confirmed intraday signals use current-session Alpaca IEX data; the volume test projects partial-session IEX volume against full previous IEX sessions. Paper orders may be submitted only during regular market hours.</p></section>
+<section class="panel"><h2>Why no paper trades? — scan diagnostics</h2>
+<p id="diagnostic-status" class="muted">Loading screening diagnostics...</p>
+<table><thead><tr><th>Closest stock</th><th>Price</th><th>Projected IEX RVOL</th><th>Failed filters</th></tr></thead><tbody id="diagnostic-rows"></tbody></table>
+<p class="muted">Closest means fewest failed screening rules, not a buy recommendation. The scanner requires all filters to pass. Relative volume is projected from partial-session IEX data.</p></section>
+<section class="panel"><h2>Automatic trading activity</h2>
+<p id="activity-status" class="muted">Loading paper trading activity...</p>
+<table><thead><tr><th>Scan time</th><th>Evaluated</th><th>Qualified</th><th>Orders submitted</th><th>Reason</th></tr></thead><tbody id="activity-rows"></tbody></table>
+<p class="muted">Shows automated scanner submissions, not manual test orders or confirmed fills. History begins after deployment and retains the latest 500 scans.</p></section>
 <section class="panel"><h2>Signals</h2><p id="updated" class="muted">Loading...</p>
 <table><thead><tr><th>Ticker</th><th>Strategy</th><th>Score</th><th>Price</th><th>Relative volume</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></section>
 <section class="panel"><h2>Suggested purchase plan (PAPER only)</h2>
@@ -130,6 +138,43 @@ async function loadConfirmations(){
    rows.appendChild(tr);
   }
  }catch(error){status.textContent='Intraday confirmation scan has not published data yet.';}
+}
+async function loadDiagnostics(){
+ const status=byId('diagnostic-status'),rows=byId('diagnostic-rows');
+ try{
+  const data=await getData('intraday_signals'),items=data.signals||[];
+  const qualified=items.filter(x=>x.qualified);
+  const rejected=items.filter(x=>!x.qualified).sort((a,b)=>
+    (a.rejection_reasons||[]).length-(b.rejection_reasons||[]).length).slice(0,10);
+  status.textContent='Last scan: '+new Date(data.generated_at).toLocaleString()+
+   ' | '+items.length+' stocks evaluated | '+qualified.length+' qualified | '+
+   (qualified.length?'Qualified: '+qualified.map(x=>x.ticker).join(', '):
+    'No stocks passed every filter; no automatic buys from this scan.');
+  rows.replaceChildren();
+  for(const x of rejected){
+   const tr=document.createElement('tr');
+   for(const value of [x.ticker,money(x.price),x.rvol+'x',
+       (x.rejection_reasons||['Diagnostics unavailable']).join(', ')]){
+    const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
+   }rows.appendChild(tr);
+  }
+ }catch(e){status.textContent='Diagnostics unavailable until the next intraday scan.';}
+}
+async function loadActivity(){
+ const status=byId('activity-status'),rows=byId('activity-rows');
+ try{
+  const data=await getData('trading_activity');
+  if(!Array.isArray(data))throw new Error('Invalid history');
+  status.textContent=data.length+' scan records retained; showing the most recent 20.';
+  rows.replaceChildren();
+  for(const x of data.slice(-20).reverse()){
+   const tr=document.createElement('tr');
+   for(const value of [new Date(x.timestamp).toLocaleString(),x.evaluated,
+       (x.qualified||[]).length,(x.orders_submitted||[]).length,x.reason||'']){
+    const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
+   }rows.appendChild(tr);
+  }
+ }catch(e){status.textContent='Activity log will appear after the next automated scan.';}
 }
 async function loadSignals(){
  try{
@@ -236,7 +281,7 @@ byId('budget').addEventListener('input',renderPurchasePlan);
 const tableObserver=new MutationObserver(labelTableCells);
 for(const tbody of document.querySelectorAll('table tbody'))tableObserver.observe(tbody,{childList:true,subtree:false});
 labelTableCells();
-Promise.allSettled([loadIntraday(),loadConfirmations(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca(),loadPurchasePlan()]);
-setInterval(()=>{loadIntraday();loadConfirmations();loadAlpaca();loadPurchasePlan();},60000);
+Promise.allSettled([loadIntraday(),loadConfirmations(),loadSignals(),loadHistory(),loadPaper(),loadAlpaca(),loadPurchasePlan(),loadDiagnostics(),loadActivity()]);
+setInterval(()=>{loadIntraday();loadConfirmations();loadAlpaca();loadPurchasePlan();loadDiagnostics();loadActivity();},60000);
 </script>
 </body></html>
