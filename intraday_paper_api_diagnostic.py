@@ -24,10 +24,14 @@ def inspect(*,api_fn,now,expected_account_id=None):
     snapshot=collect_window(api_fn=api_fn,base=PAPER,start_utc=start,end_utc=now,max_pages=10,clock_fn=lambda:now)
     positions=inspect_positions(api_fn=api_fn,base=PAPER)
     # The one-hour window cannot prove account-lifetime history or ownership.
+    open_orders=api_fn(PAPER,"/v2/orders?status=open&limit=500&nested=false")
+    if not isinstance(open_orders,list) or len(open_orders)>=500 or any(not isinstance(o,dict) for o in open_orders):
+        raise FillHistoryBlocked("invalid_or_truncated_open_orders")
     restart=inspect_restart(account_verified=identity["account_identity_verified"],
-                            position_count=positions["position_count"],open_order_count=0,
+                            position_count=positions["position_count"],open_order_count=len(open_orders),
                             history_complete=False,attribution_certified=False)
     return {"mode":"PAPER_READ_ONLY","status":"window_observed",
+            "open_order_count":len(open_orders),
             "restart_clear":restart["restart_clear"],"restart_blockers":restart["blockers"],
             "position_count":positions["position_count"],"positions_observed":True,
             "account_identity_verified":identity["account_identity_verified"],
