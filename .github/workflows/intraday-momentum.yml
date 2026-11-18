@@ -1,0 +1,34 @@
+name: Intraday Momentum PAPER (dry run)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 14-20 * * 1-5'
+permissions:
+  contents: read
+concurrency:
+  group: intraday-momentum-paper
+  cancel-in-progress: false
+jobs:
+  paper-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests
+        run: python -m unittest -v test_intraday_engine.py
+      - name: Scan with PAPER credentials (no orders by default)
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_API_SECRET: ${{ secrets.ALPACA_API_SECRET }}
+          INTRADAY_PAPER_ORDERS: '0'
+        run: python intraday_engine.py
+      - name: Upload diagnostics artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: intraday-engine-diagnostics
+          path: docs/data/intraday_engine.json
+          if-no-files-found: warn
