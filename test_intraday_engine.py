@@ -30,6 +30,14 @@ class EngineTests(unittest.TestCase):
         a={"status":"ACTIVE","equity":"5000","last_equity":"5000","cash":"5000"}
         self.assertEqual(gate(a,[],[],5,now),"entry_limit")
 
+    def test_dedicated_intraday_credentials(self):
+        import inspect, intraday_engine
+        source=inspect.getsource(intraday_engine.api)
+        self.assertIn('ALPACA_INTRADAY_API_KEY',source)
+        self.assertIn('ALPACA_INTRADAY_API_SECRET',source)
+        self.assertNotIn('os.environ["ALPACA_API_KEY"]',source)
+        self.assertNotIn('os.environ["ALPACA_API_SECRET"]',source)
+
     def test_execution_fail_closed_design(self):
         import inspect, intraday_engine
         source=inspect.getsource(intraday_engine.main)
