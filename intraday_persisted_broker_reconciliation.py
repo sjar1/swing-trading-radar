@@ -5,6 +5,7 @@ submission, flatten, or enable automated PAPER trading.
 """
 from intraday_persistent_recovery_simulator import recover,PersistenceBlocked
 from intraday_broker_recovery import decide,RecoveryBlocked
+from intraday_broker_fill_quantity import compare
 
 def reconcile(*,conn,client_order_id,broker_order):
     state=recover(conn,client_order_id)
@@ -34,12 +35,14 @@ def reconcile(*,conn,client_order_id,broker_order):
         raise PersistenceBlocked("unrecorded_terminal_broker_transition")
     if phase=="partially_filled" and broker_phase in terminal:
         raise PersistenceBlocked("unrecorded_terminal_broker_transition")
+    fill_comparison=compare(persisted_quantity=state["filled_quantity"],broker_order=broker_order,phase=phase)
     # Never equate a broker's cumulative fill status with persisted fill events.
     # Even matching statuses cannot establish complete account history.
     return {"status":"broker_identity_observed","persisted_phase":phase,
             "broker_status":decision["broker_status"],
             "persisted_fill_quantity":state["filled_quantity"],
             "broker_snapshot_complete":False,
+            "fill_quantity_equal":fill_comparison["quantity_equal"],
             "fill_history_certified":False,"retry_submission":False,
             "restart_clear":False,"entry_permitted":False,
             "execution_enabled":False,"broker_writes":0}
