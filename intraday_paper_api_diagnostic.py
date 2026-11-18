@@ -47,7 +47,7 @@ def main():
     except Exception as exc:
         output["reason"]=type(exc).__name__
         if isinstance(exc,AccountIdentityBlocked):
-            safe_reasons={"expected_account_missing","invalid_account_snapshot","missing_broker_account_id","broker_account_mismatch"}
+            safe_reasons={"expected_account_missing","invalid_account_snapshot","missing_broker_account_id","broker_account_mismatch","expected_value_is_account_number_not_id"}
             output["identity_failure"]=str(exc) if str(exc) in safe_reasons else "identity_check_failed"
         print(json.dumps(output,sort_keys=True))
         return 3
