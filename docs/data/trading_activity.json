@@ -114,5 +114,113 @@
       }
     ],
     "reason": "Paper orders submitted"
+  },
+  {
+    "timestamp": "2026-11-18T17:15:39.738175+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "RIOT",
+      "GRAB",
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "WULF",
+        "price": 11.8,
+        "rvol": 1.08,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 10.45,
+        "rvol": 1.03,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.36,
+        "rvol": 0.68,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.56,
+        "rvol": 0.52,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.57,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.12,
+        "rvol": 1.11,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.42,
+        "rvol": 0.9,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 13.14,
+        "rvol": 0.73,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.19,
+        "rvol": 0.67,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 22.62,
+        "rvol": 0.23,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [
+      {
+        "ticker": "LYFT",
+        "id": "28560042-5ba7-4c01-b9b9-5df418358b96",
+        "qty": 43,
+        "limit": 18.05,
+        "stop": 16.33,
+        "target": 23.21
+      }
+    ],
+    "reason": "Paper orders submitted"
   }
 ]
