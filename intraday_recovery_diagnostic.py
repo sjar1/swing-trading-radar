@@ -80,6 +80,12 @@ def main():
             snapshot=snapshot,audit=audit,
             broker_probe=output["broker_order_probe"],
             execution_comparison=output["durable_execution_comparison"])
+        if not output["recovery_evidence_assessment"]["nonempty_durable_session_observed"]:
+            output["status"]="insufficient_nonempty_recovery_evidence"
+            output["next_step"]="observe_real_paper_durable_order_intents"
+        else:
+            output["status"]="bounded_recovery_diagnostic_observed"
+            output["next_step"]="verify_history_and_recovery_completeness"
         enforce_read_only(output)
         print(json.dumps(output,sort_keys=True))
         return 0
