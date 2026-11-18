@@ -5,6 +5,7 @@ Uses exact client order IDs. No broker writes, no auto retry, no execution gate.
 from urllib.parse import quote
 from intraday_broker_recovery import decide,RecoveryBlocked
 from intraday_durable_fill_reconciliation import DurableFillBlocked
+from intraday_broker_fill_quantity import quantity
 
 def inspect_orders(*,intents,api_fn,base,max_orders=20):
     if not isinstance(intents,list) or type(max_orders) is not int or not 1<=max_orders<=100 or len(intents)>max_orders:
@@ -14,6 +15,8 @@ def inspect_orders(*,intents,api_fn,base,max_orders=20):
     seen=set()
     matched=0
     unresolved=0
+    observed_filled_orders=0
+    observed_filled_quantity=0
     for row in intents:
         if not isinstance(row,(tuple,list)) or len(row)!=3:
             raise DurableFillBlocked("invalid_durable_intent")
@@ -35,9 +38,16 @@ def inspect_orders(*,intents,api_fn,base,max_orders=20):
             continue
         if result["broker_order_id"]!=broker_id or order.get("symbol")!=symbol:
             raise RecoveryBlocked("durable_broker_identity_mismatch")
+        filled=quantity(order.get("filled_qty"))
+        if filled>0:
+            observed_filled_orders+=1
+            observed_filled_quantity+=1
         matched+=1
     return {"status":"bounded_broker_order_probe","durable_intent_count":len(intents),
             "matched_broker_orders":matched,"unresolved_broker_orders":unresolved,
+            "broker_orders_with_fills":observed_filled_orders,
+            "broker_fill_quantity_observed":True,
+            "persisted_fill_quantity_compared":False,
             "broker_history_exhaustive":False,"restart_clear":False,
             "retry_submission":False,"entry_permitted":False,
             "execution_enabled":False,"broker_writes":0}
