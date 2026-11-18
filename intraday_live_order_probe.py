@@ -16,7 +16,6 @@ def inspect_orders(*,intents,api_fn,base,max_orders=20):
     matched=0
     unresolved=0
     observed_filled_orders=0
-    observed_filled_quantity=0
     for row in intents:
         if not isinstance(row,(tuple,list)) or len(row)!=3:
             raise DurableFillBlocked("invalid_durable_intent")
@@ -41,12 +40,11 @@ def inspect_orders(*,intents,api_fn,base,max_orders=20):
         filled=quantity(order.get("filled_qty"))
         if filled>0:
             observed_filled_orders+=1
-            observed_filled_quantity+=1
         matched+=1
     return {"status":"bounded_broker_order_probe","durable_intent_count":len(intents),
             "matched_broker_orders":matched,"unresolved_broker_orders":unresolved,
             "broker_orders_with_fills":observed_filled_orders,
-            "broker_fill_quantity_observed":True,
+            "broker_fill_quantity_observed":matched>0,
             "persisted_fill_quantity_compared":False,
             "broker_history_exhaustive":False,"restart_clear":False,
             "retry_submission":False,"entry_permitted":False,
