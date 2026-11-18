@@ -17,6 +17,14 @@ def project(rows):
         if not isinstance(row,(tuple,list)) or len(row)!=9:
             raise DurableFillBlocked("invalid_atomic_snapshot_row")
         client,symbol,broker_id,state,event_id,event_broker,status,event_at,payload=row
+        if not isinstance(client,str) or not client.startswith("intraday-") or not isinstance(symbol,str) or not symbol:
+            raise DurableFillBlocked("invalid_atomic_snapshot_identity")
+        if broker_id is not None and (not isinstance(broker_id,str) or not broker_id):
+            raise DurableFillBlocked("invalid_atomic_snapshot_broker_id")
+        if not isinstance(state,str) or not state:
+            raise DurableFillBlocked("invalid_atomic_snapshot_state")
+        if event_id is None and any(x is not None for x in (event_broker,status,event_at,payload)):
+            raise DurableFillBlocked("partial_atomic_snapshot_event")
         identity=(symbol,broker_id)
         if client in intents and intents[client]!=identity:
             raise DurableFillBlocked("atomic_snapshot_identity_conflict")
