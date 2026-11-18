@@ -1,0 +1,23 @@
+name: Intraday Broker Recovery Safety Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/intraday-broker-recovery-tests.yml'
+permissions:
+  contents: read
+jobs:
+  recovery-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/intraday-momentum-paper-engine
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test broker recovery and durable acknowledgement
+        run: python -m unittest -v test_intraday_broker_recovery.py test_intraday_durable_ack.py test_intraday_execution_protocol.py
