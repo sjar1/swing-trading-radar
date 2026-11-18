@@ -61,7 +61,7 @@ def main():
         output["durable_event_audit"]=audit
         intents=snapshot["intents"]
         # Separate recovery reads must agree with the atomic snapshot.
-        if observed_intents and any(
+        if not observed_intents or any(
             sorted(rows)!=sorted(intents) for rows in observed_intents
         ):
             raise ValueError("cross_transaction_durable_intent_drift")
