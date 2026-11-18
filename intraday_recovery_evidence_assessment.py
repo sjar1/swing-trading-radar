@@ -26,8 +26,20 @@ def assess(*,snapshot,audit,broker_probe,execution_comparison):
         raise DurableFillBlocked("invalid_recovery_evidence_counts")
     if matched+unresolved!=n or compared+incomplete!=n or drift>incomplete or pending>incomplete:
         raise DurableFillBlocked("inconsistent_recovery_evidence_counts")
-    if execution_comparison.get("fill_history_certified") is not False or execution_comparison.get("historical_execution_coverage_proven") is not False:
-        raise DurableFillBlocked("unsupported_fill_history_certification")
+    # A bounded probe cannot establish account-wide history, restart readiness,
+    # or permission to place orders. Reject any upstream claim to the contrary.
+    forbidden_true=("entry_permitted","restart_clear","account_history_complete",
+                    "fill_history_certified","historical_execution_coverage_proven",
+                    "position_attribution_certified","broker_history_exhaustive")
+    for evidence in (broker_probe,execution_comparison):
+        if any(evidence.get(flag) is True for flag in forbidden_true):
+            raise DurableFillBlocked("unsupported_recovery_authorization_claim")
+    observed_fills=broker_probe.get("broker_orders_with_fills")
+    compared_matched=execution_comparison.get("matched_broker_orders")
+    if type(observed_fills) is not int or type(compared_matched) is not int or not (0<=observed_fills<=matched<=n) or not (0<=compared_matched<=n):
+        raise DurableFillBlocked("invalid_broker_observation_counts")
+    if compared>compared_matched:
+        raise DurableFillBlocked("comparison_exceeds_matched_broker_orders")
     clean=n>0 and unresolved==0 and incomplete==0 and drift==0 and pending==0
     return {"status":"bounded_recovery_observed" if clean else "recovery_evidence_incomplete",
             "nonempty_durable_session_observed":n>0,
