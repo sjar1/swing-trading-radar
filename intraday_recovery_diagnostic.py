@@ -12,6 +12,7 @@ from intraday_snapshot_consistency import verify_snapshots
 from intraday_durable_execution_comparison import compare_rows
 from intraday_atomic_recovery_snapshot import load_atomic_snapshot
 from intraday_recovery_evidence_assessment import assess
+from intraday_session_inventory import inspect as inspect_session_inventory
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -54,6 +55,8 @@ def main():
             expected_account_id=os.environ["ALPACA_INTRADAY_EXPECTED_ACCOUNT_ID"],
             load_fn=tracked_intents)
         output.update(result)
+        output["historical_session_inventory"]=inspect_session_inventory(
+            os.environ["INTRADAY_DATABASE_URL"],as_of=session_date)
         snapshot=load_atomic_snapshot(os.environ["INTRADAY_DATABASE_URL"],session_date.isoformat())
         output["durable_snapshot_atomic"]=snapshot["snapshot_atomic"]
         event_rows=snapshot["event_rows"]
