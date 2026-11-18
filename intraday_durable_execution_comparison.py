@@ -63,19 +63,23 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
     incomplete=0
     compared=0
     unstable=0
+    unresolved=0
     for client,item in ledger.items():
         symbol,broker_id=item["identity"]
         if broker_id is None:
             incomplete+=1
+            unresolved+=1
             continue
         try:
             order=api_fn(base,"/v2/orders:by_client_order_id?client_order_id="+quote(client,safe=""))
         except Exception:
             incomplete+=1
+            unresolved+=1
             continue
         result=decide(client,"unknown",order)
         if not result["reconciled"]:
             incomplete+=1
+            unresolved+=1
             continue
         if result["broker_order_id"]!=broker_id or order.get("symbol")!=symbol:
             raise RecoveryBlocked("fill_event_broker_identity_mismatch")
@@ -95,7 +99,12 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
             unstable+=1
             continue
         second_result=decide(client,"unknown",second)
-        if not second_result["reconciled"] or second_result["broker_order_id"]!=broker_id or second.get("symbol")!=symbol:
+        if not second_result["reconciled"]:
+            incomplete+=1
+            unstable+=1
+            unresolved+=1
+            continue
+        if second_result["broker_order_id"]!=broker_id or second.get("symbol")!=symbol:
             raise RecoveryBlocked("broker_order_changed_during_comparison")
         if quantity(second.get("filled_qty"))!=broker_qty or second.get("status")!=order.get("status"):
             incomplete+=1
@@ -106,6 +115,7 @@ def compare_rows(*,rows,api_fn,base,max_orders=20):
             "durable_intent_count":len(ledger),"matched_broker_orders":matched,
             "compared_order_count":compared,"incomplete_order_count":incomplete,
             "broker_snapshot_drift_count":unstable,
+            "unresolved_broker_order_count":unresolved,
             "explicit_execution_count":sum(x["count"] for x in ledger.values()),
             "persisted_event_count":len(event_ids),
             "historical_execution_coverage_proven":False,
