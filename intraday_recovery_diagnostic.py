@@ -9,6 +9,7 @@ from intraday_durable_fill_reconciliation import load_session_intents
 from intraday_durable_event_audit import load_order_event_rows,audit_rows
 from intraday_live_order_probe import inspect_orders
 from intraday_snapshot_consistency import verify_snapshots
+from intraday_durable_execution_comparison import compare_rows,load_rows
 
 def read_only_api(base,path,method="GET",payload=None):
     if base!=PAPER or method!="GET" or payload is not None or not path.startswith("/v2/"):
@@ -44,6 +45,11 @@ def main():
         output["broker_order_probe"]=inspect_orders(
             intents=intents,
             api_fn=read_only_api,base=PAPER)
+        output["durable_execution_comparison"]=compare_rows(
+            rows=load_rows(os.environ["INTRADAY_DATABASE_URL"],session_date.isoformat()),
+            api_fn=read_only_api,base=PAPER)
+        if output["durable_execution_comparison"]["durable_intent_count"]!=len(intents):
+            raise ValueError("durable_execution_snapshot_mismatch")
         if audit["intent_count"]!=output["broker_order_probe"]["durable_intent_count"]:
             raise ValueError("durable_intent_snapshot_mismatch")
         output["mode"]="PAPER_READ_ONLY"
