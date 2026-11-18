@@ -18,6 +18,10 @@ class AtomicSnapshotTests(unittest.TestCase):
         with self.assertRaises(DurableFillBlocked):
             project([("intraday-a","SPY","broker-a","filled",None,None,None,None,None),
                      ("intraday-a","QQQ","broker-a","filled",None,None,None,None,None)])
+    def test_conflicting_state(self):
+        with self.assertRaises(DurableFillBlocked):
+            project([("intraday-a","SPY","broker-a","accepted",1,"broker-a","new",None,{}),
+                     ("intraday-a","SPY","broker-a","filled",2,"broker-a","filled",None,{})])
     def test_invalid_row(self):
         with self.assertRaises(DurableFillBlocked):project([("bad",)])
 if __name__=="__main__":unittest.main()
