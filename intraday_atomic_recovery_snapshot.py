@@ -11,6 +11,7 @@ def project(rows):
     intents={}
     states={}
     event_rows=[]
+    event_ids=set()
     execution_rows=[]
     for row in rows:
         if not isinstance(row,(tuple,list)) or len(row)!=9:
@@ -23,6 +24,10 @@ def project(rows):
             raise DurableFillBlocked("atomic_snapshot_state_conflict")
         intents[client]=identity
         states[client]=state
+        if event_id is not None:
+            if type(event_id) is not int or event_id<=0 or event_id in event_ids:
+                raise DurableFillBlocked("duplicate_or_invalid_atomic_event_id")
+            event_ids.add(event_id)
         event_rows.append((client,symbol,broker_id,state,event_id,event_broker,status,event_at))
         execution_rows.append((client,symbol,broker_id,event_id,status,payload,event_broker))
     return {"intents":[(client,*identity) for client,identity in intents.items()],
