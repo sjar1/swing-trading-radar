@@ -1,0 +1,41 @@
+name: Validate Separate Intraday PAPER Account
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate separate paper credentials (read-only, no trading)
+        env:
+          ALPACA_INTRADAY_API_KEY: ${{ secrets.ALPACA_INTRADAY_API_KEY }}
+          ALPACA_INTRADAY_API_SECRET: ${{ secrets.ALPACA_INTRADAY_API_SECRET }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.request, urllib.error
+          key=os.environ.get("ALPACA_INTRADAY_API_KEY","")
+          secret=os.environ.get("ALPACA_INTRADAY_API_SECRET","")
+          if not key or not secret:
+              print("FAIL: dedicated intraday secrets missing");sys.exit(1)
+          req=urllib.request.Request(
+              "https://paper-api.alpaca.markets/v2/account",
+              headers={"APCA-API-KEY-ID":key,"APCA-API-SECRET-KEY":secret},
+              method="GET")
+          try:
+              with urllib.request.urlopen(req,timeout=15) as response:
+                  account=json.load(response)
+          except urllib.error.HTTPError as exc:
+              print("FAIL: PAPER account request HTTP status",exc.code);sys.exit(1)
+          except Exception as exc:
+              print("FAIL: PAPER account connectivity",type(exc).__name__);sys.exit(1)
+          status=account.get("status")
+          equity=account.get("equity")
+          print("PASS: dedicated intraday PAPER API authenticated")
+          print("Account status:",status)
+          print("Simulated equity:",equity)
+          print("Trading blocked:",account.get("trading_blocked"))
+          if status!="ACTIVE": sys.exit(1)
+          PY
