@@ -997,5 +997,102 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-18T19:30:35.533645+00:00",
+    "evaluated": 28,
+    "qualified": [
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 10.47,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 3.17,
+        "rvol": 0.86,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 18.5,
+        "rvol": 0.84,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.61,
+        "rvol": 0.44,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 6.17,
+        "rvol": 1.23,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.7,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.59,
+        "rvol": 0.89,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 12.02,
+        "rvol": 0.82,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.21,
+        "rvol": 0.71,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 18.21,
+        "rvol": 0.61,
+        "failed": [
+          "projected_rvol",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
