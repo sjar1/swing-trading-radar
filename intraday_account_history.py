@@ -10,6 +10,8 @@ from intraday_alpaca_fills import normalize,FillHistoryBlocked
 def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100):
     if not isinstance(start_utc,datetime) or not isinstance(end_utc,datetime) or start_utc.tzinfo is None or end_utc.tzinfo is None:
         raise FillHistoryBlocked("invalid_window")
+    start_utc=start_utc.astimezone(timezone.utc)
+    end_utc=end_utc.astimezone(timezone.utc)
     if start_utc>=end_utc or end_utc>datetime.now(timezone.utc)+timedelta(minutes=5):
         raise FillHistoryBlocked("invalid_window")
     if type(max_pages)!=int or not 1<=max_pages<=50 or page_size!=100:
@@ -40,6 +42,19 @@ def collect_window(*,api_fn,base,start_utc,end_utc,max_pages=20,page_size=100):
             page_ids.add(activity["id"])
         if page_ids.intersection({a["id"] for a in activities}):
             raise FillHistoryBlocked("duplicate_activity_across_pages")
+        for activity in page:
+            stamp=activity.get("transaction_time")
+            if not isinstance(stamp,str):
+                raise FillHistoryBlocked("missing_fill_timestamp")
+            try:
+                event_time=datetime.fromisoformat(stamp.replace("Z","+00:00"))
+            except ValueError:
+                raise FillHistoryBlocked("invalid_fill_timestamp") from None
+            if event_time.tzinfo is None:
+                raise FillHistoryBlocked("naive_fill_timestamp")
+            event_time=event_time.astimezone(timezone.utc)
+            if not start_utc<=event_time<end_utc:
+                raise FillHistoryBlocked("fill_outside_requested_window")
         activities.extend(page)
         if len(page)<page_size:
             fills=normalize(activities,orders)
