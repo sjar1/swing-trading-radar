@@ -2,6 +2,7 @@ import unittest
 from intraday_live_order_probe import inspect_orders
 from intraday_durable_fill_reconciliation import DurableFillBlocked
 from intraday_broker_recovery import RecoveryBlocked
+from intraday_persistent_recovery_simulator import PersistenceBlocked
 I=("intraday-one","SPY","broker-one")
 def run(intents,reader):
     return inspect_orders(intents=intents,api_fn=reader,base="PAPER")
@@ -47,8 +48,8 @@ class LiveOrderProbeTests(unittest.TestCase):
     def test_missing_broker_fill_quantity_blocks(self):
         order=broker()
         del order["filled_qty"]
-        with self.assertRaises(DurableFillBlocked):run([I],lambda *args:order)
+        with self.assertRaises(PersistenceBlocked):run([I],lambda *args:order)
     def test_invalid_broker_fill_quantity_blocks(self):
-        with self.assertRaises(DurableFillBlocked):
+        with self.assertRaises(PersistenceBlocked):
             run([I],lambda *args:{**broker(),"filled_qty":"NaN"})
 if __name__=="__main__":unittest.main()
