@@ -31,7 +31,7 @@ class DiagnosticTests(unittest.TestCase):
                     with patch.object(d,"load_session_intents",return_value=[("intraday-a","SPY",None)]):
                         with patch.object(d,"inspect_orders",return_value={"durable_intent_count":1}):
                             with redirect_stdout(io.StringIO()) as out:self.assertEqual(d.main(),3)
-        self.assertIn("ValueError",out.getvalue())
+        self.assertIn("DurableFillBlocked",out.getvalue())
     def test_read_only_api_rejects_writes(self):
         with self.assertRaises(ValueError):
             d.read_only_api(d.PAPER,"/v2/orders",method="POST",payload={})
