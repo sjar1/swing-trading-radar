@@ -1,16 +1,22 @@
 name: Intraday Lifecycle Integration Safety Tests
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '15 13 * * 1-5'
   push:
     branches: [main]
     paths:
       - '.github/workflows/intraday-lifecycle-integration.yml'
 permissions:
   contents: read
+  issues: write
+concurrency:
+  group: intraday-lifecycle-safety
+  cancel-in-progress: false
 jobs:
   lifecycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,6 +25,42 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
-      - name: Cross-component order lifecycle and failure tests
-        run: python -m unittest -v test_intraday_fill_attribution.py test_intraday_order_ownership.py test_intraday_lifecycle_integration.py test_intraday_broker_recovery.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py test_intraday_durable_ack.py
+      - name: Install test dependencies
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Run PAPER safety tests (read-only)
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest -v test_intraday_fill_attribution.py test_intraday_order_ownership.py test_intraday_lifecycle_integration.py test_intraday_broker_recovery.py test_intraday_execution_protocol.py test_intraday_eod_reconciliation.py test_intraday_durable_ack.py 2>&1 | tee intraday-lifecycle-test-results.log
+      - name: Upload diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: intraday-lifecycle-test-results
+          path: intraday-lifecycle-test-results.log
+          if-no-files-found: warn
+      - name: Record summary
+        if: always()
+        shell: bash
+        run: |
+          echo "## Intraday PAPER safety checks" >> "$GITHUB_STEP_SUMMARY"
+          echo "Result: ${{ job.status }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Execution: disabled (tests only)." >> "$GITHUB_STEP_SUMMARY"
+          echo "Feature branch: feature/intraday-momentum-paper-engine" >> "$GITHUB_STEP_SUMMARY"
+      - name: Open or update GitHub issue on test failure
+        if: failure()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          title="Intraday PAPER safety CI failure"
+          existing="$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Intraday PAPER safety CI failure") | .number' | head -n 1)"
+          message="PAPER safety tests failed. Inspect $RUN_URL and the uploaded test log. No broker orders are placed by this workflow."
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$message"
+          else
+            gh issue create --title "$title" --body "$message"
+          fi
