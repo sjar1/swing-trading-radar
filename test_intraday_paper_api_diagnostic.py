@@ -18,7 +18,7 @@ class ApiDiagnosticTests(unittest.TestCase):
         with self.assertRaises(FillHistoryBlocked):inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
     def test_network_error_propagates_without_approval(self):
         def api(base,path):raise TimeoutError("private broker error")
-        with self.assertRaises(TimeoutError):inspect(api_fn=api,now=NOW)
+        with self.assertRaises(TimeoutError):inspect(api_fn=api,now=NOW,expected_account_id="paper-1")
     def test_wrong_account_blocks_before_history(self):
         calls=[]
         def api(base,path):
