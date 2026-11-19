@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T13:45:32.482986+00:00",
+  "generated_at": "2026-11-19T14:00:34.470997+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -107,10 +107,10 @@
     },
     {
       "ticker": "WULF",
-      "price": 12.67,
-      "trade_timestamp": "2026-11-19T13:15:42.602094659Z",
+      "price": 12.76,
+      "trade_timestamp": "2026-11-19T13:56:17.651175865Z",
       "previous_20d_high": 13.82,
-      "gap_to_breakout_pct": 8.32,
+      "gap_to_breakout_pct": 7.67,
       "ema20": 12.33,
       "ema50": 13.57,
       "rsi_previous_close": 46.8,
@@ -361,6 +361,23 @@
       "context_date": "2026-11-18"
     },
     {
+      "ticker": "JOBY",
+      "price": 4.26,
+      "trade_timestamp": "2026-11-19T13:59:33.293390906Z",
+      "previous_20d_high": 6.35,
+      "gap_to_breakout_pct": 32.91,
+      "ema20": 5.11,
+      "ema50": 5.59,
+      "rsi_previous_close": 32.3,
+      "macd_hist_previous_close": -0.083,
+      "iex_day_volume": 1112991,
+      "previous_close_rvol": 0.99,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-18"
+    },
+    {
       "ticker": "IONQ",
       "price": 24.28,
       "trade_timestamp": "2026-11-19T13:28:33.327420044Z",
@@ -378,26 +395,9 @@
       "context_date": "2026-11-18"
     },
     {
-      "ticker": "JOBY",
-      "price": 4.24,
-      "trade_timestamp": "2026-11-19T13:41:44.900526062Z",
-      "previous_20d_high": 6.35,
-      "gap_to_breakout_pct": 33.23,
-      "ema20": 5.11,
-      "ema50": 5.59,
-      "rsi_previous_close": 32.3,
-      "macd_hist_previous_close": -0.083,
-      "iex_day_volume": 1112991,
-      "previous_close_rvol": 0.99,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-18"
-    },
-    {
       "ticker": "SOUN",
       "price": 3.08,
-      "trade_timestamp": "2026-11-19T13:37:28.518245454Z",
+      "trade_timestamp": "2026-11-19T13:56:28.450422362Z",
       "previous_20d_high": 4.67,
       "gap_to_breakout_pct": 34.05,
       "ema20": 3.95,
@@ -413,10 +413,10 @@
     },
     {
       "ticker": "SMR",
-      "price": 4.02,
-      "trade_timestamp": "2026-11-19T13:24:44.639531368Z",
+      "price": 4.01,
+      "trade_timestamp": "2026-11-19T14:00:08.054361977Z",
       "previous_20d_high": 6.11,
-      "gap_to_breakout_pct": 34.21,
+      "gap_to_breakout_pct": 34.37,
       "ema20": 5.11,
       "ema50": 6.32,
       "rsi_previous_close": 28.5,
