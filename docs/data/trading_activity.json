@@ -1678,5 +1678,104 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-19T15:15:36.962328+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT",
+      "WULF"
+    ],
+    "closest": [
+      {
+        "ticker": "NCLH",
+        "price": 17.59,
+        "rvol": 1.53,
+        "failed": [
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "XPEV",
+        "price": 9.66,
+        "rvol": 1.75,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.33,
+        "rvol": 0.36,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.5,
+        "rvol": 1.09,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 8.69,
+        "rvol": 1.43,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "SOUN",
+        "price": 3.12,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.75,
+        "rvol": 1.56,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 24.35,
+        "rvol": 0.63,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 10.14,
+        "rvol": 0.59,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.54,
+        "rvol": 0.29,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
