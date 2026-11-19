@@ -2849,5 +2849,103 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-19T18:15:34.099845+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "XPEV",
+        "price": 9.52,
+        "rvol": 1.23,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.28,
+        "rvol": 0.83,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.89,
+        "rvol": 1.71,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 17.35,
+        "rvol": 1.17,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.54,
+        "rvol": 1.33,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.75,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.33,
+        "rvol": 0.95,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 2.94,
+        "rvol": 0.93,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.89,
+        "rvol": 0.92,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 23.39,
+        "rvol": 0.77,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
