@@ -2947,5 +2947,102 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-19T18:30:31.574685+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "XPEV",
+        "price": 9.54,
+        "rvol": 1.21,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.88,
+        "rvol": 1.53,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.35,
+        "rvol": 0.82,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 12.02,
+        "rvol": 1.66,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 17.42,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.67,
+        "rvol": 1.28,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.85,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.47,
+        "rvol": 0.93,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 2.93,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 23.41,
+        "rvol": 0.73,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
