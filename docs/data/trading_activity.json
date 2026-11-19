@@ -2657,5 +2657,101 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-19T17:45:35.561193+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "NCLH",
+        "price": 17.52,
+        "rvol": 1.21,
+        "failed": [
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "XPEV",
+        "price": 9.55,
+        "rvol": 1.19,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.48,
+        "rvol": 0.89,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.94,
+        "rvol": 1.69,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.85,
+        "rvol": 1.7,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.89,
+        "rvol": 1.02,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.35,
+        "rvol": 1.01,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 2.94,
+        "rvol": 0.99,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.54,
+        "rvol": 1.43,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.89,
+        "rvol": 0.97,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
