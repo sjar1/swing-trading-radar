@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-19T18:30:45.600353+00:00",
+  "generated_at": "2026-11-19T18:45:49.562288+00:00",
   "mode": "ALPACA_PAPER_ONLY",
   "scan_type": "intraday",
-  "equity": 7437.36,
+  "equity": 7431.24,
   "cash": 5299.38,
-  "buying_power": 12281.99,
+  "buying_power": 12276.75,
   "positions": [
     {
       "ticker": "F",
@@ -17,22 +17,22 @@
       "ticker": "GRAB",
       "shares": "258",
       "entry": 3.2,
-      "market_value": 780.321,
-      "unrealized_pl": -45.279
+      "market_value": 777.87,
+      "unrealized_pl": -47.73
     },
     {
       "ticker": "LYFT",
       "shares": "43",
       "entry": 17.89,
-      "market_value": 745.62,
-      "unrealized_pl": -23.65
+      "market_value": 742.825,
+      "unrealized_pl": -26.445
     },
     {
       "ticker": "RIOT",
       "shares": "25",
       "entry": 17.8904,
-      "market_value": 454.75,
-      "unrealized_pl": 7.49
+      "market_value": 453.875,
+      "unrealized_pl": 6.615
     }
   ],
   "orders_submitted_this_run": []
