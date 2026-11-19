@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T21:45:36.223643+00:00",
+  "generated_at": "2026-11-19T22:00:39.682866+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -412,23 +412,6 @@
       "context_date": "2026-11-18"
     },
     {
-      "ticker": "SOUN",
-      "price": 2.92,
-      "trade_timestamp": "2026-11-19T20:59:58.677706445Z",
-      "previous_20d_high": 4.67,
-      "gap_to_breakout_pct": 37.58,
-      "ema20": 3.95,
-      "ema50": 4.79,
-      "rsi_previous_close": 17.5,
-      "macd_hist_previous_close": -0.0621,
-      "iex_day_volume": 782817,
-      "previous_close_rvol": 0.88,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-18"
-    },
-    {
       "ticker": "JOBY",
       "price": 3.93,
       "trade_timestamp": "2026-11-19T20:59:58.062539034Z",
@@ -440,6 +423,23 @@
       "macd_hist_previous_close": -0.083,
       "iex_day_volume": 1013900,
       "previous_close_rvol": 1.0,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-18"
+    },
+    {
+      "ticker": "SOUN",
+      "price": 2.87,
+      "trade_timestamp": "2026-11-19T21:52:46.96499732Z",
+      "previous_20d_high": 4.67,
+      "gap_to_breakout_pct": 38.54,
+      "ema20": 3.95,
+      "ema50": 4.79,
+      "rsi_previous_close": 17.5,
+      "macd_hist_previous_close": -0.0621,
+      "iex_day_volume": 782917,
+      "previous_close_rvol": 0.88,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
