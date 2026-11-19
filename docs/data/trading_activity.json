@@ -3141,5 +3141,103 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-19T19:00:45.275566+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "XPEV",
+        "price": 9.51,
+        "rvol": 1.15,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.83,
+        "rvol": 1.54,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.18,
+        "rvol": 0.78,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.57,
+        "rvol": 1.22,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 17.3,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.79,
+        "rvol": 0.96,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.77,
+        "rvol": 1.45,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 3.0,
+        "rvol": 1.61,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 23.31,
+        "rvol": 0.67,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.47,
+        "rvol": 0.36,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
