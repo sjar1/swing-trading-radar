@@ -5661,5 +5661,106 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-20T19:15:34.553582+00:00",
+    "evaluated": 30,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "RIOT",
+        "price": 16.2,
+        "rvol": 0.9,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 5.28,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.0,
+        "rvol": 1.12,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "OKLO",
+        "price": 20.39,
+        "rvol": 1.01,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 5.45,
+        "rvol": 0.98,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 16.77,
+        "rvol": 0.96,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.33,
+        "rvol": 0.64,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.15,
+        "rvol": 1.21,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 9.93,
+        "rvol": 1.22,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 21.01,
+        "rvol": 1.31,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
