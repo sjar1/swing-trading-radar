@@ -4142,5 +4142,110 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-20T15:30:33.078634+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "RIOT",
+        "price": 16.21,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 5.8,
+        "rvol": 1.31,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.25,
+        "rvol": 1.6,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 5.7,
+        "rvol": 1.65,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.44,
+        "rvol": 0.39,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 2.97,
+        "rvol": 1.06,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "JOBY",
+        "price": 3.92,
+        "rvol": 1.04,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "SMR",
+        "price": 3.54,
+        "rvol": 1.39,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "SOUN",
+        "price": 2.81,
+        "rvol": 1.39,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "RIVN",
+        "price": 10.92,
+        "rvol": 1.45,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
