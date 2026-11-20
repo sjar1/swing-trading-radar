@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T08:45:30.602357+00:00",
+  "generated_at": "2026-11-20T09:00:38.316269+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
