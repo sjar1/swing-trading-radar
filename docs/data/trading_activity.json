@@ -6561,5 +6561,97 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-23T15:30:39.709577+00:00",
+    "evaluated": 29,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "CIFR",
+        "price": 6.56,
+        "rvol": 1.18,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "SNAP",
+        "price": 4.88,
+        "rvol": 1.15,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 17.0,
+        "rvol": 1.03,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WOLF",
+        "price": 22.31,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.57,
+        "rvol": 0.71,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AI",
+        "price": 10.07,
+        "rvol": 1.86,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.69,
+        "rvol": 3.05,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 3.15,
+        "rvol": 1.09,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 2.75,
+        "rvol": 1.37,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "SMR",
+        "price": 3.69,
+        "rvol": 0.99,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
