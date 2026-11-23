@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T12:45:36.734461+00:00",
+  "generated_at": "2026-11-23T13:00:38.593916+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -157,6 +157,23 @@
       "context_date": "2026-11-20"
     },
     {
+      "ticker": "WULF",
+      "price": 10.39,
+      "trade_timestamp": "2026-11-23T13:00:15.185566682Z",
+      "previous_20d_high": 13.82,
+      "gap_to_breakout_pct": 24.82,
+      "ema20": 12.03,
+      "ema50": 13.35,
+      "rsi_previous_close": 37.2,
+      "macd_hist_previous_close": -0.0556,
+      "iex_day_volume": 4074970,
+      "previous_close_rvol": 1.19,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-20"
+    },
+    {
       "ticker": "SNAP",
       "price": 4.54,
       "trade_timestamp": "2026-11-20T20:59:57.619869107Z",
@@ -168,23 +185,6 @@
       "macd_hist_previous_close": -0.0479,
       "iex_day_volume": 3979766,
       "previous_close_rvol": 1.26,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-20"
-    },
-    {
-      "ticker": "WULF",
-      "price": 9.84,
-      "trade_timestamp": "2026-11-20T20:59:57.009389558Z",
-      "previous_20d_high": 13.82,
-      "gap_to_breakout_pct": 28.8,
-      "ema20": 12.03,
-      "ema50": 13.35,
-      "rsi_previous_close": 37.2,
-      "macd_hist_previous_close": -0.0556,
-      "iex_day_volume": 4074970,
-      "previous_close_rvol": 1.19,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
