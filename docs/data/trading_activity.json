@@ -6268,5 +6268,103 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-23T14:45:35.200855+00:00",
+    "evaluated": 28,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "JBLU",
+        "price": 3.53,
+        "rvol": 0.88,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 6.01,
+        "rvol": 2.89,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.32,
+        "rvol": 4.76,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LCID",
+        "price": 2.75,
+        "rvol": 1.16,
+        "failed": [
+          "liquidity",
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.7,
+        "rvol": 1.32,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "SOUN",
+        "price": 2.91,
+        "rvol": 0.93,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 15.41,
+        "rvol": 1.5,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "SMR",
+        "price": 3.68,
+        "rvol": 1.51,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 3.18,
+        "rvol": 1.69,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 6.41,
+        "rvol": 1.79,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
