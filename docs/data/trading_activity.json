@@ -8330,5 +8330,104 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-23T20:00:37.487059+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "AMC",
+        "price": 2.84,
+        "rvol": 0.95,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.6,
+        "rvol": 0.46,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 10.95,
+        "rvol": 1.2,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 23.45,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IREN",
+        "price": 14.65,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 8.28,
+        "rvol": 1.09,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.66,
+        "rvol": 1.08,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 3.0,
+        "rvol": 1.07,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "ASTS",
+        "price": 25.27,
+        "rvol": 1.4,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 7.38,
+        "rvol": 0.96,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
