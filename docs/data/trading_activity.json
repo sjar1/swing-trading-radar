@@ -7833,5 +7833,105 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-23T18:45:31.879984+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "JBLU",
+        "price": 3.58,
+        "rvol": 0.51,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.75,
+        "rvol": 1.18,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 8.34,
+        "rvol": 1.24,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IREN",
+        "price": 14.61,
+        "rvol": 1.28,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 23.45,
+        "rvol": 1.31,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 3.03,
+        "rvol": 1.07,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 7.39,
+        "rvol": 1.05,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 11.05,
+        "rvol": 1.36,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "ASTS",
+        "price": 25.61,
+        "rvol": 1.39,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.94,
+        "rvol": 0.97,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
