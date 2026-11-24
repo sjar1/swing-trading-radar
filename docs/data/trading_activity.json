@@ -8725,5 +8725,102 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-24T15:00:37.305938+00:00",
+    "evaluated": 28,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "SNAP",
+        "price": 5.21,
+        "rvol": 1.14,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.74,
+        "rvol": 0.7,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "ACHR",
+        "price": 2.94,
+        "rvol": 1.17,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 23.08,
+        "rvol": 1.23,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 6.97,
+        "rvol": 1.25,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 5.71,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.75,
+        "rvol": 1.41,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "SMR",
+        "price": 3.37,
+        "rvol": 0.98,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "UPST",
+        "price": 17.27,
+        "rvol": 1.42,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "LCID",
+        "price": 2.81,
+        "rvol": 1.59,
+        "failed": [
+          "liquidity",
+          "ema20_trend"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
