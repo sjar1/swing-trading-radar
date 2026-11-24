@@ -9875,5 +9875,100 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-24T18:00:40.423431+00:00",
+    "evaluated": 29,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "AAL",
+        "price": 12.62,
+        "rvol": 1.06,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "SNAP",
+        "price": 5.02,
+        "rvol": 0.97,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.79,
+        "rvol": 0.74,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.06,
+        "rvol": 0.5,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 2.81,
+        "rvol": 1.19,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.59,
+        "rvol": 1.18,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 6.7,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.0,
+        "rvol": 1.36,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 22.34,
+        "rvol": 1.4,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IREN",
+        "price": 12.68,
+        "rvol": 1.42,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
