@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T13:45:28.794207+00:00",
+  "generated_at": "2026-11-24T14:00:35.009485+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -22,10 +22,10 @@
     },
     {
       "ticker": "RIOT",
-      "price": 17.14,
-      "trade_timestamp": "2026-11-23T20:59:59.97434709Z",
+      "price": 16.6,
+      "trade_timestamp": "2026-11-24T13:52:16.600652832Z",
       "previous_20d_high": 19.79,
-      "gap_to_breakout_pct": 13.37,
+      "gap_to_breakout_pct": 16.12,
       "ema20": 16.62,
       "ema50": 17.32,
       "rsi_previous_close": 52.6,
@@ -294,10 +294,10 @@
     },
     {
       "ticker": "MARA",
-      "price": 5.32,
-      "trade_timestamp": "2026-11-24T13:45:01.354055299Z",
+      "price": 5.31,
+      "trade_timestamp": "2026-11-24T13:59:09.331214433Z",
       "previous_20d_high": 7.95,
-      "gap_to_breakout_pct": 33.08,
+      "gap_to_breakout_pct": 33.21,
       "ema20": 6.78,
       "ema50": 8.21,
       "rsi_previous_close": 35.8,
@@ -328,10 +328,10 @@
     },
     {
       "ticker": "SOUN",
-      "price": 2.89,
-      "trade_timestamp": "2026-11-23T20:59:55.522185252Z",
+      "price": 2.81,
+      "trade_timestamp": "2026-11-24T13:59:26.621912383Z",
       "previous_20d_high": 4.5,
-      "gap_to_breakout_pct": 35.73,
+      "gap_to_breakout_pct": 37.51,
       "ema20": 3.65,
       "ema50": 4.57,
       "rsi_previous_close": 25.3,
@@ -465,7 +465,7 @@
     {
       "ticker": "SMR",
       "price": 3.38,
-      "trade_timestamp": "2026-11-24T13:17:23.692480434Z",
+      "trade_timestamp": "2026-11-24T13:58:28.737737269Z",
       "previous_20d_high": 6.11,
       "gap_to_breakout_pct": 44.68,
       "ema20": 4.71,
