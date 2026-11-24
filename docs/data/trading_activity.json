@@ -10842,5 +10842,103 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-24T20:30:36.501825+00:00",
+    "evaluated": 29,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "JBLU",
+        "price": 3.73,
+        "rvol": 0.6,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.16,
+        "rvol": 1.12,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 22.34,
+        "rvol": 1.09,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 6.72,
+        "rvol": 1.08,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IREN",
+        "price": 12.77,
+        "rvol": 1.02,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.54,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AAL",
+        "price": 12.5,
+        "rvol": 0.95,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "SNAP",
+        "price": 4.89,
+        "rvol": 0.71,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 16.21,
+        "rvol": 0.66,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.98,
+        "rvol": 0.52,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
