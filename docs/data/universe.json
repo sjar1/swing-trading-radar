@@ -1,278 +1,278 @@
 {
-  "generated_at": "2026-11-21T03:20:43.579477+00:00",
+  "generated_at": "2026-11-24T06:13:43.093680+00:00",
   "selection_method": "Curated candidate pool; price $2-$25, 20d dollar volume >=$5m, 20d range/return/liquidity ranking",
   "tickers": [
     "RIOT",
     "JBLU",
     "CHPT",
+    "AMC",
+    "LUNR",
+    "NCLH",
+    "WULF",
     "ACHR",
-    "ASTS",
     "CIFR",
     "CLSK",
     "HIMS",
     "IONQ",
     "IREN",
-    "LUNR",
     "MARA",
     "OKLO",
     "QBTS",
     "RGTI",
     "SMR",
     "WOLF",
-    "WULF",
     "LCID",
-    "NCLH",
-    "JOBY",
     "QS",
-    "AMC",
+    "JOBY",
+    "GRAB",
+    "AAL",
+    "RIVN",
     "SOUN",
-    "LYFT",
     "UPST",
     "SNAP",
     "NNE",
-    "GRAB",
-    "AI"
+    "LYFT"
   ],
   "candidates": [
     {
       "ticker": "RIOT",
-      "price": 16.23,
-      "avg_dollar_volume_20d": 477511788,
-      "avg_intraday_range_pct_20d": 9.31,
-      "return_20d_pct": 29.53,
+      "price": 17.15,
+      "avg_dollar_volume_20d": 487371166,
+      "avg_intraday_range_pct_20d": 9.35,
+      "return_20d_pct": 36.22,
       "rank_score": 100.0
     },
     {
       "ticker": "JBLU",
-      "price": 3.32,
-      "avg_dollar_volume_20d": 101525454,
-      "avg_intraday_range_pct_20d": 7.49,
-      "return_20d_pct": 26.24,
-      "rank_score": 97.12
+      "price": 3.63,
+      "avg_dollar_volume_20d": 96311481,
+      "avg_intraday_range_pct_20d": 6.87,
+      "return_20d_pct": 53.16,
+      "rank_score": 93.65
     },
     {
       "ticker": "CHPT",
-      "price": 8.72,
-      "avg_dollar_volume_20d": 9207405,
-      "avg_intraday_range_pct_20d": 8.09,
-      "return_20d_pct": 4.43,
-      "rank_score": 65.52
+      "price": 9.21,
+      "avg_dollar_volume_20d": 9181253,
+      "avg_intraday_range_pct_20d": 8.14,
+      "return_20d_pct": 11.77,
+      "rank_score": 74.07
+    },
+    {
+      "ticker": "AMC",
+      "price": 2.86,
+      "avg_dollar_volume_20d": 76661921,
+      "avg_intraday_range_pct_20d": 7.24,
+      "return_20d_pct": -1.04,
+      "rank_score": 71.19
+    },
+    {
+      "ticker": "LUNR",
+      "price": 9.75,
+      "avg_dollar_volume_20d": 113966661,
+      "avg_intraday_range_pct_20d": 10.25,
+      "return_20d_pct": -6.97,
+      "rank_score": 68.54
+    },
+    {
+      "ticker": "NCLH",
+      "price": 16.99,
+      "avg_dollar_volume_20d": 386117760,
+      "avg_intraday_range_pct_20d": 4.11,
+      "return_20d_pct": 11.41,
+      "rank_score": 68.08
+    },
+    {
+      "ticker": "WULF",
+      "price": 10.91,
+      "avg_dollar_volume_20d": 626966025,
+      "avg_intraday_range_pct_20d": 10.29,
+      "return_20d_pct": -8.93,
+      "rank_score": 66.25
     },
     {
       "ticker": "ACHR",
-      "price": 2.91,
-      "avg_dollar_volume_20d": 109480177,
-      "avg_intraday_range_pct_20d": 8.57,
-      "return_20d_pct": -25.58,
-      "rank_score": 65.0
-    },
-    {
-      "ticker": "ASTS",
-      "price": 23.27,
-      "avg_dollar_volume_20d": 622269462,
-      "avg_intraday_range_pct_20d": 11.06,
-      "return_20d_pct": -41.52,
+      "price": 3.07,
+      "avg_dollar_volume_20d": 110114934,
+      "avg_intraday_range_pct_20d": 8.73,
+      "return_20d_pct": -22.08,
       "rank_score": 65.0
     },
     {
       "ticker": "CIFR",
-      "price": 5.43,
-      "avg_dollar_volume_20d": 380969446,
-      "avg_intraday_range_pct_20d": 12.31,
-      "return_20d_pct": -31.55,
+      "price": 6.2,
+      "avg_dollar_volume_20d": 379227782,
+      "avg_intraday_range_pct_20d": 12.36,
+      "return_20d_pct": -19.58,
       "rank_score": 65.0
     },
     {
       "ticker": "CLSK",
-      "price": 4.89,
-      "avg_dollar_volume_20d": 134298195,
-      "avg_intraday_range_pct_20d": 10.16,
-      "return_20d_pct": -37.94,
+      "price": 5.53,
+      "avg_dollar_volume_20d": 132532345,
+      "avg_intraday_range_pct_20d": 10.29,
+      "return_20d_pct": -28.83,
       "rank_score": 65.0
     },
     {
       "ticker": "HIMS",
-      "price": 14.6,
-      "avg_dollar_volume_20d": 354959442,
-      "avg_intraday_range_pct_20d": 8.3,
-      "return_20d_pct": -47.31,
+      "price": 15.06,
+      "avg_dollar_volume_20d": 356121267,
+      "avg_intraday_range_pct_20d": 8.44,
+      "return_20d_pct": -45.42,
       "rank_score": 65.0
     },
     {
       "ticker": "IONQ",
-      "price": 20.72,
-      "avg_dollar_volume_20d": 681085965,
-      "avg_intraday_range_pct_20d": 8.69,
-      "return_20d_pct": -33.74,
+      "price": 23.34,
+      "avg_dollar_volume_20d": 685753379,
+      "avg_intraday_range_pct_20d": 8.8,
+      "return_20d_pct": -24.12,
       "rank_score": 65.0
     },
     {
       "ticker": "IREN",
-      "price": 11.82,
-      "avg_dollar_volume_20d": 1553245232,
-      "avg_intraday_range_pct_20d": 10.91,
-      "return_20d_pct": -52.54,
-      "rank_score": 65.0
-    },
-    {
-      "ticker": "LUNR",
-      "price": 8.77,
-      "avg_dollar_volume_20d": 110973860,
-      "avg_intraday_range_pct_20d": 10.15,
-      "return_20d_pct": -16.59,
+      "price": 14.64,
+      "avg_dollar_volume_20d": 1570956552,
+      "avg_intraday_range_pct_20d": 10.85,
+      "return_20d_pct": -42.43,
       "rank_score": 65.0
     },
     {
       "ticker": "MARA",
-      "price": 5.09,
-      "avg_dollar_volume_20d": 272746953,
-      "avg_intraday_range_pct_20d": 9.32,
-      "return_20d_pct": -27.49,
+      "price": 5.58,
+      "avg_dollar_volume_20d": 273841405,
+      "avg_intraday_range_pct_20d": 9.68,
+      "return_20d_pct": -18.42,
       "rank_score": 65.0
     },
     {
       "ticker": "OKLO",
-      "price": 19.85,
-      "avg_dollar_volume_20d": 252254939,
-      "avg_intraday_range_pct_20d": 8.68,
-      "return_20d_pct": -24.67,
+      "price": 20.77,
+      "avg_dollar_volume_20d": 252659125,
+      "avg_intraday_range_pct_20d": 8.83,
+      "return_20d_pct": -19.93,
       "rank_score": 65.0
     },
     {
       "ticker": "QBTS",
-      "price": 6.52,
-      "avg_dollar_volume_20d": 158549082,
-      "avg_intraday_range_pct_20d": 8.73,
-      "return_20d_pct": -44.08,
+      "price": 7.31,
+      "avg_dollar_volume_20d": 160605065,
+      "avg_intraday_range_pct_20d": 8.95,
+      "return_20d_pct": -36.66,
       "rank_score": 65.0
     },
     {
       "ticker": "RGTI",
-      "price": 7.16,
-      "avg_dollar_volume_20d": 186778706,
-      "avg_intraday_range_pct_20d": 9.02,
-      "return_20d_pct": -37.85,
+      "price": 8.1,
+      "avg_dollar_volume_20d": 188470669,
+      "avg_intraday_range_pct_20d": 9.12,
+      "return_20d_pct": -29.24,
       "rank_score": 65.0
     },
     {
       "ticker": "SMR",
-      "price": 3.36,
-      "avg_dollar_volume_20d": 156812581,
-      "avg_intraday_range_pct_20d": 8.98,
-      "return_20d_pct": -37.55,
+      "price": 3.53,
+      "avg_dollar_volume_20d": 154609988,
+      "avg_intraday_range_pct_20d": 9.22,
+      "return_20d_pct": -33.02,
       "rank_score": 65.0
     },
     {
       "ticker": "WOLF",
-      "price": 19.22,
-      "avg_dollar_volume_20d": 69751563,
-      "avg_intraday_range_pct_20d": 9.49,
-      "return_20d_pct": -16.18,
-      "rank_score": 65.0
-    },
-    {
-      "ticker": "WULF",
-      "price": 9.85,
-      "avg_dollar_volume_20d": 625031210,
-      "avg_intraday_range_pct_20d": 10.3,
-      "return_20d_pct": -12.99,
+      "price": 20.67,
+      "avg_dollar_volume_20d": 70162062,
+      "avg_intraday_range_pct_20d": 9.69,
+      "return_20d_pct": -11.59,
       "rank_score": 65.0
     },
     {
       "ticker": "LCID",
-      "price": 2.5,
-      "avg_dollar_volume_20d": 43904155,
-      "avg_intraday_range_pct_20d": 9.44,
-      "return_20d_pct": -28.98,
-      "rank_score": 62.56
-    },
-    {
-      "ticker": "NCLH",
-      "price": 15.99,
-      "avg_dollar_volume_20d": 384636979,
-      "avg_intraday_range_pct_20d": 4.09,
-      "return_20d_pct": 5.89,
-      "rank_score": 61.54
-    },
-    {
-      "ticker": "JOBY",
-      "price": 3.6,
-      "avg_dollar_volume_20d": 110859028,
-      "avg_intraday_range_pct_20d": 7.15,
-      "return_20d_pct": -24.37,
-      "rank_score": 60.23
+      "price": 2.61,
+      "avg_dollar_volume_20d": 44031652,
+      "avg_intraday_range_pct_20d": 9.58,
+      "return_20d_pct": -23.24,
+      "rank_score": 62.61
     },
     {
       "ticker": "QS",
-      "price": 2.79,
-      "avg_dollar_volume_20d": 61985300,
-      "avg_intraday_range_pct_20d": 7.13,
-      "return_20d_pct": -30.77,
-      "rank_score": 60.11
+      "price": 2.93,
+      "avg_dollar_volume_20d": 62932165,
+      "avg_intraday_range_pct_20d": 7.42,
+      "return_20d_pct": -24.87,
+      "rank_score": 61.74
     },
     {
-      "ticker": "AMC",
-      "price": 2.57,
-      "avg_dollar_volume_20d": 75754260,
-      "avg_intraday_range_pct_20d": 7.01,
-      "return_20d_pct": -11.38,
-      "rank_score": 59.44
-    },
-    {
-      "ticker": "SOUN",
-      "price": 2.61,
-      "avg_dollar_volume_20d": 74547893,
-      "avg_intraday_range_pct_20d": 6.55,
-      "return_20d_pct": -41.08,
-      "rank_score": 56.85
-    },
-    {
-      "ticker": "LYFT",
-      "price": 16.48,
-      "avg_dollar_volume_20d": 205528737,
-      "avg_intraday_range_pct_20d": 4.74,
-      "return_20d_pct": -2.72,
-      "rank_score": 55.17
-    },
-    {
-      "ticker": "UPST",
-      "price": 15.66,
-      "avg_dollar_volume_20d": 116048333,
-      "avg_intraday_range_pct_20d": 6.23,
-      "return_20d_pct": -34.15,
-      "rank_score": 55.07
-    },
-    {
-      "ticker": "SNAP",
-      "price": 4.55,
-      "avg_dollar_volume_20d": 260108379,
-      "avg_intraday_range_pct_20d": 6.06,
-      "return_20d_pct": -28.23,
-      "rank_score": 54.11
-    },
-    {
-      "ticker": "NNE",
-      "price": 9.1,
-      "avg_dollar_volume_20d": 22750983,
-      "avg_intraday_range_pct_20d": 8.46,
-      "return_20d_pct": -25.16,
-      "rank_score": 54.1
+      "ticker": "JOBY",
+      "price": 3.85,
+      "avg_dollar_volume_20d": 112038861,
+      "avg_intraday_range_pct_20d": 7.26,
+      "return_20d_pct": -17.91,
+      "rank_score": 60.81
     },
     {
       "ticker": "GRAB",
-      "price": 2.75,
-      "avg_dollar_volume_20d": 270779177,
-      "avg_intraday_range_pct_20d": 4.24,
-      "return_20d_pct": -1.43,
-      "rank_score": 53.83
+      "price": 2.81,
+      "avg_dollar_volume_20d": 273574128,
+      "avg_intraday_range_pct_20d": 4.16,
+      "return_20d_pct": 3.69,
+      "rank_score": 59.36
     },
     {
-      "ticker": "AI",
-      "price": 9.13,
-      "avg_dollar_volume_20d": 47494111,
-      "avg_intraday_range_pct_20d": 5.76,
-      "return_20d_pct": -26.73,
-      "rank_score": 51.37
+      "ticker": "AAL",
+      "price": 12.72,
+      "avg_dollar_volume_20d": 801052438,
+      "avg_intraday_range_pct_20d": 3.93,
+      "return_20d_pct": 4.26,
+      "rank_score": 58.74
+    },
+    {
+      "ticker": "RIVN",
+      "price": 11.22,
+      "avg_dollar_volume_20d": 425791635,
+      "avg_intraday_range_pct_20d": 5.08,
+      "return_20d_pct": -1.84,
+      "rank_score": 58.12
+    },
+    {
+      "ticker": "SOUN",
+      "price": 2.89,
+      "avg_dollar_volume_20d": 73954308,
+      "avg_intraday_range_pct_20d": 6.51,
+      "return_20d_pct": -31.72,
+      "rank_score": 56.63
+    },
+    {
+      "ticker": "UPST",
+      "price": 16.98,
+      "avg_dollar_volume_20d": 116166142,
+      "avg_intraday_range_pct_20d": 6.23,
+      "return_20d_pct": -26.17,
+      "rank_score": 55.05
+    },
+    {
+      "ticker": "SNAP",
+      "price": 4.92,
+      "avg_dollar_volume_20d": 256840431,
+      "avg_intraday_range_pct_20d": 6.1,
+      "return_20d_pct": -22.4,
+      "rank_score": 54.32
+    },
+    {
+      "ticker": "NNE",
+      "price": 9.47,
+      "avg_dollar_volume_20d": 22568024,
+      "avg_intraday_range_pct_20d": 8.74,
+      "return_20d_pct": -20.15,
+      "rank_score": 54.03
+    },
+    {
+      "ticker": "LYFT",
+      "price": 16.22,
+      "avg_dollar_volume_20d": 204061865,
+      "avg_intraday_range_pct_20d": 4.82,
+      "return_20d_pct": -4.92,
+      "rank_score": 53.01
     }
   ],
   "pool_size": 84,
