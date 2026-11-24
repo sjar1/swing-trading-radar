@@ -9780,5 +9780,100 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-24T17:45:31.411453+00:00",
+    "evaluated": 28,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "SNAP",
+        "price": 5.04,
+        "rvol": 1.01,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 15.89,
+        "rvol": 0.92,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.77,
+        "rvol": 0.75,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.06,
+        "rvol": 0.39,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.63,
+        "rvol": 1.19,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 2.81,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 6.76,
+        "rvol": 1.28,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "SOUN",
+        "price": 2.69,
+        "rvol": 1.01,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 22.57,
+        "rvol": 1.42,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 5.02,
+        "rvol": 1.43,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
