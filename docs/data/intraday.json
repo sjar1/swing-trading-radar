@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T13:00:41.880924+00:00",
+  "generated_at": "2026-11-24T13:15:31.163088+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -157,23 +157,6 @@
       "context_date": "2026-11-23"
     },
     {
-      "ticker": "GRAB",
-      "price": 2.81,
-      "trade_timestamp": "2026-11-23T20:59:35.304158291Z",
-      "previous_20d_high": 3.56,
-      "gap_to_breakout_pct": 21.21,
-      "ema20": 3.07,
-      "ema50": 3.11,
-      "rsi_previous_close": 37.8,
-      "macd_hist_previous_close": -0.0514,
-      "iex_day_volume": 3823738,
-      "previous_close_rvol": 0.81,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-23"
-    },
-    {
       "ticker": "RIVN",
       "price": 11.21,
       "trade_timestamp": "2026-11-23T21:00:00.125087374Z",
@@ -185,6 +168,23 @@
       "macd_hist_previous_close": -0.1815,
       "iex_day_volume": 1451865,
       "previous_close_rvol": 0.95,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-23"
+    },
+    {
+      "ticker": "GRAB",
+      "price": 2.76,
+      "trade_timestamp": "2026-11-24T13:10:00.126390849Z",
+      "previous_20d_high": 3.56,
+      "gap_to_breakout_pct": 22.47,
+      "ema20": 3.07,
+      "ema50": 3.11,
+      "rsi_previous_close": 37.8,
+      "macd_hist_previous_close": -0.0514,
+      "iex_day_volume": 3823738,
+      "previous_close_rvol": 0.81,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
@@ -464,10 +464,10 @@
     },
     {
       "ticker": "SMR",
-      "price": 3.53,
-      "trade_timestamp": "2026-11-23T20:59:54.757221754Z",
+      "price": 3.38,
+      "trade_timestamp": "2026-11-24T13:08:37.046835774Z",
       "previous_20d_high": 6.11,
-      "gap_to_breakout_pct": 42.23,
+      "gap_to_breakout_pct": 44.68,
       "ema20": 4.71,
       "ema50": 6.02,
       "rsi_previous_close": 27.9,
