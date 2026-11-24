@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T14:00:35.009485+00:00",
+  "generated_at": "2026-11-24T14:15:31.615463+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -209,10 +209,10 @@
     },
     {
       "ticker": "AMC",
-      "price": 2.86,
-      "trade_timestamp": "2026-11-23T20:59:51.981456861Z",
+      "price": 2.82,
+      "trade_timestamp": "2026-11-24T14:02:06.38951689Z",
       "previous_20d_high": 3.77,
-      "gap_to_breakout_pct": 24.14,
+      "gap_to_breakout_pct": 25.2,
       "ema20": 3.06,
       "ema50": 2.97,
       "rsi_previous_close": 44.3,
@@ -294,10 +294,10 @@
     },
     {
       "ticker": "MARA",
-      "price": 5.31,
-      "trade_timestamp": "2026-11-24T13:59:09.331214433Z",
+      "price": 5.34,
+      "trade_timestamp": "2026-11-24T14:12:24.48163126Z",
       "previous_20d_high": 7.95,
-      "gap_to_breakout_pct": 33.21,
+      "gap_to_breakout_pct": 32.83,
       "ema20": 6.78,
       "ema50": 8.21,
       "rsi_previous_close": 35.8,
@@ -464,10 +464,10 @@
     },
     {
       "ticker": "SMR",
-      "price": 3.38,
-      "trade_timestamp": "2026-11-24T13:58:28.737737269Z",
+      "price": 3.39,
+      "trade_timestamp": "2026-11-24T14:02:21.93076203Z",
       "previous_20d_high": 6.11,
-      "gap_to_breakout_pct": 44.68,
+      "gap_to_breakout_pct": 44.52,
       "ema20": 4.71,
       "ema50": 6.02,
       "rsi_previous_close": 27.9,
