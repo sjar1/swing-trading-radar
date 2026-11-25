@@ -12388,5 +12388,100 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-25T19:15:36.101031+00:00",
+    "evaluated": 29,
+    "qualified": [
+      "RIOT"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 9.28,
+        "rvol": 1.23,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.88,
+        "rvol": 1.06,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 17.16,
+        "rvol": 0.91,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.13,
+        "rvol": 0.85,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.11,
+        "rvol": 0.68,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.79,
+        "rvol": 0.66,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 8.02,
+        "rvol": 1.22,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 23.73,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 6.99,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 10.12,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
