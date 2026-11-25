@@ -11622,5 +11622,101 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-25T17:15:36.395851+00:00",
+    "evaluated": 28,
+    "qualified": [
+      "LYFT"
+    ],
+    "closest": [
+      {
+        "ticker": "RIOT",
+        "price": 16.22,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.97,
+        "rvol": 1.27,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.85,
+        "rvol": 1.02,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.08,
+        "rvol": 0.7,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.75,
+        "rvol": 0.61,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 22.11,
+        "rvol": 1.17,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.43,
+        "rvol": 1.25,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "SOUN",
+        "price": 2.54,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 14.34,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "IREN",
+        "price": 12.19,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
