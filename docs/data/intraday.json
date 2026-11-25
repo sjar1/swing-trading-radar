@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-25T21:00:34.708731+00:00",
+  "generated_at": "2026-11-25T21:15:30.575081+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -98,7 +98,7 @@
       "ema50": 8.65,
       "rsi_previous_close": 32.9,
       "macd_hist_previous_close": 0.0084,
-      "iex_day_volume": 2266061,
+      "iex_day_volume": 2266154,
       "previous_close_rvol": 1.01,
       "early_warning": false,
       "breakout_above_prior_high": false,
@@ -285,7 +285,7 @@
       "ema50": 32.54,
       "rsi_previous_close": 35.1,
       "macd_hist_previous_close": -0.6218,
-      "iex_day_volume": 898626,
+      "iex_day_volume": 898696,
       "previous_close_rvol": 0.75,
       "early_warning": false,
       "breakout_above_prior_high": false,
@@ -438,7 +438,7 @@
       "ema50": 42.14,
       "rsi_previous_close": 31.0,
       "macd_hist_previous_close": -0.3238,
-      "iex_day_volume": 1080072,
+      "iex_day_volume": 1080099,
       "previous_close_rvol": 0.81,
       "early_warning": false,
       "breakout_above_prior_high": false,
