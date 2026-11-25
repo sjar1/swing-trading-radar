@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-25T04:45:28.981149+00:00",
+  "generated_at": "2026-11-25T05:00:35.357222+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -86,23 +86,6 @@
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 15,
-      "context_date": "2026-11-24"
-    },
-    {
-      "ticker": "AAL",
-      "price": 12.6,
-      "trade_timestamp": "2026-11-24T20:59:57.417787579Z",
-      "previous_20d_high": 14.37,
-      "gap_to_breakout_pct": 12.32,
-      "ema20": 12.91,
-      "ema50": 13.09,
-      "rsi_previous_close": 46.5,
-      "macd_hist_previous_close": -0.1067,
-      "iex_day_volume": 2324245,
-      "previous_close_rvol": 1.01,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
       "context_date": "2026-11-24"
     },
     {
@@ -474,6 +457,23 @@
       "macd_hist_previous_close": -0.0768,
       "iex_day_volume": 1228023,
       "previous_close_rvol": 0.86,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-24"
+    },
+    {
+      "ticker": "ASTS",
+      "price": 23.59,
+      "trade_timestamp": "2026-11-24T20:59:58.963650891Z",
+      "previous_20d_high": 44.85,
+      "gap_to_breakout_pct": 47.41,
+      "ema20": 31.94,
+      "ema50": 42.14,
+      "rsi_previous_close": 31.0,
+      "macd_hist_previous_close": -0.3238,
+      "iex_day_volume": 875944,
+      "previous_close_rvol": 0.8,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
