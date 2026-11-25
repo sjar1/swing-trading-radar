@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-25T15:30:33.323651+00:00",
+  "generated_at": "2026-11-25T16:30:35.973919+00:00",
   "mode": "intraday_iex",
   "signals": [
     {
       "ticker": "RIOT",
       "date": "2026-11-25",
-      "price": 15.41,
-      "rvol": 2.18,
-      "rsi": 44.6,
+      "price": 15.62,
+      "rvol": 1.52,
+      "rsi": 45.5,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -18,11 +18,10 @@
         "ema20_trend": false,
         "projected_rvol": true,
         "rsi": true,
-        "macd_positive_or_improving": false
+        "macd_positive_or_improving": true
       },
       "rejection_reasons": [
-        "ema20_trend",
-        "macd_positive_or_improving"
+        "ema20_trend"
       ],
       "prior_20d_high": 19.79,
       "data_source": "Alpaca IEX daily bars; partial current session",
@@ -33,8 +32,8 @@
       "ticker": "JBLU",
       "date": "2026-11-25",
       "price": 3.6,
-      "rvol": 0.72,
-      "rsi": 51.0,
+      "rvol": 0.54,
+      "rsi": 50.9,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -58,9 +57,9 @@
     {
       "ticker": "AMC",
       "date": "2026-11-25",
-      "price": 2.96,
-      "rvol": 0.65,
-      "rsi": 47.3,
+      "price": 3.02,
+      "rvol": 0.72,
+      "rsi": 49.2,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -85,9 +84,9 @@
     {
       "ticker": "ACHR",
       "date": "2026-11-25",
-      "price": 2.75,
-      "rvol": 1.53,
-      "rsi": 28.8,
+      "price": 2.85,
+      "rvol": 1.56,
+      "rsi": 29.9,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -98,12 +97,11 @@
         "ema20_trend": false,
         "projected_rvol": true,
         "rsi": false,
-        "macd_positive_or_improving": false
+        "macd_positive_or_improving": true
       },
       "rejection_reasons": [
         "ema20_trend",
-        "rsi",
-        "macd_positive_or_improving"
+        "rsi"
       ],
       "prior_20d_high": 5.07,
       "data_source": "Alpaca IEX daily bars; partial current session",
@@ -113,9 +111,9 @@
     {
       "ticker": "ASTS",
       "date": "2026-11-25",
-      "price": 22.64,
-      "rvol": 1.79,
-      "rsi": 30.0,
+      "price": 23.23,
+      "rvol": 1.47,
+      "rsi": 30.6,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -140,9 +138,9 @@
     {
       "ticker": "CIFR",
       "date": "2026-11-25",
-      "price": 5.22,
-      "rvol": 1.42,
-      "rsi": 33.3,
+      "price": 5.26,
+      "rvol": 0.98,
+      "rsi": 33.5,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -168,7 +166,7 @@
       "ticker": "CLSK",
       "date": "2026-11-25",
       "price": 4.82,
-      "rvol": 2.51,
+      "rvol": 2.25,
       "rsi": 31.3,
       "score": 0,
       "strategy": "watch",
@@ -195,8 +193,8 @@
     {
       "ticker": "HIMS",
       "date": "2026-11-25",
-      "price": 13.88,
-      "rvol": 1.32,
+      "price": 13.94,
+      "rvol": 1.1,
       "rsi": 24.9,
       "score": 0,
       "strategy": "watch",
@@ -222,9 +220,9 @@
     {
       "ticker": "IONQ",
       "date": "2026-11-25",
-      "price": 20.62,
-      "rvol": 1.15,
-      "rsi": 32.5,
+      "price": 21.21,
+      "rvol": 1.16,
+      "rsi": 33.3,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -235,12 +233,11 @@
         "ema20_trend": false,
         "projected_rvol": true,
         "rsi": false,
-        "macd_positive_or_improving": false
+        "macd_positive_or_improving": true
       },
       "rejection_reasons": [
         "ema20_trend",
-        "rsi",
-        "macd_positive_or_improving"
+        "rsi"
       ],
       "prior_20d_high": 36.34,
       "data_source": "Alpaca IEX daily bars; partial current session",
@@ -250,9 +247,9 @@
     {
       "ticker": "IREN",
       "date": "2026-11-25",
-      "price": 11.66,
-      "rvol": 1.95,
-      "rsi": 29.4,
+      "price": 11.71,
+      "rvol": 1.32,
+      "rsi": 29.5,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -278,9 +275,9 @@
     {
       "ticker": "LUNR",
       "date": "2026-11-25",
-      "price": 8.04,
-      "rvol": 1.77,
-      "rsi": 35.4,
+      "price": 8.18,
+      "rvol": 1.63,
+      "rsi": 35.8,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -306,9 +303,9 @@
     {
       "ticker": "MARA",
       "date": "2026-11-25",
-      "price": 5.22,
-      "rvol": 1.81,
-      "rsi": 33.6,
+      "price": 5.25,
+      "rvol": 1.25,
+      "rsi": 33.8,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -334,8 +331,8 @@
     {
       "ticker": "OKLO",
       "date": "2026-11-25",
-      "price": 17.49,
-      "rvol": 1.75,
+      "price": 17.51,
+      "rvol": 1.44,
       "rsi": 29.5,
       "score": 0,
       "strategy": "watch",
@@ -362,9 +359,9 @@
     {
       "ticker": "QBTS",
       "date": "2026-11-25",
-      "price": 6.16,
-      "rvol": 1.39,
-      "rsi": 27.1,
+      "price": 6.2,
+      "rvol": 1.4,
+      "rsi": 27.2,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -390,9 +387,9 @@
     {
       "ticker": "RGTI",
       "date": "2026-11-25",
-      "price": 7.0,
-      "rvol": 1.36,
-      "rsi": 31.0,
+      "price": 7.09,
+      "rvol": 1.37,
+      "rsi": 31.3,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -403,12 +400,11 @@
         "ema20_trend": false,
         "projected_rvol": true,
         "rsi": false,
-        "macd_positive_or_improving": false
+        "macd_positive_or_improving": true
       },
       "rejection_reasons": [
         "ema20_trend",
-        "rsi",
-        "macd_positive_or_improving"
+        "rsi"
       ],
       "prior_20d_high": 13.22,
       "data_source": "Alpaca IEX daily bars; partial current session",
@@ -418,9 +414,9 @@
     {
       "ticker": "SMR",
       "date": "2026-11-25",
-      "price": 3.02,
-      "rvol": 1.25,
-      "rsi": 24.2,
+      "price": 3.06,
+      "rvol": 1.0,
+      "rsi": 24.5,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -446,9 +442,9 @@
     {
       "ticker": "WOLF",
       "date": "2026-11-25",
-      "price": 16.39,
-      "rvol": 2.19,
-      "rsi": 33.8,
+      "price": 16.65,
+      "rvol": 1.46,
+      "rsi": 34.2,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -474,9 +470,9 @@
     {
       "ticker": "WULF",
       "date": "2026-11-25",
-      "price": 9.34,
-      "rvol": 2.18,
-      "rsi": 37.5,
+      "price": 9.44,
+      "rvol": 1.52,
+      "rsi": 37.9,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -502,9 +498,9 @@
     {
       "ticker": "NCLH",
       "date": "2026-11-25",
-      "price": 16.64,
-      "rvol": 1.38,
-      "rsi": 46.9,
+      "price": 16.63,
+      "rvol": 1.16,
+      "rsi": 46.8,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -529,9 +525,9 @@
     {
       "ticker": "LCID",
       "date": "2026-11-25",
-      "price": 2.54,
-      "rvol": 1.0,
-      "rsi": 36.5,
+      "price": 2.5,
+      "rvol": 0.82,
+      "rsi": 35.9,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -540,14 +536,16 @@
         "price": true,
         "liquidity": false,
         "ema20_trend": false,
-        "projected_rvol": true,
+        "projected_rvol": false,
         "rsi": false,
-        "macd_positive_or_improving": true
+        "macd_positive_or_improving": false
       },
       "rejection_reasons": [
         "liquidity",
         "ema20_trend",
-        "rsi"
+        "projected_rvol",
+        "rsi",
+        "macd_positive_or_improving"
       ],
       "prior_20d_high": 4.2,
       "data_source": "Alpaca IEX daily bars; partial current session",
@@ -557,9 +555,9 @@
     {
       "ticker": "JOBY",
       "date": "2026-11-25",
-      "price": 3.44,
-      "rvol": 2.22,
-      "rsi": 27.9,
+      "price": 3.46,
+      "rvol": 1.77,
+      "rsi": 28.2,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -584,9 +582,9 @@
     {
       "ticker": "QS",
       "date": "2026-11-25",
-      "price": 2.67,
-      "rvol": 1.23,
-      "rsi": 26.5,
+      "price": 2.68,
+      "rvol": 0.92,
+      "rsi": 26.6,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -609,41 +607,11 @@
       "avg_iex_daily_dollar_volume": 3340321.54
     },
     {
-      "ticker": "CHPT",
-      "date": "2026-11-25",
-      "price": 8.12,
-      "rvol": 0.41,
-      "rsi": 37.5,
-      "score": 0,
-      "strategy": "watch",
-      "qualified": false,
-      "stop_reference": null,
-      "filter_checks": {
-        "price": true,
-        "liquidity": false,
-        "ema20_trend": false,
-        "projected_rvol": false,
-        "rsi": false,
-        "macd_positive_or_improving": false
-      },
-      "rejection_reasons": [
-        "liquidity",
-        "ema20_trend",
-        "projected_rvol",
-        "rsi",
-        "macd_positive_or_improving"
-      ],
-      "prior_20d_high": 12.95,
-      "data_source": "Alpaca IEX daily bars; partial current session",
-      "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
-      "avg_iex_daily_dollar_volume": 355357.07
-    },
-    {
       "ticker": "GRAB",
       "date": "2026-11-25",
-      "price": 2.73,
-      "rvol": 0.87,
-      "rsi": 34.7,
+      "price": 2.75,
+      "rvol": 0.92,
+      "rsi": 35.4,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -652,13 +620,12 @@
         "price": true,
         "liquidity": true,
         "ema20_trend": false,
-        "projected_rvol": false,
+        "projected_rvol": true,
         "rsi": false,
         "macd_positive_or_improving": false
       },
       "rejection_reasons": [
         "ema20_trend",
-        "projected_rvol",
         "rsi",
         "macd_positive_or_improving"
       ],
@@ -670,9 +637,9 @@
     {
       "ticker": "SOUN",
       "date": "2026-11-25",
-      "price": 2.44,
-      "rvol": 1.77,
-      "rsi": 20.8,
+      "price": 2.42,
+      "rvol": 1.3,
+      "rsi": 20.5,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -696,11 +663,39 @@
       "avg_iex_daily_dollar_volume": 3150997.82
     },
     {
+      "ticker": "UPST",
+      "date": "2026-11-25",
+      "price": 16.31,
+      "rvol": 0.38,
+      "rsi": 30.7,
+      "score": 0,
+      "strategy": "watch",
+      "qualified": false,
+      "stop_reference": null,
+      "filter_checks": {
+        "price": true,
+        "liquidity": true,
+        "ema20_trend": false,
+        "projected_rvol": false,
+        "rsi": false,
+        "macd_positive_or_improving": true
+      },
+      "rejection_reasons": [
+        "ema20_trend",
+        "projected_rvol",
+        "rsi"
+      ],
+      "prior_20d_high": 24.9,
+      "data_source": "Alpaca IEX daily bars; partial current session",
+      "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
+      "avg_iex_daily_dollar_volume": 5686940.09
+    },
+    {
       "ticker": "RIVN",
       "date": "2026-11-25",
-      "price": 10.96,
-      "rvol": 0.84,
-      "rsi": 36.9,
+      "price": 11.1,
+      "rvol": 0.71,
+      "rsi": 37.8,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -726,9 +721,35 @@
     {
       "ticker": "LYFT",
       "date": "2026-11-25",
-      "price": 15.87,
-      "rvol": 0.73,
-      "rsi": 42.4,
+      "price": 16.38,
+      "rvol": 0.97,
+      "rsi": 46.9,
+      "score": 0,
+      "strategy": "watch",
+      "qualified": false,
+      "stop_reference": null,
+      "filter_checks": {
+        "price": true,
+        "liquidity": true,
+        "ema20_trend": false,
+        "projected_rvol": true,
+        "rsi": true,
+        "macd_positive_or_improving": true
+      },
+      "rejection_reasons": [
+        "ema20_trend"
+      ],
+      "prior_20d_high": 18.84,
+      "data_source": "Alpaca IEX daily bars; partial current session",
+      "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
+      "avg_iex_daily_dollar_volume": 15314169.61
+    },
+    {
+      "ticker": "SNAP",
+      "date": "2026-11-25",
+      "price": 4.78,
+      "rvol": 0.6,
+      "rsi": 40.1,
       "score": 0,
       "strategy": "watch",
       "qualified": false,
@@ -746,68 +767,10 @@
         "projected_rvol",
         "macd_positive_or_improving"
       ],
-      "prior_20d_high": 18.84,
-      "data_source": "Alpaca IEX daily bars; partial current session",
-      "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
-      "avg_iex_daily_dollar_volume": 15314169.61
-    },
-    {
-      "ticker": "SNAP",
-      "date": "2026-11-25",
-      "price": 4.72,
-      "rvol": 0.86,
-      "rsi": 39.4,
-      "score": 0,
-      "strategy": "watch",
-      "qualified": false,
-      "stop_reference": null,
-      "filter_checks": {
-        "price": true,
-        "liquidity": true,
-        "ema20_trend": false,
-        "projected_rvol": false,
-        "rsi": false,
-        "macd_positive_or_improving": false
-      },
-      "rejection_reasons": [
-        "ema20_trend",
-        "projected_rvol",
-        "rsi",
-        "macd_positive_or_improving"
-      ],
       "prior_20d_high": 6.14,
       "data_source": "Alpaca IEX daily bars; partial current session",
       "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
       "avg_iex_daily_dollar_volume": 17674142.87
-    },
-    {
-      "ticker": "NNE",
-      "date": "2026-11-25",
-      "price": 8.1,
-      "rvol": 1.02,
-      "rsi": 28.2,
-      "score": 0,
-      "strategy": "watch",
-      "qualified": false,
-      "stop_reference": null,
-      "filter_checks": {
-        "price": true,
-        "liquidity": false,
-        "ema20_trend": false,
-        "projected_rvol": true,
-        "rsi": false,
-        "macd_positive_or_improving": false
-      },
-      "rejection_reasons": [
-        "liquidity",
-        "ema20_trend",
-        "rsi",
-        "macd_positive_or_improving"
-      ],
-      "prior_20d_high": 12.88,
-      "data_source": "Alpaca IEX daily bars; partial current session",
-      "volume_method": "Projected full-session IEX volume / average 20 completed IEX sessions (approximate)",
-      "avg_iex_daily_dollar_volume": 916993.68
     }
   ],
   "errors": [],

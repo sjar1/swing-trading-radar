@@ -11334,5 +11334,101 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-25T16:30:35.973919+00:00",
+    "evaluated": 28,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "LYFT",
+        "price": 16.38,
+        "rvol": 0.97,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 15.62,
+        "rvol": 1.52,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.6,
+        "rvol": 0.54,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 21.21,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.63,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 13.94,
+        "rvol": 1.1,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RGTI",
+        "price": 7.09,
+        "rvol": 1.37,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 5.26,
+        "rvol": 0.98,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "ASTS",
+        "price": 23.23,
+        "rvol": 1.47,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 2.68,
+        "rvol": 0.92,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
