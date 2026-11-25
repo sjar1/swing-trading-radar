@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-25T12:45:29.052847+00:00",
+  "generated_at": "2026-11-25T13:00:43.088806+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -225,23 +225,6 @@
       "context_date": "2026-11-24"
     },
     {
-      "ticker": "MARA",
-      "price": 5.4,
-      "trade_timestamp": "2026-11-24T20:59:59.37903097Z",
-      "previous_20d_high": 7.95,
-      "gap_to_breakout_pct": 32.08,
-      "ema20": 6.65,
-      "ema50": 8.1,
-      "rsi_previous_close": 34.8,
-      "macd_hist_previous_close": -0.0285,
-      "iex_day_volume": 2086537,
-      "previous_close_rvol": 1.09,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-24"
-    },
-    {
       "ticker": "UPST",
       "price": 16.76,
       "trade_timestamp": "2026-11-24T20:59:59.569827957Z",
@@ -270,6 +253,23 @@
       "macd_hist_previous_close": -0.393,
       "iex_day_volume": 22756,
       "previous_close_rvol": 0.64,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-24"
+    },
+    {
+      "ticker": "MARA",
+      "price": 5.19,
+      "trade_timestamp": "2026-11-25T13:00:02.939644475Z",
+      "previous_20d_high": 7.95,
+      "gap_to_breakout_pct": 34.72,
+      "ema20": 6.65,
+      "ema50": 8.1,
+      "rsi_previous_close": 34.8,
+      "macd_hist_previous_close": -0.0285,
+      "iex_day_volume": 2086537,
+      "previous_close_rvol": 1.09,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
