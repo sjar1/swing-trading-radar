@@ -10940,5 +10940,104 @@
     ],
     "orders_submitted": [],
     "reason": "No stocks passed all entry filters"
+  },
+  {
+    "timestamp": "2026-11-25T14:45:35.894197+00:00",
+    "evaluated": 29,
+    "qualified": [],
+    "closest": [
+      {
+        "ticker": "JBLU",
+        "price": 3.58,
+        "rvol": 0.44,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 13.55,
+        "rvol": 1.3,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "RIVN",
+        "price": 10.87,
+        "rvol": 1.0,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "QS",
+        "price": 2.63,
+        "rvol": 1.47,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "NCLH",
+        "price": 16.39,
+        "rvol": 1.6,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 14.98,
+        "rvol": 1.85,
+        "failed": [
+          "ema20_trend",
+          "macd_positive_or_improving"
+        ]
+      },
+      {
+        "ticker": "ASTS",
+        "price": 22.86,
+        "rvol": 1.96,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 2.86,
+        "rvol": 0.36,
+        "failed": [
+          "ema20_trend",
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CIFR",
+        "price": 4.92,
+        "rvol": 2.38,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.7,
+        "rvol": 1.26,
+        "failed": [
+          "ema20_trend",
+          "rsi",
+          "macd_positive_or_improving"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "No stocks passed all entry filters"
   }
 ]
