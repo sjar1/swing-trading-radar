@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T04:15:07.287254+00:00",
+  "generated_at": "2026-11-27T04:24:26.920524+00:00",
   "selection_method": "Curated candidate pool; price $2-$25, 20d dollar volume >=$5m, 20d range/return/liquidity ranking",
   "tickers": [
     "RIOT",
@@ -37,7 +37,7 @@
     {
       "ticker": "RIOT",
       "price": 16.65,
-      "avg_dollar_volume_20d": 490549157,
+      "avg_dollar_volume_20d": 490619836,
       "avg_intraday_range_pct_20d": 9.53,
       "return_20d_pct": 15.22,
       "rank_score": 94.43
@@ -53,7 +53,7 @@
     {
       "ticker": "AMC",
       "price": 3.21,
-      "avg_dollar_volume_20d": 77538821,
+      "avg_dollar_volume_20d": 77548355,
       "avg_intraday_range_pct_20d": 7.87,
       "return_20d_pct": 7.36,
       "rank_score": 84.54
@@ -69,7 +69,7 @@
     {
       "ticker": "ACHR",
       "price": 3.04,
-      "avg_dollar_volume_20d": 108390200,
+      "avg_dollar_volume_20d": 108405020,
       "avg_intraday_range_pct_20d": 9.4,
       "return_20d_pct": -29.95,
       "rank_score": 65.0
@@ -77,7 +77,7 @@
     {
       "ticker": "CIFR",
       "price": 5.51,
-      "avg_dollar_volume_20d": 363211729,
+      "avg_dollar_volume_20d": 363266774,
       "avg_intraday_range_pct_20d": 12.95,
       "return_20d_pct": -37.88,
       "rank_score": 65.0
@@ -85,7 +85,7 @@
     {
       "ticker": "CLSK",
       "price": 5.18,
-      "avg_dollar_volume_20d": 132855751,
+      "avg_dollar_volume_20d": 132870048,
       "avg_intraday_range_pct_20d": 10.9,
       "return_20d_pct": -39.63,
       "rank_score": 65.0
@@ -93,7 +93,7 @@
     {
       "ticker": "HIMS",
       "price": 14.65,
-      "avg_dollar_volume_20d": 342676260,
+      "avg_dollar_volume_20d": 342730172,
       "avg_intraday_range_pct_20d": 8.6,
       "return_20d_pct": -50.03,
       "rank_score": 65.0
@@ -101,7 +101,7 @@
     {
       "ticker": "IONQ",
       "price": 23.54,
-      "avg_dollar_volume_20d": 671814874,
+      "avg_dollar_volume_20d": 672000958,
       "avg_intraday_range_pct_20d": 9.28,
       "return_20d_pct": -27.41,
       "rank_score": 65.0
@@ -109,7 +109,7 @@
     {
       "ticker": "IREN",
       "price": 12.85,
-      "avg_dollar_volume_20d": 1530223089,
+      "avg_dollar_volume_20d": 1530979375,
       "avg_intraday_range_pct_20d": 11.57,
       "return_20d_pct": -55.44,
       "rank_score": 65.0
@@ -117,7 +117,7 @@
     {
       "ticker": "JOBY",
       "price": 3.9,
-      "avg_dollar_volume_20d": 112971717,
+      "avg_dollar_volume_20d": 113007967,
       "avg_intraday_range_pct_20d": 8.12,
       "return_20d_pct": -23.23,
       "rank_score": 65.0
@@ -125,7 +125,7 @@
     {
       "ticker": "LUNR",
       "price": 9.14,
-      "avg_dollar_volume_20d": 115662816,
+      "avg_dollar_volume_20d": 115683609,
       "avg_intraday_range_pct_20d": 10.74,
       "return_20d_pct": -21.14,
       "rank_score": 65.0
@@ -133,7 +133,7 @@
     {
       "ticker": "MARA",
       "price": 5.42,
-      "avg_dollar_volume_20d": 267503686,
+      "avg_dollar_volume_20d": 267541788,
       "avg_intraday_range_pct_20d": 10.14,
       "return_20d_pct": -26.26,
       "rank_score": 65.0
@@ -141,7 +141,7 @@
     {
       "ticker": "OKLO",
       "price": 19.47,
-      "avg_dollar_volume_20d": 252154448,
+      "avg_dollar_volume_20d": 252184919,
       "avg_intraday_range_pct_20d": 9.39,
       "return_20d_pct": -28.21,
       "rank_score": 65.0
@@ -149,7 +149,7 @@
     {
       "ticker": "QBTS",
       "price": 7.0,
-      "avg_dollar_volume_20d": 156794417,
+      "avg_dollar_volume_20d": 156830852,
       "avg_intraday_range_pct_20d": 9.59,
       "return_20d_pct": -40.53,
       "rank_score": 65.0
@@ -157,7 +157,7 @@
     {
       "ticker": "RGTI",
       "price": 7.85,
-      "avg_dollar_volume_20d": 186412764,
+      "avg_dollar_volume_20d": 186447657,
       "avg_intraday_range_pct_20d": 9.69,
       "return_20d_pct": -36.69,
       "rank_score": 65.0
@@ -165,7 +165,7 @@
     {
       "ticker": "SMR",
       "price": 3.25,
-      "avg_dollar_volume_20d": 149749490,
+      "avg_dollar_volume_20d": 149759971,
       "avg_intraday_range_pct_20d": 9.46,
       "return_20d_pct": -42.68,
       "rank_score": 65.0
@@ -181,7 +181,7 @@
     {
       "ticker": "WULF",
       "price": 10.03,
-      "avg_dollar_volume_20d": 621811057,
+      "avg_dollar_volume_20d": 621863113,
       "avg_intraday_range_pct_20d": 10.88,
       "return_20d_pct": -25.26,
       "rank_score": 65.0
@@ -189,7 +189,7 @@
     {
       "ticker": "QS",
       "price": 2.94,
-      "avg_dollar_volume_20d": 61645821,
+      "avg_dollar_volume_20d": 61648555,
       "avg_intraday_range_pct_20d": 7.8,
       "return_20d_pct": -30.66,
       "rank_score": 63.89
@@ -197,7 +197,7 @@
     {
       "ticker": "LCID",
       "price": 2.56,
-      "avg_dollar_volume_20d": 43572291,
+      "avg_dollar_volume_20d": 43576682,
       "avg_intraday_range_pct_20d": 9.9,
       "return_20d_pct": -24.93,
       "rank_score": 62.43
@@ -213,7 +213,7 @@
     {
       "ticker": "RIVN",
       "price": 11.71,
-      "avg_dollar_volume_20d": 421221315,
+      "avg_dollar_volume_20d": 421327173,
       "avg_intraday_range_pct_20d": 5.37,
       "return_20d_pct": 0.34,
       "rank_score": 62.25
@@ -221,7 +221,7 @@
     {
       "ticker": "GRAB",
       "price": 2.84,
-      "avg_dollar_volume_20d": 281729547,
+      "avg_dollar_volume_20d": 281741176,
       "avg_intraday_range_pct_20d": 4.49,
       "return_20d_pct": 3.27,
       "rank_score": 60.74
@@ -229,7 +229,7 @@
     {
       "ticker": "SOUN",
       "price": 2.64,
-      "avg_dollar_volume_20d": 72214235,
+      "avg_dollar_volume_20d": 72221165,
       "avg_intraday_range_pct_20d": 7.02,
       "return_20d_pct": -40.43,
       "rank_score": 59.49
@@ -237,7 +237,7 @@
     {
       "ticker": "NU",
       "price": 12.36,
-      "avg_dollar_volume_20d": 852591206,
+      "avg_dollar_volume_20d": 852670495,
       "avg_intraday_range_pct_20d": 4.26,
       "return_20d_pct": 3.26,
       "rank_score": 59.45
@@ -253,7 +253,7 @@
     {
       "ticker": "SNAP",
       "price": 5.04,
-      "avg_dollar_volume_20d": 251778113,
+      "avg_dollar_volume_20d": 251784313,
       "avg_intraday_range_pct_20d": 6.45,
       "return_20d_pct": -15.44,
       "rank_score": 56.3
@@ -261,7 +261,7 @@
     {
       "ticker": "PINS",
       "price": 19.71,
-      "avg_dollar_volume_20d": 289376480,
+      "avg_dollar_volume_20d": 289395303,
       "avg_intraday_range_pct_20d": 5.33,
       "return_20d_pct": -5.78,
       "rank_score": 54.92
