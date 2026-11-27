@@ -13059,5 +13059,99 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-27T15:00:38.495911+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "NU",
+      "PINS"
+    ],
+    "closest": [
+      {
+        "ticker": "RIOT",
+        "price": 16.48,
+        "rvol": 0.93,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.54,
+        "rvol": 1.63,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.44,
+        "rvol": 0.75,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 24.35,
+        "rvol": 1.76,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.22,
+        "rvol": 0.51,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 10.25,
+        "rvol": 2.15,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.92,
+        "rvol": 2.18,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.79,
+        "rvol": 0.15,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "CLSK",
+        "price": 4.96,
+        "rvol": 1.16,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 14.42,
+        "rvol": 1.13,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
