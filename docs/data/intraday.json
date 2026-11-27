@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T13:45:32.116483+00:00",
+  "generated_at": "2026-11-27T14:00:39.176108+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -39,10 +39,10 @@
     },
     {
       "ticker": "AMC",
-      "price": 3.26,
-      "trade_timestamp": "2026-11-27T13:20:31.346635836Z",
+      "price": 3.28,
+      "trade_timestamp": "2026-11-27T13:58:28.803816131Z",
       "previous_20d_high": 3.77,
-      "gap_to_breakout_pct": 13.53,
+      "gap_to_breakout_pct": 13.0,
       "ema20": 3.07,
       "ema50": 2.98,
       "rsi_previous_close": 54.2,
@@ -312,7 +312,7 @@
     {
       "ticker": "ACHR",
       "price": 3.19,
-      "trade_timestamp": "2026-11-27T13:44:11.527315561Z",
+      "trade_timestamp": "2026-11-27T13:54:57.249615165Z",
       "previous_20d_high": 5.07,
       "gap_to_breakout_pct": 37.08,
       "ema20": 3.7,
@@ -480,6 +480,23 @@
       "context_date": "2026-11-25"
     },
     {
+      "ticker": "IREN",
+      "price": 13.75,
+      "trade_timestamp": "2026-11-27T13:46:47.659494992Z",
+      "previous_20d_high": 27.83,
+      "gap_to_breakout_pct": 50.6,
+      "ema20": 18.51,
+      "ema50": 26.22,
+      "rsi_previous_close": 31.0,
+      "macd_hist_previous_close": -0.0581,
+      "iex_day_volume": 2821897,
+      "previous_close_rvol": 0.97,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-25"
+    },
+    {
       "ticker": "HIMS",
       "price": 14.64,
       "trade_timestamp": "2026-11-25T20:59:59.074663471Z",
@@ -491,23 +508,6 @@
       "macd_hist_previous_close": -0.5178,
       "iex_day_volume": 444602,
       "previous_close_rvol": 0.73,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-25"
-    },
-    {
-      "ticker": "IREN",
-      "price": 12.85,
-      "trade_timestamp": "2026-11-25T20:59:59.961153023Z",
-      "previous_20d_high": 27.83,
-      "gap_to_breakout_pct": 53.84,
-      "ema20": 18.51,
-      "ema50": 26.22,
-      "rsi_previous_close": 31.0,
-      "macd_hist_previous_close": -0.0581,
-      "iex_day_volume": 2821897,
-      "previous_close_rvol": 0.97,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
