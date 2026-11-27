@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T13:15:37.338754+00:00",
+  "generated_at": "2026-11-27T13:30:33.481575+00:00",
   "source": "Alpaca IEX snapshot prices; Yahoo completed-session daily indicators",
   "disclaimer": "IEX-only prices and volumes may differ from consolidated market data. RSI/MACD/EMA use prior daily close. Read-only early warnings, NOT buy signals or orders.",
   "items": [
@@ -39,10 +39,10 @@
     },
     {
       "ticker": "AMC",
-      "price": 3.2,
-      "trade_timestamp": "2026-11-25T20:59:59.361562738Z",
+      "price": 3.26,
+      "trade_timestamp": "2026-11-27T13:20:31.346635836Z",
       "previous_20d_high": 3.77,
-      "gap_to_breakout_pct": 15.12,
+      "gap_to_breakout_pct": 13.53,
       "ema20": 3.07,
       "ema50": 2.98,
       "rsi_previous_close": 54.2,
@@ -310,6 +310,23 @@
       "context_date": "2026-11-25"
     },
     {
+      "ticker": "QBTS",
+      "price": 7.43,
+      "trade_timestamp": "2026-11-27T13:17:22.116388609Z",
+      "previous_20d_high": 11.84,
+      "gap_to_breakout_pct": 37.25,
+      "ema20": 9.04,
+      "ema50": 11.81,
+      "rsi_previous_close": 31.4,
+      "macd_hist_previous_close": -0.1192,
+      "iex_day_volume": 1074119,
+      "previous_close_rvol": 1.18,
+      "early_warning": false,
+      "breakout_above_prior_high": false,
+      "readiness_score": 0,
+      "context_date": "2026-11-25"
+    },
+    {
       "ticker": "LUNR",
       "price": 9.13,
       "trade_timestamp": "2026-11-25T20:59:58.868148585Z",
@@ -423,23 +440,6 @@
       "macd_hist_previous_close": -0.1616,
       "iex_day_volume": 1149916,
       "previous_close_rvol": 1.07,
-      "early_warning": false,
-      "breakout_above_prior_high": false,
-      "readiness_score": 0,
-      "context_date": "2026-11-25"
-    },
-    {
-      "ticker": "QBTS",
-      "price": 7.0,
-      "trade_timestamp": "2026-11-25T20:59:53.520188741Z",
-      "previous_20d_high": 11.84,
-      "gap_to_breakout_pct": 40.92,
-      "ema20": 9.04,
-      "ema50": 11.81,
-      "rsi_previous_close": 31.4,
-      "macd_hist_previous_close": -0.1192,
-      "iex_day_volume": 1074119,
-      "previous_close_rvol": 1.18,
       "early_warning": false,
       "breakout_above_prior_high": false,
       "readiness_score": 0,
