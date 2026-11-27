@@ -13153,5 +13153,98 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-27T15:15:35.165758+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "NU",
+      "PINS"
+    ],
+    "closest": [
+      {
+        "ticker": "LUNR",
+        "price": 9.72,
+        "rvol": 1.4,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "IONQ",
+        "price": 25.16,
+        "rvol": 1.43,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LYFT",
+        "price": 17.66,
+        "rvol": 0.85,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 16.77,
+        "rvol": 0.75,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.2,
+        "rvol": 0.72,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "SNAP",
+        "price": 5.29,
+        "rvol": 0.6,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 10.51,
+        "rvol": 1.89,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.77,
+        "rvol": 0.32,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.92,
+        "rvol": 2.23,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "HIMS",
+        "price": 14.73,
+        "rvol": 1.11,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
