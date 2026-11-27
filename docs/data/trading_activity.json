@@ -14101,5 +14101,101 @@
     ],
     "orders_submitted": [],
     "reason": "Qualified stocks found; check execution and risk controls"
+  },
+  {
+    "timestamp": "2026-11-27T17:45:31.733733+00:00",
+    "evaluated": 30,
+    "qualified": [
+      "LYFT",
+      "NU",
+      "PINS"
+    ],
+    "closest": [
+      {
+        "ticker": "IONQ",
+        "price": 24.84,
+        "rvol": 1.06,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "LUNR",
+        "price": 9.84,
+        "rvol": 1.05,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "WULF",
+        "price": 10.61,
+        "rvol": 0.96,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "GRAB",
+        "price": 2.9,
+        "rvol": 1.68,
+        "failed": [
+          "ema20_trend"
+        ]
+      },
+      {
+        "ticker": "JBLU",
+        "price": 3.81,
+        "rvol": 0.63,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "AMC",
+        "price": 3.15,
+        "rvol": 0.61,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "RIOT",
+        "price": 17.39,
+        "rvol": 0.47,
+        "failed": [
+          "projected_rvol"
+        ]
+      },
+      {
+        "ticker": "QBTS",
+        "price": 7.46,
+        "rvol": 1.27,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "MARA",
+        "price": 5.49,
+        "rvol": 1.11,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      },
+      {
+        "ticker": "JOBY",
+        "price": 3.98,
+        "rvol": 0.94,
+        "failed": [
+          "ema20_trend",
+          "rsi"
+        ]
+      }
+    ],
+    "orders_submitted": [],
+    "reason": "Qualified stocks found; check execution and risk controls"
   }
 ]
